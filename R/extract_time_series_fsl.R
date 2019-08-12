@@ -10,7 +10,7 @@
 #' @export
 #'
 #' @examples
-extract_time_series <- function(in_nii, in_mask_nii, out_path, statistic = "mean", overwrite = F) {
+extract_time_series_fsl <- function(in_nii, in_mask_nii, out_path, statistic = "mean", overwrite = F) {
   # check input -----
   if (!file.exists(in_nii)) {
     stop(glue("{in_nii} does not exist."))
@@ -25,7 +25,7 @@ extract_time_series <- function(in_nii, in_mask_nii, out_path, statistic = "mean
   }
 
   if (!(statistic %in% c("mean", "eig", "eigenvariate"))) {
-    stop(glue("{out_path} already exists and overwrite is set to FALSE."))
+    stop(glue("{statistic} must be mean, eig, or eigenvariate."))
   }
 
   # load packages -----
