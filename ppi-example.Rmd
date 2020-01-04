@@ -1,0 +1,40 @@
+---
+title: "PPI Example"
+author: "Ekarin Eric Pongpipat, M.A."
+date: "1/2/2020"
+output: html_document
+---
+
+## R Packages
+```{r}
+packages <- c("tidyverse", "eepR", "furrr")
+xfun::pkg_attach(packages, install = T, message = F)
+
+script_dir <- "~/Documents/GitHub/ppi/R/"
+script_files <- list.files(script_dir)
+script_path <- paste0(script_dir, script_files)
+script_ppi <- lapply(script_path, source)
+```
+
+## Psychological Variables
+```{r}
+
+
+df_psy <- read.csv("~/Box/my_mri/behavioral/nback_3tb4188_2017_Sep_13_1341_soa.csv") %>%
+  rename(onset = start, trial_type = block) %>%
+  mutate(duration = ifelse(trial_type == "0-back", 10 * 2.5, 20 * 2.5)) %>%
+  group_by(run) %>%
+  nest() %>%
+  mutate(data = future_map(data, function(x) x %>% select(onset, duration, trial_type)),
+         data_trial_type = future_pmap(list(data, 1.5, 260),  create_trial_type_by_volume_list)) %>%
+  unnest(data_trial_type) %>%
+  contrast_code_categorical_variable(., cbind(nback_vs_baseline = c(1, 1, 1, 1, -4)/5,
+                                              task_vs_control = c(-3, 1, 1, 1, 0)/4,
+                                              linear_task = c(0, -1, 0, 1, 0)/2,
+                                              quadratic_task = c(0, -1, 2, -1, 0)/3))
+```
+
+## Physlogical Variable
+```{r}
+
+```

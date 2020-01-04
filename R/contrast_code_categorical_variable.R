@@ -1,29 +1,15 @@
-contrast_code_categorical_variable <- function(in_file, in_contrast_code_file, out_file, overwrite = F) {
-  if (!file.exists(in_file)) {
-    stop(paste0(in_file, " does not exist."))
-  }
-
-  if (!file.exists(in_contrast_code_file)) {
-    stop(paste0(in_contrast_code_file, " does not exist."))
-  }
-
-  if (file.exists(out_file) & overwrite == F) {
-    stop(paste0(out_file), " already exists and overwrite option is set to FALSE.")
-  }
-
-  # read files
-  x <- read_csv(in_file, col_names = F)
-  c <- read_csv(in_contrast_code_file, col_names = T)
+contrast_code_categorical_variable <- function(data, contrast) {
 
   # apply contrast
-  contrasts(x) <- c
+  contrasts(data$trial_type) <- contrast
 
   # create design matrix
-  o <- model.matrix(~ x) %>%
+  df_new <- model.matrix(~ trial_type, data) %>%
     as_tibble() %>%
     select(-"(Intercept)")
-  colnames(o) <- colnames(c)
+  colnames(df_new) <- paste0("psy_", colnames(contrast))
 
-  # write file
-  write_csv(x, out_file)
+  df_new <- cbind(data, df_new)
+
+  return(df_new)
 }
