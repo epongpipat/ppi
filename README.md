@@ -95,5 +95,11 @@ I would like to make a script that combines all of the above scripts into one si
 in_ - prefix of parameters signifying file is input 
 out_ - prefix of parameters signifying file is output
 nii <- nifti file as either .nii or .nii.gz
+file <- text file as .csv
 design_matrix <- design matrix
 
+## Functions that use AFNI
+- should have an option for saving the file, but should not be required
+  - false, the bash script should have this option
+  - this should be consistent with R; only having options within the environment
+- these functions should create and delete temporary files

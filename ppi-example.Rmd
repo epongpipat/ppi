@@ -1,8 +1,18 @@
 ---
 title: "PPI Example"
 author: "Ekarin Eric Pongpipat, M.A."
-date: "1/2/2020"
-output: html_document
+date: "2019-01-06"
+output: 
+  html_document:
+    highlight: textmate
+    theme: lumen
+    code_folding: hide
+    code_download: true
+    toc: yes
+    toc_depth: 3
+    toc_float:
+      collapsed: yes
+      smooth_scroll: yes
 ---
 
 ## R Packages
@@ -16,10 +26,23 @@ script_path <- paste0(script_dir, script_files)
 script_ppi <- lapply(script_path, source)
 ```
 
-## Psychological Variables
+## Ideal HRF
 ```{r}
+hrf <- get_hrf_afni("spmg1", 1.5, 16)
 
+ggplot(hrf %>% mutate(volume = row_number()), aes(volume, hrf)) +
+  geom_line() +
+  theme_minimal() +
+  labs(title = "HRF: SPMG1",
+       subtitle = "Upsample: 16")
 
+# write.table(hrf$hrf, file = "example/hrf-spmg1_upsample-16.csv", col.names = F, row.names = F)
+```
+
+## Psychological Variables
+
+### Label Volume by Trial Type
+```{r}
 df_psy <- read.csv("~/Box/my_mri/behavioral/nback_3tb4188_2017_Sep_13_1341_soa.csv") %>%
   rename(onset = start, trial_type = block) %>%
   mutate(duration = ifelse(trial_type == "0-back", 10 * 2.5, 20 * 2.5)) %>%
@@ -27,14 +50,132 @@ df_psy <- read.csv("~/Box/my_mri/behavioral/nback_3tb4188_2017_Sep_13_1341_soa.c
   nest() %>%
   mutate(data = future_map(data, function(x) x %>% select(onset, duration, trial_type)),
          data_trial_type = future_pmap(list(data, 1.5, 260),  create_trial_type_by_volume_list)) %>%
-  unnest(data_trial_type) %>%
-  contrast_code_categorical_variable(., cbind(nback_vs_baseline = c(1, 1, 1, 1, -4)/5,
-                                              task_vs_control = c(-3, 1, 1, 1, 0)/4,
-                                              linear_task = c(0, -1, 0, 1, 0)/2,
-                                              quadratic_task = c(0, -1, 2, -1, 0)/3))
+  unnest(data_trial_type)
+head(df_psy)
 ```
 
-## Physlogical Variable
+### Contrast Code
+```{r}
+func_fig_contrast <- function(data) {
+  data %>%
+    as.data.frame() %>%
+    mutate(volume = row_number()) %>%
+    gather(., psy_contrast, value, -volume) %>%
+    ggplot(., aes(volume, value)) +
+    geom_line() +
+    facet_wrap(~ psy_contrast) +
+    theme_minimal()
+}
+
+func_add_fig_title <- function(fig, text) {
+  fig + 
+    labs(title = text)
+}
+
+df_psy_contrast <- df_psy %>%
+  contrast_code_categorical_variable(., cbind(nback_vs_baseline = c(1, 1, 1, 1, -4)/5,
+                                              task_vs_control = c(-3, 1, 1, 1, 0)/4,
+                                              linear_task = c(0, -1, 0, 1, 0),
+                                              quadratic_task = c(0, -1, 2, -1, 0)/3)) %>%
+  group_by(run) %>%
+  nest() %>%
+  mutate(data = future_map(data, function(x) x %>% select(contains("psy"))),
+         fig = future_map(data, func_fig_contrast),
+         fig = future_map2(fig, paste0("Run: ", run), func_add_fig_title))
+
+df_psy_contrast$fig
+```
+
+### Upsample
+```{r}
+df_psy_upsample_16 <- df_psy_contrast %>%
+  mutate(data_upsample_16 = future_map(data, function(x) apply(x, 2, function(x) upsample(x, 16))),
+         fig_upsample_16 = future_map(data_upsample_16, func_fig_contrast),
+         fig_upsample_16 = future_map2(fig_upsample_16, paste0("Run: ", run), func_add_fig_title))
+
+df_psy_upsample_16$fig_upsample_16
+```
+
+### Convolve
+```{r}
+df_psy_convolve <- df_psy_upsample_16 %>%
+  mutate(data_convolve = future_map(data_upsample_16, function(x) apply(x, 2, function(x) convolve_afni(x, hrf, 1.5, 260, 16))),
+         fig_convolve = future_map(data_convolve, func_fig_contrast),
+         fig_convolve = future_map2(fig_convolve, paste0("Run:", run), func_add_fig_title))
+
+df_psy_convolve$fig_convolve
+```
+
+### Downsample
+```{r}
+df_psy_downsample_16 <- df_psy_convolve %>%
+  mutate(data_downsample_16 = future_map(data_convolve, function(x) apply(x, 2, function(x) downsample(x, 16))),
+         fig_downsample_16 = future_map(data_downsample_16, func_fig_contrast),
+         fig_downsample_16 = future_map2(fig_downsample_16, paste0("Run:", run), func_add_fig_title))
+
+df_psy_downsample_16$fig_downsample_16
+```
+
+## Physiological Variable
+
+### Create Sphere(s)
+
+This step can be skipped if have you have your own mask. 
+
+```{r}
+
+```
+
+### Extract ROI
+```{r}
+
+```
+
+### Detrend
+```{r, eval = F}
+df_phys_detrend <- df_phys
+```
+
+### Upsample
+```{r, eval = F}
+df_phys_upsample <- df_phys_detrend
+```
+
+### Deconvolve
+```{r}
+df_psy_deconvolve <- df_psy_downsample_16 %>%
+  mutate(data_deconvolve = future_map(data_convolve, function(x) apply(x, 2, function(x) deconvolve_afni(x, hrf))),
+         fig_deconvolve = future_map(data_deconvolve, func_fig_contrast),
+         fig_deconvolve = future_map2(fig_deconvolve, paste0("Run:", run), func_add_fig_title))
+
+df_psy_deconvolve$fig_deconvolve
+```
+
+## Psychophysiological Interaction Variable
+
+### Multiply/Create Interaction
+```{r}
+
+```
+
+### Convolve
+```{r}
+
+```
+
+### Downsample
+```{r}
+
+```
+
+## Create Design Matrix
+
+### Create design matrix
+```{r}
+
+```
+
+### Add nuisance variables
 ```{r}
 
 ```
