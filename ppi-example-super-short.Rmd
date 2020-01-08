@@ -1,0 +1,83 @@
+---
+title: "Psychophysiological Interaction (PPI): Data Manipulation"
+author: "Ekarin Eric Pongpipat, M.A."
+date: "2019-01-06"
+output: 
+  html_document:
+    highlight: textmate
+    theme: lumen
+    code_folding: hide
+    code_download: true
+    toc: yes
+    toc_depth: 3
+    toc_float:
+      collapsed: yes
+      smooth_scroll: yes
+---
+
+I believe it is helpful to think of PPI as a essentially *a lot* of data manipulation/wrangling followed by multi-level modeling.
+
+This example will focus on how to perform the data manipulation portion of PPI.
+
+This example assumes that the reader:
+
+1. is familiar with standard task fMRI analyses and jargon
+2. has a conceptual understanding of psychophysiological interaction (PPI)
+3. has pre-processed the fMRI data
+
+## R Packages
+
+First, let's load some packages.
+
+```{r, warning = F}
+packages <- c("tidyverse", "eepR", "furrr", "ggpubr")
+xfun::pkg_attach(packages, install = T, message = F)
+
+script_dir <- "~/Documents/GitHub/ppi/R/"
+script_files <- list.files(script_dir)
+script_path <- paste0(script_dir, script_files)
+script_ppi <- lapply(script_path, source)
+```
+
+## Define Parameters
+
+Let's define some MRI parameters and an upsample factor for convolution and deconvolution.
+
+In this example, we are going to use SPM's first gamma variate (`spmg1`) for the HRF. This is SPM's default HRF other current options include `gam` and `block`.
+
+```{r}
+tr <- 1.5
+n_volumes <- 260
+hrf_name <- "spmg1"
+upsample_factor <- 16
+detrend_factor <- 2
+
+events_file <- "~/Box/my_mri/behavioral/nback_3tb4188_2017_Sep_13_1341_soa.csv"
+
+psy_contrast_table <- cbind(nback_vs_baseline = c(1, 1, 1, 1, -4)/5,
+                                              task_vs_control = c(-3, 1, 1, 1, 0)/4,
+                                              linear_task = c(0, -1, 0, 1, 0),
+                                              quadratic_task = c(0, -1, 2, -1, 0)/3)
+psy_contrast_table
+
+out_file <- NULL
+```
+
+## Load Data
+```{r}
+events_file <- ""
+phys_file <- ""
+nuisance_file <- ""
+```
+
+## Data Wrangling
+```{r}
+
+```
+
+## Save
+```{r}
+if (!is.null(out_file)) {
+  write.csv(df_design_mat_final, out_file)
+}
+```

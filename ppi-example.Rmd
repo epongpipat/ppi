@@ -1,5 +1,5 @@
 ---
-title: "PPI Example"
+title: "Psychophysiological Interaction (PPI): Data Manipulation"
 author: "Ekarin Eric Pongpipat, M.A."
 date: "2019-01-06"
 output: 
@@ -15,7 +15,20 @@ output:
       smooth_scroll: yes
 ---
 
+I believe it is helpful to think of PPI as a essentially *a lot* of data manipulation/wrangling followed by multi-level modeling.
+
+This example will focus on how to perform the data manipulation portion of PPI.
+
+This example assumes that the reader:
+
+1. is familiar with standard task fMRI analyses and jargon
+2. has a conceptual understanding of psychophysiological interaction (PPI)
+3. has pre-processed the fMRI data
+
 ## R Packages
+
+First, let's load some packages.
+
 ```{r, warning = F}
 packages <- c("tidyverse", "eepR", "furrr", "ggpubr")
 xfun::pkg_attach(packages, install = T, message = F)
@@ -26,37 +39,57 @@ script_path <- paste0(script_dir, script_files)
 script_ppi <- lapply(script_path, source)
 ```
 
-## Set Parameters
+## Define Parameters
+
+Let's define some MRI parameters and an upsample factor for convolution and deconvolution.
+
+In this example, we are going to use SPM's first gamma variate (`spmg1`) for the HRF. This is SPM's default HRF other current options include `gam` and `block`.
+
 ```{r}
 tr <- 1.5
 n_volumes <- 260
 upsample_factor <- 16
+hrf_name <- "spmg1"
+
+events_file <- "~/Box/my_mri/behavioral/nback_3tb4188_2017_Sep_13_1341_soa.csv"
+
+psy_contrast_table <- cbind(nback_vs_baseline = c(1, 1, 1, 1, -4)/5,
+                                              task_vs_control = c(-3, 1, 1, 1, 0)/4,
+                                              linear_task = c(0, -1, 0, 1, 0),
+                                              quadratic_task = c(0, -1, 2, -1, 0)/3)
+psy_contrast_table
+
+out_file <- NULL
 ```
 
 ## Ideal HRF
+
+Let's first obtain the hemodynamic response function (HRF) that we are going to use during convolution and deconvolution steps. 
+
 ```{r, warning = F, message = F}
-hrf <- get_hrf_afni("spmg1", tr, upsample_factor)
+hrf <- get_hrf_afni(hrf_name, tr, upsample_factor)
 
 ggplot(hrf %>% mutate(volume = row_number()), aes(volume, hrf)) +
   geom_line() +
   theme_minimal() +
-  labs(title = "HRF: SPMG1",
+  labs(title = paste0("HRF: ", toupper(hrf_name)),
        subtitle = "Upsample: ", upsample_factor)
 ```
 
 ## Psychological Variables
 
 ### Label Volume by Trial Type
+
 ```{r}
-df_psy <- read.csv("~/Box/my_mri/behavioral/nback_3tb4188_2017_Sep_13_1341_soa.csv") %>%
+df_psy <- read.csv(events_file) %>%
   rename(onset = start, trial_type = block) %>%
   mutate(duration = ifelse(trial_type == "0-back", 10 * 2.5, 20 * 2.5)) %>%
   group_by(run) %>%
   nest() %>%
   mutate(data = future_map(data, function(x) x %>% select(onset, duration, trial_type)),
          data_trial_type = future_pmap(list(data, tr, n_volumes),  create_trial_type_by_volume_list)) %>%
-  unnest(data_trial_type) %>%
   select(-data) %>%
+  unnest(data_trial_type) %>%
   ungroup()
 head(df_psy)
 ```
@@ -79,10 +112,7 @@ func_add_fig_title <- function(fig, text) {
     labs(title = text)
 }
 
-df_psy_contrast <- contrast_code_categorical_variable(df_psy, cbind(nback_vs_baseline = c(1, 1, 1, 1, -4)/5,
-                                              task_vs_control = c(-3, 1, 1, 1, 0)/4,
-                                              linear_task = c(0, -1, 0, 1, 0),
-                                              quadratic_task = c(0, -1, 2, -1, 0)/3)) %>%
+df_psy_contrast <- contrast_code_categorical_variable(df_psy, psy_contrast_table) %>%
   group_by(run) %>%
   nest() %>%
   mutate(data = future_map(data, function(x) x %>% select(contains("psy"))),
@@ -291,7 +321,6 @@ func_fig_data_ts_long(df_design_mat)
 ```
 
 ### Final
-
 ```{r}
 df_design_mat_final <- df_design_mat %>%
   group_by(run) %>%
@@ -307,4 +336,11 @@ func_fig_data_heat_map(df_design_mat_final)
 
 ```{r, fig.width = 8, fig.height = 12}
 func_fig_data_ts_long(df_design_mat_final)
+```
+
+### Save
+```{r}
+if (!is.null(out_file)) {
+  write.csv(df_design_mat_final, out_file)
+}
 ```

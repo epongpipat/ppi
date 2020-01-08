@@ -21,7 +21,7 @@ upsample <- function(data, upsample_factor) {
       temp_end <- data[i+1]
     }
 
-      temp_data <- seq(temp_start, temp_end, length.out = upsample_factor + 1)
+      temp_data <- seq(temp_start, temp_end, length.out = (upsample_factor + 1))
       temp_data <- temp_data[-length(temp_data)]
       new_data <- c(new_data, temp_data)
   }

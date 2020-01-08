@@ -1,9 +1,9 @@
-create_trial_type_by_volume_list <- function(in_file, tr_sec, n_vol, thr = 0.51, unlabeled_trial_type = "fixation") {
+create_trial_type_by_volume_list <- function(events, tr_sec, n_vol, thr = 0.51, unlabeled_trial_type = "fixation") {
 
   total_fmri_time_sec <- tr_sec * n_vol
 
   # task data
-  df_behav <- in_file %>%
+  df_behav <- events %>%
     mutate(end = onset + duration)
 
   # new trial_typedata
