@@ -45,22 +45,29 @@ Let's define some MRI parameters and an upsample factor for convolution and deco
 
 In this example, we are going to use SPM's first gamma variate (`spmg1`) for the HRF. This is SPM's default HRF other current options include `gam` and `block`.
 
+### MRI
 ```{r}
 tr <- 1.5
 n_volumes <- 260
+```
+
+### Files
+```{r}
+events_file <- "~/Box/my_mri/behavioral/nback_3tb4188_2017_Sep_13_1341_soa.csv"
+out_file <- NULL
+```
+
+### PPI Options
+```{r}
 hrf_name <- "spmg1"
 upsample_factor <- 16
 detrend_factor <- 2
-
-events_file <- "~/Box/my_mri/behavioral/nback_3tb4188_2017_Sep_13_1341_soa.csv"
 
 psy_contrast_table <- cbind(nback_vs_baseline = c(1, 1, 1, 1, -4)/5,
                                               task_vs_control = c(-3, 1, 1, 1, 0)/4,
                                               linear_task = c(0, -1, 0, 1, 0),
                                               quadratic_task = c(0, -1, 2, -1, 0)/3)
 psy_contrast_table
-
-out_file <- NULL
 ```
 
 ## Ideal HRF
@@ -69,12 +76,6 @@ Let's first obtain the hemodynamic response function (HRF) that we are going to 
 
 ```{r, warning = F, message = F}
 hrf <- get_hrf_afni(hrf_name, tr, upsample_factor)
-
-ggplot(hrf %>% mutate(volume = row_number()), aes(volume, hrf)) +
-  geom_line() +
-  theme_minimal() +
-  labs(title = paste0("HRF: ", toupper(hrf_name)),
-       subtitle = "Upsample: ", upsample_factor)
 ```
 
 ## Psychological Variables
@@ -86,31 +87,19 @@ df_psy <- read.csv(events_file) %>%
   mutate(duration = ifelse(trial_type == "0-back", 10 * 2.5, 20 * 2.5)) %>%
   select(run, onset, duration, trial_type) %>%
   group_by(run) %>%
-  nest()
+  nest() %>%
+  mutate(data = map(data, as.data.frame))
 ```
 
 ### Create
 ```{r}
-psy_var <- apply(df_psy[,2], 1, function(x) create_psy_var(x[[1]], psy_contrast_table, hrf, tr, n_volumes, upsample_factor))
+psy_var <- apply(df_psy[, "data"], 1, function(x) create_psy_var(x[[1]], psy_contrast_table, hrf, tr, n_volumes, upsample_factor))
 ```
 
 ## Physiological Variable
 
 ### Load Data
 ```{r, fig.width = 12, fig.height = 6}
-func_fig_phys <- function(data) {
-  colnames(data) <- "data"
-  
-  data <- as.data.frame(data)
-  
-  fig <- data %>%
-    mutate(volume = row_number()) %>%
-    ggplot(., aes(volume, data)) +
-    geom_line() +
-    theme_minimal()
-  return(fig)
-}
-
 dir_phys <- "/Volumes/shared/KK_KR_JLBS/Wave1/MRI/FMRI/PPI/Nback_individual_covariates/PHYS_MNI_42_-42_42/3tb1780/"
 files_phys <- list.files(dir_phys, "_mean.1D")
 path_phys <- paste0(dir_phys, files_phys)
@@ -118,50 +107,42 @@ df_phys <- tibble(file = files_phys,
                   path = path_phys) %>%
   mutate(run = str_remove(file, "_mean.1D"),
          run = str_remove(run, "r"),
-         data = future_map(path, function(x) read.csv(x, header = F, col.names = "data")),
-         fig = future_map(data, func_fig_phys),
-         fig = future_map2(fig, paste0("Run: ", run), func_add_fig_title))
-
-ggarrange(plotlist = df_phys$fig, ncol = 1)
+         data = future_map(path, function(x) read.csv(x, header = F, col.names = "data")))
 ```
 
 ### Create
 ```{r}
-phys_var <- create_phys_var(df_phys, detrend_factor, upsample_factor, hrf)
+phys_var <- apply(df_phys[, "data"], 1, function(x) create_phys_var(x[[1]], detrend_factor, upsample_factor, hrf))
 ```
 
 ## Psychophysiological Interaction Variable
 
-### Load Data
-```{r, , fig.width = 12, fig.height = 12}
-
-```
-
 ### Create
 ```{r}
-ppi_var <- create_ppi_var(map(psy_var, "upsample"), map(phys_var, "deconvolve"), hrf, tr, n_volumes, upsample_factor)
+temp_psy_var <- map(psy_var, "upsample")
+temp_phys_var <- map(phys_var, "deconvolve")
+ppi_var <- list()
+for (i in 1:3) {
+  ppi_var[[i]] <- create_ppi_var(temp_psy_var[[i]], temp_phys_var[[i]], hrf, tr, n_volumes, upsample_factor)
+}
 ```
 
 ## Design Matrix
 
 ### Initialize
 ```{r}
-df_design_mat <- tibble(run = c(1:3),
-                        data = NA)
+temp_psy_var <- map(psy_var, "downsample")
+temp_phys_var <- map(phys_var, "detrend")
+temp_ppi_var <- map(ppi_var, "downsample")
 
-for (i in 1:nrow(df_design_mat)) {
-  
-  temp_psy <- df_psy_downsample$data_downsample[[i]]
-  temp_phys <- df_phys_detrend$data_detrend[[i]] %>% rename(phys = residual)
-  temp_ppi <- df_ppi_downsample$data_downsample[[i]]
-  colnames(temp_ppi) <- str_replace(colnames(temp_ppi), "psy_", "ppi_")
-
-  df_design_mat$data[i] <- list(cbind(temp_psy, temp_phys, temp_ppi))
-}
-
-df_design_mat <- df_design_mat %>%
+df_design_mat <- tibble(run = c(1:3)) %>%
+  mutate(data = future_map(run, function(x) create_design_matrix(temp_psy_var[[x]], temp_phys_var[[x]], temp_ppi_var[[x]]))) %>%
   unnest()
 
+head(df_design_mat)
+```
+
+```{r}
 func_fig_data_heat_map <- function(data) {
   colnames(data) <- paste0(str_pad(1:ncol(data), 2, "left", "0"), "_", colnames(data))
   apply(data, 2, scale_min_max) %>%
@@ -192,30 +173,6 @@ func_fig_data_heat_map(df_design_mat)
 
 ```{r, fig.width = 8, fig.height = 12}
 func_fig_data_ts_long(df_design_mat)
-```
-
-### Add nuisance variables
-
-```{r}
-
-```
-
-### Final
-```{r}
-df_design_mat_final <- df_design_mat %>%
-  group_by(run) %>%
-  nest() %>%
-  mutate(data = future_map(data, function(x) x %>% mutate(time_linear = row_number(),
-                                                          time_linear = scale(time_linear),
-                                                          time_quadratic = time_linear^2))) %>%
-  unnest() %>%
-  ungroup()
-
-func_fig_data_heat_map(df_design_mat_final)
-```
-
-```{r, fig.width = 8, fig.height = 12}
-func_fig_data_ts_long(df_design_mat_final)
 ```
 
 ### Save

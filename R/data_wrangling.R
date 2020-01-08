@@ -1,11 +1,13 @@
-data_wrangling <- function(events, contrast_table, hrf_name, phys,
-                           detrend_factor, tr, n_volumes, upsample_factor,
-                           deconvolve, nuisance_var) {
+data_wrangling <- function(psy_events_data, psy_contrast_table, phys_data,
+                           detrend_factor, hrf_name, tr, n_volumes,
+                           upsample_factor = NULL, deconvolve = TRUE,
+                           nuisance_var = NULL) {
   data_wrangling <- list()
   data_wrangling$hrf <- get_hrf_afni(hrf_name, tr, upsample_factor)
-  data_wrangling$psy_var <- create_psy_var(events, contrast_table, data_wrangling$hrf, tr,
-                                           n_volumes, upsample_factor)
-  data_wrangling$phys_var <- create_phys_var(phys, detrend_factor,
+  data_wrangling$psy_var <- create_psy_var(psy_events_data, psy_contrast_table,
+                                           data_wrangling$hrf, tr, n_volumes,
+                                           upsample_factor)
+  data_wrangling$phys_var <- create_phys_var(phys_data, detrend_factor,
                                              upsample_factor, data_wrangling$hrf)
 
   if (deconvolve == TRUE) {

@@ -1,7 +1,7 @@
 ---
 title: "Psychophysiological Interaction (PPI): Data Manipulation"
 author: "Ekarin Eric Pongpipat, M.A."
-date: "2019-01-06"
+date: "2019-01-08"
 output: 
   html_document:
     highlight: textmate
@@ -15,19 +15,7 @@ output:
       smooth_scroll: yes
 ---
 
-I believe it is helpful to think of PPI as a essentially *a lot* of data manipulation/wrangling followed by multi-level modeling.
-
-This example will focus on how to perform the data manipulation portion of PPI.
-
-This example assumes that the reader:
-
-1. is familiar with standard task fMRI analyses and jargon
-2. has a conceptual understanding of psychophysiological interaction (PPI)
-3. has pre-processed the fMRI data
-
 ## R Packages
-
-First, let's load some packages.
 
 ```{r, warning = F}
 packages <- c("tidyverse", "eepR", "furrr", "ggpubr")
@@ -41,38 +29,120 @@ script_ppi <- lapply(script_path, source)
 
 ## Define Parameters
 
-Let's define some MRI parameters and an upsample factor for convolution and deconvolution.
-
-In this example, we are going to use SPM's first gamma variate (`spmg1`) for the HRF. This is SPM's default HRF other current options include `gam` and `block`.
-
+### MRI
 ```{r}
 tr <- 1.5
 n_volumes <- 260
+```
+
+### Files
+```{r}
+events_file <- "~/Box/my_mri/behavioral/nback_3tb4188_2017_Sep_13_1341_soa.csv"
+out_file <- NULL
+```
+
+### PPI Options
+```{r}
 hrf_name <- "spmg1"
 upsample_factor <- 16
 detrend_factor <- 2
-
-events_file <- "~/Box/my_mri/behavioral/nback_3tb4188_2017_Sep_13_1341_soa.csv"
 
 psy_contrast_table <- cbind(nback_vs_baseline = c(1, 1, 1, 1, -4)/5,
                                               task_vs_control = c(-3, 1, 1, 1, 0)/4,
                                               linear_task = c(0, -1, 0, 1, 0),
                                               quadratic_task = c(0, -1, 2, -1, 0)/3)
 psy_contrast_table
-
-out_file <- NULL
 ```
 
 ## Load Data
-```{r}
-events_file <- ""
-phys_file <- ""
-nuisance_file <- ""
+
+### PSY
+
+```{r, message = F, warning = F}
+df_psy <- read.csv(events_file) %>%
+  rename(onset = start, trial_type = block) %>%
+  mutate(duration = ifelse(trial_type == "0-back", 10 * 2.5, 20 * 2.5)) %>%
+  select(run, onset, duration, trial_type) %>%
+  group_by(run) %>%
+  nest() %>%
+  mutate(data = map(data, as.data.frame)) %>%
+  ungroup() %>%
+  select(run, data_psy = data)
+```
+
+### PHYS
+```{r, message = F, warning = F}
+dir_phys <- "/Volumes/shared/KK_KR_JLBS/Wave1/MRI/FMRI/PPI/Nback_individual_covariates/PHYS_MNI_42_-42_42/3tb1780/"
+files_phys <- list.files(dir_phys, "_mean.1D")
+path_phys <- paste0(dir_phys, files_phys)
+df_phys <- tibble(file = files_phys,
+                  path = path_phys) %>%
+  mutate(run = str_remove(file, "_mean.1D"),
+         run = str_remove(run, "r"),
+         run = as.integer(run),
+         data = future_map(path, function(x) read.csv(x, header = F, col.names = "data"))) %>%
+  select(run, data_phys = data)
 ```
 
 ## Data Wrangling
-```{r}
+```{r, message = F, warning = F}
+df_wrangling <- full_join(df_psy, df_phys, by = "run") %>%
+  mutate(data_wrangling = NA)
 
+for (i in 1:nrow(df_wrangling)) {
+  df_wrangling$data_wrangling[i] <- list(data_wrangling(psy_events_data = df_wrangling$data_psy[[i]], 
+                                          psy_contrast_table = psy_contrast_table, 
+                                          phys_data = df_wrangling$data_phys[[i]],
+                                          detrend_factor = 2, 
+                                          hrf_name = "spmg1",
+                                          tr = 1.5, 
+                                          n_volumes = 260, 
+                                          upsample_factor = 16, 
+                                          deconvolve = TRUE))
+}
+```
+
+## Design Matrix
+```{r, warning = F}
+df_design_mat <- df_wrangling %>%
+  mutate(design_mat = map(data_wrangling, "design_matrix")) %>%
+  select(run, design_mat) %>%
+  unnest()
+
+head(df_design_mat)
+```
+
+```{r}
+func_fig_data_heat_map <- function(data) {
+  colnames(data) <- paste0(str_pad(1:ncol(data), 2, "left", "0"), "_", colnames(data))
+  apply(data, 2, scale_min_max) %>%
+    as.data.frame() %>%
+    mutate(volume = row_number()) %>%
+    gather(., variable, value, -volume) %>%
+    ggplot(., aes(variable, volume, fill = value)) +
+    geom_raster() + 
+    scale_fill_distiller(palette = "Greys", direction = 1) + 
+    theme_minimal() +
+    theme(axis.text.x = element_text(hjust = 1, angle = 45)) +
+    labs(x = NULL)
+}
+
+func_fig_data_ts_long <- function(data) {
+  colnames(data) <- paste0(str_pad(1:ncol(data), 2, "left", "0"), "_", colnames(data))
+  data %>%
+  mutate(volume = row_number()) %>%
+  gather(., variable, value, -volume) %>%
+  ggplot(., aes(volume, value)) +
+  geom_line() +
+  facet_wrap(~ variable, scales = "free_y", ncol = 1) +
+  theme_minimal()
+}
+
+func_fig_data_heat_map(df_design_mat)
+```
+
+```{r, fig.width = 8, fig.height = 12}
+func_fig_data_ts_long(df_design_mat)
 ```
 
 ## Save
