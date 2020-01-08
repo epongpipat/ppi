@@ -16,8 +16,8 @@ output:
 ---
 
 ## R Packages
-```{r}
-packages <- c("tidyverse", "eepR", "furrr")
+```{r, warning = F}
+packages <- c("tidyverse", "eepR", "furrr", "ggpubr")
 xfun::pkg_attach(packages, install = T, message = F)
 
 script_dir <- "~/Documents/GitHub/ppi/R/"
@@ -26,17 +26,22 @@ script_path <- paste0(script_dir, script_files)
 script_ppi <- lapply(script_path, source)
 ```
 
-## Ideal HRF
+## Set Parameters
 ```{r}
-hrf <- get_hrf_afni("spmg1", 1.5, 16)
+tr <- 1.5
+n_volumes <- 260
+upsample_factor <- 16
+```
+
+## Ideal HRF
+```{r, warning = F, message = F}
+hrf <- get_hrf_afni("spmg1", tr, upsample_factor)
 
 ggplot(hrf %>% mutate(volume = row_number()), aes(volume, hrf)) +
   geom_line() +
   theme_minimal() +
   labs(title = "HRF: SPMG1",
-       subtitle = "Upsample: 16")
-
-# write.table(hrf$hrf, file = "example/hrf-spmg1_upsample-16.csv", col.names = F, row.names = F)
+       subtitle = "Upsample: ", upsample_factor)
 ```
 
 ## Psychological Variables
@@ -49,13 +54,15 @@ df_psy <- read.csv("~/Box/my_mri/behavioral/nback_3tb4188_2017_Sep_13_1341_soa.c
   group_by(run) %>%
   nest() %>%
   mutate(data = future_map(data, function(x) x %>% select(onset, duration, trial_type)),
-         data_trial_type = future_pmap(list(data, 1.5, 260),  create_trial_type_by_volume_list)) %>%
-  unnest(data_trial_type)
+         data_trial_type = future_pmap(list(data, tr, n_volumes),  create_trial_type_by_volume_list)) %>%
+  unnest(data_trial_type) %>%
+  select(-data) %>%
+  ungroup()
 head(df_psy)
 ```
 
 ### Contrast Code
-```{r}
+```{r, fig.width = 12, fig.height = 12}
 func_fig_contrast <- function(data) {
   data %>%
     as.data.frame() %>%
@@ -72,8 +79,7 @@ func_add_fig_title <- function(fig, text) {
     labs(title = text)
 }
 
-df_psy_contrast <- df_psy %>%
-  contrast_code_categorical_variable(., cbind(nback_vs_baseline = c(1, 1, 1, 1, -4)/5,
+df_psy_contrast <- contrast_code_categorical_variable(df_psy, cbind(nback_vs_baseline = c(1, 1, 1, 1, -4)/5,
                                               task_vs_control = c(-3, 1, 1, 1, 0)/4,
                                               linear_task = c(0, -1, 0, 1, 0),
                                               quadratic_task = c(0, -1, 2, -1, 0)/3)) %>%
@@ -83,37 +89,39 @@ df_psy_contrast <- df_psy %>%
          fig = future_map(data, func_fig_contrast),
          fig = future_map2(fig, paste0("Run: ", run), func_add_fig_title))
 
-df_psy_contrast$fig
+ggarrange(plotlist = df_psy_contrast$fig, ncol = 1)
 ```
 
 ### Upsample
-```{r}
-df_psy_upsample_16 <- df_psy_contrast %>%
-  mutate(data_upsample_16 = future_map(data, function(x) apply(x, 2, function(x) upsample(x, 16))),
-         fig_upsample_16 = future_map(data_upsample_16, func_fig_contrast),
-         fig_upsample_16 = future_map2(fig_upsample_16, paste0("Run: ", run), func_add_fig_title))
+```{r, message = F, fig.width = 12, fig.height = 12}
+df_psy_upsample <- df_psy_contrast %>%
+  mutate(data_upsample = future_map(data, function(x) apply(x, 2, function(x) upsample(x, upsample_factor))),
+         fig_upsample = future_map(data_upsample, func_fig_contrast),
+         fig_upsample = future_map2(fig_upsample, paste0("Run: ", run), func_add_fig_title))
 
-df_psy_upsample_16$fig_upsample_16
+ggarrange(plotlist = df_psy_upsample$fig_upsample, ncol = 1)
 ```
 
 ### Convolve
-```{r}
-df_psy_convolve <- df_psy_upsample_16 %>%
-  mutate(data_convolve = future_map(data_upsample_16, function(x) apply(x, 2, function(x) convolve_afni(x, hrf, 1.5, 260, 16))),
+```{r, message = F, fig.width = 12, fig.height = 12}
+df_psy_convolve <- df_psy_upsample %>%
+  mutate(data_convolve = future_map(data_upsample, function(x) apply(x, 2, function(x) convolve_afni(x, hrf, tr, n_volumes, upsample_factor))),
          fig_convolve = future_map(data_convolve, func_fig_contrast),
          fig_convolve = future_map2(fig_convolve, paste0("Run:", run), func_add_fig_title))
 
-df_psy_convolve$fig_convolve
+
+ggarrange(plotlist = df_psy_convolve$fig_convolve, ncol = 1)
 ```
 
 ### Downsample
-```{r}
-df_psy_downsample_16 <- df_psy_convolve %>%
-  mutate(data_downsample_16 = future_map(data_convolve, function(x) apply(x, 2, function(x) downsample(x, 16))),
-         fig_downsample_16 = future_map(data_downsample_16, func_fig_contrast),
-         fig_downsample_16 = future_map2(fig_downsample_16, paste0("Run:", run), func_add_fig_title))
+```{r, fig.width = 12, fig.height = 12}
+df_psy_downsample <- df_psy_convolve %>%
+  mutate(data_downsample = future_map(data_convolve, function(x) apply(x, 2, function(x) downsample(x, upsample_factor))),
+         fig_downsample = future_map(data_downsample, func_fig_contrast),
+         fig_downsample = future_map2(fig_downsample, paste0("Run:", run), func_add_fig_title))
 
-df_psy_downsample_16$fig_downsample_16
+
+ggarrange(plotlist = df_psy_downsample$fig_downsample, ncol = 1)
 ```
 
 ## Physiological Variable
@@ -127,55 +135,176 @@ This step can be skipped if have you have your own mask.
 ```
 
 ### Extract ROI
-```{r}
+```{r, fig.width = 12, fig.height = 6}
+func_fig_phys <- function(data) {
+  colnames(data) <- "data"
+  
+  data <- as.data.frame(data)
+  
+  fig <- data %>%
+    mutate(volume = row_number()) %>%
+    ggplot(., aes(volume, data)) +
+    geom_line() +
+    theme_minimal()
+  return(fig)
+}
 
+dir_phys <- "/Volumes/shared/KK_KR_JLBS/Wave1/MRI/FMRI/PPI/Nback_individual_covariates/PHYS_MNI_42_-42_42/3tb1780/"
+files_phys <- list.files(dir_phys, "_mean.1D")
+path_phys <- paste0(dir_phys, files_phys)
+df_phys <- tibble(file = files_phys,
+                  path = path_phys) %>%
+  mutate(run = str_remove(file, "_mean.1D"),
+         run = str_remove(run, "r"),
+         data = future_map(path, function(x) read.csv(x, header = F, col.names = "data")),
+         fig = future_map(data, func_fig_phys),
+         fig = future_map2(fig, paste0("Run: ", run), func_add_fig_title))
+
+ggarrange(plotlist = df_phys$fig, ncol = 1)
 ```
 
 ### Detrend
-```{r, eval = F}
-df_phys_detrend <- df_phys
+```{r, fig.width = 12, fig.height = 6}
+df_phys_detrend <- df_phys %>%
+  mutate(data_detrend = future_map(data, function(x) detrend(x, 2)),
+         fig_detrend = future_map(data_detrend, func_fig_phys),
+         fig_detrend = future_map2(fig_detrend, paste0("Run: ", run), func_add_fig_title))
+
+
+ggarrange(plotlist = df_phys_detrend$fig_detrend, ncol = 1)
 ```
 
 ### Upsample
-```{r, eval = F}
-df_phys_upsample <- df_phys_detrend
+```{r, fig.width = 12, fig.height = 6}
+df_phys_upsample <- df_phys_detrend %>%
+  mutate(data_upsample = future_map(data_detrend, function(x) apply(x, 2, function(x) upsample(x, upsample_factor))),
+         fig_upsample = future_map(data_upsample, func_fig_phys),
+         fig_upsample = future_map2(fig_upsample, paste0("Run: ", run), func_add_fig_title))
+
+ggarrange(plotlist = df_phys_upsample$fig_upsample, ncol = 1)
 ```
 
 ### Deconvolve
-```{r}
-df_psy_deconvolve <- df_psy_downsample_16 %>%
-  mutate(data_deconvolve = future_map(data_convolve, function(x) apply(x, 2, function(x) deconvolve_afni(x, hrf))),
-         fig_deconvolve = future_map(data_deconvolve, func_fig_contrast),
+```{r, message = F, fig.width = 12, fig.height = 6}
+df_phys_deconvolve <- df_phys_upsample %>%
+  mutate(data_deconvolve = future_map(data_upsample, function(x) apply(x, 2, function(x) deconvolve_afni(x, hrf))),
+         fig_deconvolve = future_map(data_deconvolve, func_fig_phys),
          fig_deconvolve = future_map2(fig_deconvolve, paste0("Run:", run), func_add_fig_title))
 
-df_psy_deconvolve$fig_deconvolve
+ggarrange(plotlist = df_phys_deconvolve$fig_deconvolve, ncol = 1)
 ```
 
 ## Psychophysiological Interaction Variable
 
 ### Multiply/Create Interaction
-```{r}
+```{r, , fig.width = 12, fig.height = 12}
+df_ppi <- tibble(run = c(1:3),
+                 data = NA)
 
+for (i in 1:nrow(df_ppi)) {
+  df_ppi$data[i] <- list(apply(df_psy_upsample$data_upsample[[i]], 2, function(x) x * df_phys_deconvolve$data_deconvolve[[i]]))
+}
+
+df_ppi <- df_ppi %>%
+  mutate(fig = future_map(data, func_fig_contrast),
+         fig = future_map2(fig, paste0("Run:", run), func_add_fig_title))
+
+ggarrange(plotlist = df_ppi$fig, ncol = 1)
 ```
 
 ### Convolve
-```{r}
+```{r, message = F, fig.width = 12, fig.height = 12}
+df_ppi_convolve <- df_ppi %>%
+  mutate(data_convolve = future_map(data, function(x) apply(x, 2, function(x) convolve_afni(x, hrf, tr, n_volumes, upsample_factor))),
+         fig_convolve = future_map(data_convolve, func_fig_contrast),
+         fig_convolve = future_map2(fig_convolve, paste0("Run:", run), func_add_fig_title))
 
+ggarrange(plotlist = df_ppi_convolve$fig_convolve, ncol = 1)
 ```
 
 ### Downsample
-```{r}
+```{r, fig.width = 12, fig.height = 12}
+df_ppi_downsample <- df_ppi_convolve %>%
+  mutate(data_downsample = future_map(data_convolve, function(x) apply(x, 2, function(x) downsample(x, upsample_factor))),
+         fig_downsample = future_map(data_downsample, func_fig_contrast),
+         fig_downsample = future_map2(fig_downsample, paste0("Run:", run), func_add_fig_title))
 
+ggarrange(plotlist = df_ppi_downsample$fig_downsample, ncol = 1)
 ```
 
-## Create Design Matrix
+## Design Matrix
 
-### Create design matrix
+### Initialize
 ```{r}
+df_design_mat <- tibble(run = c(1:3),
+                        data = NA)
 
+for (i in 1:nrow(df_design_mat)) {
+  
+  temp_psy <- df_psy_downsample$data_downsample[[i]]
+  temp_phys <- df_phys_detrend$data_detrend[[i]] %>% rename(phys = residual)
+  temp_ppi <- df_ppi_downsample$data_downsample[[i]]
+  colnames(temp_ppi) <- str_replace(colnames(temp_ppi), "psy_", "ppi_")
+
+  df_design_mat$data[i] <- list(cbind(temp_psy, temp_phys, temp_ppi))
+}
+
+df_design_mat <- df_design_mat %>%
+  unnest()
+
+func_fig_data_heat_map <- function(data) {
+  colnames(data) <- paste0(str_pad(1:ncol(data), 2, "left", "0"), "_", colnames(data))
+  apply(data, 2, scale_min_max) %>%
+    as.data.frame() %>%
+    mutate(volume = row_number()) %>%
+    gather(., variable, value, -volume) %>%
+    ggplot(., aes(variable, volume, fill = value)) +
+    geom_raster() + 
+    scale_fill_distiller(palette = "Greys", direction = 1) + 
+    theme_minimal() +
+    theme(axis.text.x = element_text(hjust = 1, angle = 45)) +
+    labs(x = NULL)
+}
+
+func_fig_data_ts_long <- function(data) {
+  colnames(data) <- paste0(str_pad(1:ncol(data), 2, "left", "0"), "_", colnames(data))
+  data %>%
+  mutate(volume = row_number()) %>%
+  gather(., variable, value, -volume) %>%
+  ggplot(., aes(volume, value)) +
+  geom_line() +
+  facet_wrap(~ variable, scales = "free_y", ncol = 1) +
+  theme_minimal()
+}
+
+func_fig_data_heat_map(df_design_mat)
+```
+
+```{r, fig.width = 8, fig.height = 12}
+func_fig_data_ts_long(df_design_mat)
 ```
 
 ### Add nuisance variables
+
 ```{r}
 
+```
+
+### Final
+
+```{r}
+df_design_mat_final <- df_design_mat %>%
+  group_by(run) %>%
+  nest() %>%
+  mutate(data = future_map(data, function(x) x %>% mutate(time_linear = row_number(),
+                                                          time_linear = scale(time_linear),
+                                                          time_quadratic = time_linear^2))) %>%
+  unnest() %>%
+  ungroup()
+
+func_fig_data_heat_map(df_design_mat_final)
+```
+
+```{r, fig.width = 8, fig.height = 12}
+func_fig_data_ts_long(df_design_mat_final)
 ```

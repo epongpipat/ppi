@@ -1,7 +1,11 @@
-detrend <- function(data, degree = 2) {
+detrend <- function(data, degree) {
 
   if (degree < 0 || !is.numeric(degree)) {
     stop("degree must be an positive integer greater than or equal to 1")
+  }
+
+  if (is.matrix(data) || is.data.frame(data)) {
+    data <- data[, 1]
   }
 
   require(xfun)
