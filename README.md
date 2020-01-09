@@ -1,105 +1,23 @@
-# Psychophysiological Interaction (PPI)
+# `ppi`: Psychophysiological Interaction (PPI)
 
-A script to help perform PPI analyses for fMRI. Mostly, scripts to help pre-process the data to get the data ready to perform a standard interaction in the GLM framework.
+A package to "easily" perform PPI analyses for task fMRI.
 
-The purpose of this package is to allow for one script to perform the entire PPI process while printing an HTML file to show it's progress.
+Note: This package is still being developed and will likely change a lot. Use cautiously.
 
-## Functions
+## Data Wrangling
+1. `create_hrf()` - Creates the hemodynamic response function (HRF) time series
+2. `create_psy_var()` - Creates psychological variables
+3. `create_phy_var()` - Creates physiological variables
+4. `create_ppi_var()` - Creates psychophysiological interaction (PPI) variables
+5. `create_design_matrix()` - Create design matrix
 
-## 1. create_psy_vars() - Create psychological variables
+<br>`data_wrangling()` - Uber script of the above
 
-Input:
+## Analysis (Under Construction)
 
-1. events (csv/tsv of stim onsets and durations)
-2. contrast coding scheme (csv/tsv)
-2. kernel
-3. upsampling rate
+### Visualization (Under Construction)
 
-Output:
+## Acknowledgements
+This package relies on a variety of R packages (i.e., `tidyverse`, `afnir`, `furrr`) and neuroimaging programs (i.e, AFNI and FSL).
 
-1. contrast coded psy time series (upsampled)
-2. convolved psy time series (upsampled)
-3. convolved psy time series (downsampled)
-
-## 2. create_phy_vars() - Create physiological variables
-
-Input: 
-
-1. phys time series
-2. deconvolve option
-3. hrf kernel
-4. upsampling rate
-
-Output:
-
-1. phys time series (upsampled)
-2. phys time series (detrended)
-3. deconvolved phys time series (upsampled)
-4. deconvolved phys time series (downsampled)
-
-## 3. create_ppi_vars() - Create ppi variables
-
-Input:
-
-1. contrast psy time series (upsampled)
-2. deconvolved phys time series (upsampled)
-3. upsampling rate
-
-Output:
-
-1. ppi (upsampled)
-2. convolved ppi (upsampled)
-3. convolved ppi (downsampled)
-4. ppi (downsampled)
-
-## 4. create_design_mat() - Create design matrix
-
-Input:
-
-1. convolved psy time series (downsampled)
-2. phys time series (detrended)
-3. intercept/temporal detrend concatente or differing slopes
-4. covariates file (csv/tsv file)
-
-Output:
-
-1. csv/tsv file
-
-## 5. concatenate_nii() - Concatenate nifti files
-
-## 6. analyze() - Perform first/subject-level analyses
-
-Input:
-
-1. design matrix
-2. nii (whole brain) or csv/tsv (roi set)
-
-Output:
-
-1. coefficient table with estimate, se, t-stat, p-value, r^2, and adj r^2 (csv/tsv)
-2. overall model performance metrics with r^2 and adj^2 of the omnibus test, loglik, aic, bic, df, df.residual (csv/tsv)
-4. tolerance (csv/tsv)
-3. predicted values (csv/tsv or nii depending on input)
-4. resdiuals (csv/tsv or nii depending on input)
-
-## Random
-
-I would like to make a script that combines all of the above scripts into one single bash script by having multiple input values
-
-### This package currently relies on AFNI and FSL functions. They will hopefully all be replaced to be solely in R.
-
-### I also need some functions for visualizing the data at each step.
-
-## Notations
-
-in_ - prefix of parameters signifying file is input 
-out_ - prefix of parameters signifying file is output
-nii <- nifti file as either .nii or .nii.gz
-file <- text file as .csv
-design_matrix <- design matrix
-
-## Functions that use AFNI
-- should have an option for saving the file, but should not be required
-  - false, the bash script should have this option
-  - this should be consistent with R; only having options within the environment
-- these functions should create and delete temporary files
+Note: AFNI and FSL will eventually (hopefully) be replaced to stay solely within R.
