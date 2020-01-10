@@ -1,8 +1,8 @@
-# `ppi`: Psychophysiological Interaction (PPI)
+# `ppi` : Psychophysiological Interaction (PPI)
 
 A package to "easily" perform PPI analyses for task fMRI.
 
-Note: This package is still being developed and will likely change a lot. Use cautiously.
+Note: This package is still being developed and will likely change a lot. Please use cautiously.
 
 ## Data Wrangling
 1. `create_hrf()` - Creates the hemodynamic response function (HRF) time series
@@ -15,7 +15,7 @@ Note: This package is still being developed and will likely change a lot. Use ca
 
 ## Analysis (Under Construction)
 
-### Visualization (Under Construction)
+## Visualization (Under Construction)
 
 ## Acknowledgements
 This package relies on a variety of R packages (i.e., `tidyverse`, `afnir`, `furrr`) and neuroimaging programs (i.e, AFNI and FSL).

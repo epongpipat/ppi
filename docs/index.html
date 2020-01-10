@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>What the Package Does (Title Case) • ppi</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="What the Package Does (Title Case)">
 <meta property="og:description" content="More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.">
@@ -39,7 +40,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -56,99 +57,44 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="psychophysiological-interaction-ppi" class="section level1">
+<div id="ppi-psychophysiological-interaction-ppi" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#psychophysiological-interaction-ppi" class="anchor"></a>Psychophysiological Interaction (PPI)</h1></div>
-<p>A script to help perform PPI analyses for fMRI. Mostly, scripts to help pre-process the data to get the data ready to perform a standard interaction in the GLM framework.</p>
-<div id="functions" class="section level2">
+<a href="#ppi-psychophysiological-interaction-ppi" class="anchor"></a><code>ppi</code> : Psychophysiological Interaction (PPI)</h1></div>
+<p>A package to “easily” perform PPI analyses for task fMRI.</p>
+<p>Note: This package is still being developed and will likely change a lot. Please use cautiously.</p>
+<div id="data-wrangling" class="section level2">
 <h2 class="hasAnchor">
-<a href="#functions" class="anchor"></a>Functions</h2>
+<a href="#data-wrangling" class="anchor"></a>Data Wrangling</h2>
+<ol>
+<li>
+<code>create_hrf()</code> - Creates the hemodynamic response function (HRF) time series</li>
+<li>
+<code>create_psy_var()</code> - Creates psychological variables</li>
+<li>
+<code>create_phy_var()</code> - Creates physiological variables</li>
+<li>
+<code>create_ppi_var()</code> - Creates psychophysiological interaction (PPI) variables</li>
+<li>
+<code>create_design_matrix()</code> - Create design matrix</li>
+</ol>
+<p><br><code>data_wrangling()</code> - Uber script of the above</p>
 </div>
-<div id="create_psy_vars---create-psychological-variables" class="section level2">
+<div id="analysis-under-construction" class="section level2">
 <h2 class="hasAnchor">
-<a href="#create_psy_vars---create-psychological-variables" class="anchor"></a>1. create_psy_vars() - Create psychological variables</h2>
-<p>Input:</p>
-<ol>
-<li>events (csv/tsv of stim onsets and durations)</li>
-<li>contrast coding scheme (csv/tsv)</li>
-<li>kernel</li>
-<li>upsampling rate</li>
-</ol>
-<p>Output:</p>
-<ol>
-<li>contrast coded psy time series (upsampled)</li>
-<li>convolved psy time series (upsampled)</li>
-<li>convolved psy time series (downsampled)</li>
-</ol>
+<a href="#analysis-under-construction" class="anchor"></a>Analysis (Under Construction)</h2>
+<div id="visualization-under-construction" class="section level3">
+<h3 class="hasAnchor">
+<a href="#visualization-under-construction" class="anchor"></a>Visualization (Under Construction)</h3>
 </div>
-<div id="create_phy_vars---create-physiological-variables" class="section level2">
-<h2 class="hasAnchor">
-<a href="#create_phy_vars---create-physiological-variables" class="anchor"></a>2. create_phy_vars() - Create physiological variables</h2>
-<p>Input:</p>
-<ol>
-<li>phys time series</li>
-<li>deconvolve option</li>
-<li>hrf kernel</li>
-<li>upsampling rate</li>
-</ol>
-<p>Output:</p>
-<ol>
-<li>phys time series (upsampled)</li>
-<li>phys time series (detrended)</li>
-<li>deconvolved phys time series (upsampled)</li>
-<li>deconvolved phys time series (downsampled)</li>
-</ol>
 </div>
-<div id="create_ppi_vars---create-ppi-variables" class="section level2">
+<div id="acknowledgements" class="section level2">
 <h2 class="hasAnchor">
-<a href="#create_ppi_vars---create-ppi-variables" class="anchor"></a>3. create_ppi_vars() - Create ppi variables</h2>
-<p>Input:</p>
-<ol>
-<li>contrast psy time series (upsampled)</li>
-<li>deconvolved phys time series (upsampled)</li>
-<li>upsampling rate</li>
-</ol>
-<p>Output:</p>
-<ol>
-<li>ppi (upsampled)</li>
-<li>convolved ppi (upsampled)</li>
-<li>convolved ppi (downsampled)</li>
-<li>ppi (downsampled)</li>
-</ol>
-</div>
-<div id="create_design_mat---create-design-matrix" class="section level2">
-<h2 class="hasAnchor">
-<a href="#create_design_mat---create-design-matrix" class="anchor"></a>4. create_design_mat() - Create design matrix</h2>
-<p>Input:</p>
-<ol>
-<li>convolved psy time series (downsampled)</li>
-<li>phys time series (detrended)</li>
-<li>intercept/temporal detrend concatente or differing slopes</li>
-<li>covariates file (csv/tsv file)</li>
-</ol>
-<p>Output:</p>
-<ol>
-<li>csv/tsv file</li>
-</ol>
-</div>
-<div id="analyze---perform-firstsubject-level-analyses" class="section level2">
-<h2 class="hasAnchor">
-<a href="#analyze---perform-firstsubject-level-analyses" class="anchor"></a>5. analyze() - Perform first/subject-level analyses</h2>
-<p>Input:</p>
-<ol>
-<li>design matrix</li>
-<li>nii (whole brain) or csv/tsv (roi set)</li>
-</ol>
-<p>Output:</p>
-<ol>
-<li>coefficient table with estimate, se, t-stat, p-value, r^2, and adj r^2 (csv/tsv)</li>
-<li>overall model performance metrics with r^2 and adj^2 of the omnibus test, loglik, aic, bic, df, df.residual (csv/tsv)</li>
-<li>tolerance (csv/tsv)</li>
-<li>predicted values (csv/tsv or nii depending on input)</li>
-<li>resdiuals (csv/tsv or nii depending on input)</li>
-</ol>
+<a href="#acknowledgements" class="anchor"></a>Acknowledgements</h2>
+<p>This package relies on a variety of R packages (i.e., <code>tidyverse</code>, <code>afnir</code>, <code>furrr</code>) and neuroimaging programs (i.e, AFNI and FSL).</p>
+<p>Note: AFNI and FSL will eventually (hopefully) be replaced to stay solely within R.</p>
 </div>
 </div>
   </div>
@@ -170,17 +116,20 @@
   </div>
 </div>
 
+
       <footer><div class="copyright">
   <p>Developed by The package maintainer.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>
