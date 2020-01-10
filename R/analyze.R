@@ -1,12 +1,3 @@
-#' Title
-#'
-#' @param in_nii
-#' @param design_matrix
-#'
-#' @return
-#' @export
-#' @import
-#' @examples
 analyze <- function(in_nii, design_matrix) {
 
   y_all <- RNifti::readNifti(in_nii)

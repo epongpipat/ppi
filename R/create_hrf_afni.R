@@ -1,8 +1,17 @@
+#' @title create_hrf_afni
+#'
+#' @param hrf name of the hemodynamic response function. can be gam, block or spmg1
+#' @param tr retrieval time (tr) in seconds
+#' @param upsample_factor number of volumes or time points
+#'
+#' @return
+#' @export
+#' @import dplyr afnir glue
+#'
+#' @examples
+#' hrf <- create_hrf_afni("spmg1", 1.5, 16)
+#' head(hrf)
 create_hrf_afni <- function(hrf, tr, upsample_factor = NULL) {
-
-  library(dplyr)
-  library(afnir)
-  library(glue)
 
   df_hrf <- tribble(~hrf_name, ~hrf_duration,
                     "gam", 12,
@@ -66,7 +75,3 @@ create_hrf_afni <- function(hrf, tr, upsample_factor = NULL) {
   return(df)
 
 }
-
-#hrf <- "spmg1"
-#out_file <- glue("~/Box/my_mri/behavioral/hrf_{hrf}_up_16.csv")
-#df <- get_hrf_afni(hrf, 1.5, upsample_factor = 16, out_file = out_file)

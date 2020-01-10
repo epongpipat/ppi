@@ -1,15 +1,3 @@
-#' extract_time_series
-#'
-#' @param in_nii
-#' @param in_mask_nii
-#' @param out_path
-#' @param statistic
-#' @param overwrite
-#'
-#' @return
-#' @export
-#'
-#' @examples
 extract_time_series_mean <- function(in_nii, in_mask_nii, out_path, overwrite = F) {
 
   # check input -----

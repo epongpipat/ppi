@@ -1,13 +1,14 @@
-#' Title
+#' calculate_parameter_temporal_derivative_polynomial
 #'
-#' @param data
-#' @param temporal_derivative
-#' @param polynomial
+#' @param data data to have temporal derivatives and polynomial calculated
+#' @param temporal_derivative temporal derivative value (default: 1)
+#' @param polynomial polynomial value (default: 2)
 #'
 #' @return
 #' @export
 #' @import dplyr
 #' @examples
+#' # to be added
 calculate_parameter_temporal_derivative_polynomial <- function(data, temporal_derivative = 1, polynomial = 2) {
 
   # check parameters
