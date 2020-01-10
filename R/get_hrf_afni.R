@@ -1,4 +1,4 @@
-get_hrf_afni <- function(hrf, tr, upsample_factor = NULL) {
+create_hrf_afni <- function(hrf, tr, upsample_factor = NULL) {
 
   library(dplyr)
   library(afnir)

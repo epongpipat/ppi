@@ -1,3 +1,17 @@
+#' @title create_ppi_var
+#'
+#' @param psy_var
+#' @param phys_var
+#' @param hrf
+#' @param tr
+#' @param n_volumes
+#' @param upsample_factor
+#' @param deconvolve
+#'
+#' @return a list of datasets for each data wrangling step of the ppi variables
+#' @export
+#'
+#' @examples
 create_ppi_var <- function(psy_var, phys_var, hrf, tr, n_volumes, upsample_factor = NULL, deconvolve = TRUE) {
   ppi_list <- list()
   ppi_list$interaction <- apply(as.matrix(psy_var), 2, function(x) x * as.matrix(phys_var)) %>% as.data.frame()
