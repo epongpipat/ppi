@@ -4,9 +4,18 @@
 \alias{data_wrangling}
 \title{data_wrangling}
 \usage{
-data_wrangling(psy_events_data, psy_contrast_table, phys_data,
-  detrend_factor, hrf_name, tr, n_volumes, upsample_factor = NULL,
-  deconvolve = TRUE, nuisance_var = NULL)
+data_wrangling(
+  psy_events_data,
+  psy_contrast_table,
+  phys_data,
+  detrend_factor,
+  hrf_name,
+  tr,
+  n_volumes,
+  upsample_factor = NULL,
+  deconvolve = TRUE,
+  nuisance_var = NULL
+)
 }
 \arguments{
 \item{psy_events_data}{events data with columns of onset, duration, and trial_type}
@@ -28,6 +37,9 @@ data_wrangling(psy_events_data, psy_contrast_table, phys_data,
 \item{deconvolve}{perform deconvolution of phys and convolve of ppi term (also known as deconvolve-convolve or reconvolve step)}
 
 \item{nuisance_var}{data of nuisance variables to include in design matrix}
+}
+\value{
+
 }
 \description{
 uber data wrangling wrapper function to create data for each step of data wrangling for each psy, phys, and ppi variables to ultimately create the design matrix. This function is a wrapper of \code{create_hrf_afni()}, \code{create_psy_var()}, \code{create_phys_var()}, \code{create_ppi_var()}, and \code{create_design_matrix()}

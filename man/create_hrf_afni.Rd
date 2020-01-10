@@ -13,6 +13,9 @@ create_hrf_afni(hrf, tr, upsample_factor = NULL)
 
 \item{upsample_factor}{number of volumes or time points}
 }
+\value{
+
+}
 \description{
 create_hrf_afni
 }

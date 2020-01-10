@@ -4,8 +4,15 @@
 \alias{create_psy_var}
 \title{create_psy_var}
 \usage{
-create_psy_var(events, contrast_table, hrf, tr, n_volumes,
-  upsample_factor = NULL, unlabeled_trial_type = "fixation")
+create_psy_var(
+  events,
+  contrast_table,
+  hrf,
+  tr,
+  n_volumes,
+  upsample_factor = NULL,
+  unlabeled_trial_type = "fixation"
+)
 }
 \arguments{
 \item{events}{events data with columns of onset, duration, and trial_type}

@@ -17,6 +17,9 @@ convolve_afni(data, hrf, tr, n_volumes, upsample_factor = NULL)
 
 \item{upsample_factor}{factor to upsample data for convolution step}
 }
+\value{
+
+}
 \description{
 convolve_afni
 }

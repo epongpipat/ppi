@@ -4,8 +4,13 @@
 \alias{create_trial_type_by_volume_list}
 \title{create_trial_type_by_volume_list}
 \usage{
-create_trial_type_by_volume_list(events, tr, n_volumes, thr = 0.51,
-  unlabeled_trial_type = "fixation")
+create_trial_type_by_volume_list(
+  events,
+  tr,
+  n_volumes,
+  thr = 0.51,
+  unlabeled_trial_type = "fixation"
+)
 }
 \arguments{
 \item{events}{events with columns of onset, duration, and trial_type}
