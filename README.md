@@ -4,6 +4,11 @@ A package to "easily" perform PPI analyses for task fMRI.
 
 Note: This package is still being developed and will likely change a lot. Please use cautiously.
 
+## Installation
+```
+devtools::install_github("epongpipat/ppi")
+```
+
 ## Data Wrangling
 1. `create_hrf()` - Creates the hemodynamic response function (HRF) time series
 2. `create_psy_var()` - Creates psychological variables
@@ -20,4 +25,4 @@ Note: This package is still being developed and will likely change a lot. Please
 ## Acknowledgements
 This package relies on a variety of R packages (i.e., `tidyverse`, `afnir`, `furrr`) and neuroimaging programs (i.e, AFNI and FSL).
 
-Note: AFNI and FSL will eventually (hopefully) be replaced to stay solely within R.
+Note: AFNI and FSL functions will eventually (hopefully) be replaced so that the package only uses R.

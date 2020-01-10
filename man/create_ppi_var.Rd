@@ -4,15 +4,8 @@
 \alias{create_ppi_var}
 \title{create_ppi_var}
 \usage{
-create_ppi_var(
-  psy_var,
-  phys_var,
-  hrf,
-  tr,
-  n_volumes,
-  upsample_factor = NULL,
-  deconvolve = TRUE
-)
+create_ppi_var(psy_var, phys_var, hrf, tr, n_volumes,
+  upsample_factor = NULL, deconvolve = TRUE)
 }
 \arguments{
 \item{psy_var}{psychological variables (e.g., contrast-coded and upsampled)}
