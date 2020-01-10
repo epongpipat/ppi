@@ -1,11 +1,11 @@
 #' @title create_ppi_var
-#'
-#' @param psy_var psychological variables (e.g., contrast-coded and upsampled)
-#' @param phys_var physiological variables (e.g., detrended and upsampled)
+#' @concept data_wrangling_wrapper_functions
+#' @param psy_var psychological variable data (e.g., psy var that is contrast-coded and upsampled)
+#' @param phys_var physiological variable data (e.g., psy var that is detrended and upsampled)
 #' @param hrf hemodynamic response function (hrf) time series data
-#' @param tr retrieval time (tr) in seconds
+#' @param tr repetition time (tr) in seconds
 #' @param n_volumes number of volumes or time points
-#' @param upsample_factor factor to upsample data by for convolution and deconvolution step
+#' @param upsample_factor factor to upsample data by for convolution and deconvolution step (default: NULL)
 #' @param deconvolve option to perform or not perform deconvolution step (default: TRUE)
 #'
 #' @return a list of datasets for each data wrangling step of the ppi variables

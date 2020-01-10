@@ -7,13 +7,13 @@
 create_design_matrix(psy_var, phys_var, ppi_var, nuisance_var = NULL)
 }
 \arguments{
-\item{psy_var}{data of psy variable}
+\item{psy_var}{psy variable data to add to design matrix}
 
-\item{phys_var}{data of phys variable}
+\item{phys_var}{phys variable data to add to design matrix}
 
-\item{ppi_var}{data of ppi variable}
+\item{ppi_var}{ppi variable data to add to design matrix}
 
-\item{nuisance_var}{data of nuisance variables}
+\item{nuisance_var}{nuisance variable data to add to design matrix}
 }
 \value{
 design matrix
@@ -24,3 +24,4 @@ create_design_matrix
 \examples{
 # to be added
 }
+\concept{data_wrangling_wrapper_functions}

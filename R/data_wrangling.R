@@ -1,3 +1,22 @@
+#' @title data_wrangling
+#' @description uber data wrangling wrapper function to create data for each step of data wrangling for each psy, phys, and ppi variables to ultimately create the design matrix. This function is a wrapper of \code{create_hrf_afni()}, \code{create_psy_var()}, \code{create_phys_var()}, \code{create_ppi_var()}, and \code{create_design_matrix()}
+#' @concept data_wrangling_uber_functions
+#' @param psy_events_data events data with columns of onset, duration, and trial_type
+#' @param psy_contrast_table contrast code
+#' @param phys_data time series data of physiological variable (seed ROI)
+#' @param detrend_factor factor to detrend time series
+#' @param hrf_name name of hemodynamic response function (hrf) to use during convolution and deconvolution step
+#' @param tr repition time (tr) in seconds
+#' @param n_volumes number of volumes or time points
+#' @param upsample_factor factor to upsample psy and phys data for convolution and deconvolution step
+#' @param deconvolve perform deconvolution of phys and convolve of ppi term (also known as deconvolve-convolve or reconvolve step)
+#' @param nuisance_var data of nuisance variables to include in design matrix
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#' # to be added
 data_wrangling <- function(psy_events_data, psy_contrast_table, phys_data,
                            detrend_factor, hrf_name, tr, n_volumes,
                            upsample_factor = NULL, deconvolve = TRUE,

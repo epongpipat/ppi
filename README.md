@@ -10,11 +10,11 @@ devtools::install_github("epongpipat/ppi")
 ```
 
 ## Data Wrangling
-1. `create_hrf()` - Creates the hemodynamic response function (HRF) time series
+1. `create_hrf_afni()` - Creates the hemodynamic response function (HRF) time series
 2. `create_psy_var()` - Creates psychological variables
-3. `create_phy_var()` - Creates physiological variables
+3. `create_phys_var()` - Creates physiological variables
 4. `create_ppi_var()` - Creates psychophysiological interaction (PPI) variables
-5. `create_design_matrix()` - Create design matrix
+5. `create_design_matrix()` - Creates design matrix
 
 <br>`data_wrangling()` - Uber script of the above
 

@@ -1,12 +1,13 @@
 #' @title create_psy_var
-#'
+#' @description creates data for each wrangling step of the psychological variable using the data wrangling functions: \code{create_trial_type_by_volume_list()}, \code{contrast_code_categorical_variable()}, \code{upsample()}, \code{convolve_afni()}, \code{downsample()}
+#' @concept data_wrangling_wrapper_functions
 #' @param events events data with columns of onset, duration, and trial_type
 #' @param contrast_table table of contrast codes
 #' @param hrf hemodynamic response function (hrf) time series
 #' @param tr repetition time (tr) in seconds
 #' @param n_volumes number of volumes or time points
 #' @param upsample_factor factor to upsample the trial_type_by_volume data for the convolution step
-#'
+#' @param unlabeled_trial_type name of trial_type for unlabeleled trial types (default: "fixation")
 #' @return a list of datasets for each data wrangling step of the psychological variables
 #' @export
 #'
@@ -55,13 +56,6 @@
 #'                           unlabeled_trial_type = "response")
 #'
 #' summary(psy_var)
-#' head(psy_var$trial_type_by_volume)
-#' summary(psy_var$trial_type_by_volume$trial_type)
-#' head(psy_var$contrast_table)
-#' head(psy_var$contrast)
-#' head(psy_var$upsample)
-#' head(psy_var$convolve)
-#' head(psy_var$downsample)
 #'
 #' # references:
 #' # Lepping RJ, Atchley RA, Chrysikou E, Martin LE, Clair AA, Ingram RE, et al. Neural processing of emotional musical and nonmusical stimuli in depression.  PlosONE.  In Press.
@@ -72,7 +66,7 @@
 #' # Lepping RJ, Atchley RA, Patrician TM, Stroupe NN, Martin LE, Ingram RE, et al. Music to my ears: Neural responsiveness to emotional music and sounds in depression.  Society of Biological Psychiatry annual scientific convention 2013 May 16-18; San Francisco, CA 2013.
 create_psy_var <- function(events, contrast_table, hrf, tr, n_volumes, upsample_factor = NULL, unlabeled_trial_type = "fixation") {
   psy_list <- list()
-  psy_list$trial_type_by_volume <- as.data.frame(create_trial_type_by_volume_list(events, tr, n_volumes, unlabeled_trial_type))
+  psy_list$trial_type_by_volume <- as.data.frame(create_trial_type_by_volume_list(events, tr, n_volumes, unlabeled_trial_type = unlabeled_trial_type))
   psy_list$contrast_table <- as.data.frame(contrast_table)
   psy_list$contrast <- as.data.frame(contrast_code_categorical_variable(psy_list$trial_type_by_volume, as.matrix(psy_list$contrast_table))) %>% select(contains("psy"))
   psy_list$upsample <- as.data.frame(apply(psy_list$contrast, 2, function(x) upsample(x, upsample_factor)))

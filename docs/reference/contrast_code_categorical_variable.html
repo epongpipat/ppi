@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>create_psy_var — create_psy_var • ppi</title>
+<title>contrast_code_categorical_variable — contrast_code_categorical_variable • ppi</title>
 
 
 <!-- jquery -->
@@ -33,8 +33,8 @@
 
 
 
-<meta property="og:title" content="create_psy_var — create_psy_var" />
-<meta property="og:description" content="creates data for each wrangling step of the psychological variable using the data wrangling functions: create_trial_type_by_volume_list(), contrast_code_categorical_variable(), upsample(), convolve_afni(), downsample()" />
+<meta property="og:title" content="contrast_code_categorical_variable — contrast_code_categorical_variable" />
+<meta property="og:description" content="contrast_code_categorical_variable" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -96,58 +96,38 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>create_psy_var</h1>
+    <h1>contrast_code_categorical_variable</h1>
     
-    <div class="hidden name"><code>create_psy_var.Rd</code></div>
+    <div class="hidden name"><code>contrast_code_categorical_variable.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>creates data for each wrangling step of the psychological variable using the data wrangling functions: <code><a href='create_trial_type_by_volume_list.html'>create_trial_type_by_volume_list()</a></code>, <code><a href='contrast_code_categorical_variable.html'>contrast_code_categorical_variable()</a></code>, <code><a href='upsample.html'>upsample()</a></code>, <code><a href='convolve_afni.html'>convolve_afni()</a></code>, <code><a href='downsample.html'>downsample()</a></code></p>
+    <p>contrast_code_categorical_variable</p>
     </div>
 
-    <pre class="usage"><span class='fu'>create_psy_var</span>(<span class='no'>events</span>, <span class='no'>contrast_table</span>, <span class='no'>hrf</span>, <span class='no'>tr</span>, <span class='no'>n_volumes</span>,
-  <span class='kw'>upsample_factor</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>unlabeled_trial_type</span> <span class='kw'>=</span> <span class='st'>"fixation"</span>)</pre>
+    <pre class="usage"><span class='fu'>contrast_code_categorical_variable</span>(<span class='no'>data</span>, <span class='no'>contrast</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>events</th>
-      <td><p>events data with columns of onset, duration, and trial_type</p></td>
+      <th>data</th>
+      <td><p>data to apply contrast code</p></td>
     </tr>
     <tr>
-      <th>contrast_table</th>
-      <td><p>table of contrast codes</p></td>
-    </tr>
-    <tr>
-      <th>hrf</th>
-      <td><p>hemodynamic response function (hrf) time series</p></td>
-    </tr>
-    <tr>
-      <th>tr</th>
-      <td><p>repetition time (tr) in seconds</p></td>
-    </tr>
-    <tr>
-      <th>n_volumes</th>
-      <td><p>number of volumes or time points</p></td>
-    </tr>
-    <tr>
-      <th>upsample_factor</th>
-      <td><p>factor to upsample the trial_type_by_volume data for the convolution step</p></td>
-    </tr>
-    <tr>
-      <th>unlabeled_trial_type</th>
-      <td><p>name of trial_type for unlabeleled trial types (default: "fixation")</p></td>
+      <th>contrast</th>
+      <td><p>contrast code</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>a list of datasets for each data wrangling step of the psychological variables</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
-
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘dplyr’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:stats’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    filter, lag</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'>
 <span class='co'># this examples uses the following data from openneuro.org</span>
 <span class='co'># https://openneuro.org/datasets/ds000171/versions/00001</span>
 
@@ -159,19 +139,17 @@
 <span class='co'># active). the repitition time (tr) for this dataset was 3 and the number of</span>
 <span class='co'># volumes collected for this was run 105.</span>
 
-
-<span class='co'># mri parameters</span>
-<span class='no'>tr</span> <span class='kw'>&lt;-</span> <span class='fl'>3</span>
-<span class='no'>n_volumes</span> <span class='kw'>&lt;-</span> <span class='fl'>105</span>
-
 <span class='co'># read events from openneuro.org</span>
 <span class='no'>psy_events</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>readr</span><span class='kw ns'>::</span><span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_tsv</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/connections'>url</a></span>(<span class='st'>"https://openneuro.org/crn/datasets/ds000171/snapshots/00001/files/sub-control01:func:sub-control01_task-music_run-1_events.tsv"</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>trial_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/factor'>as.factor</a></span>(<span class='no'>trial_type</span>))</div><div class='output co'>#&gt; <span class='message'>Parsed with column specification:</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>trial_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/factor'>as.factor</a></span>(<span class='no'>trial_type</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='create_trial_type_by_volume_list.html'>create_trial_type_by_volume_list</a></span>(<span class='no'>.</span>, <span class='kw'>tr</span> <span class='kw'>=</span> <span class='fl'>1.5</span>, <span class='kw'>n_volumes</span> <span class='kw'>=</span> <span class='fl'>105</span>, <span class='kw'>unlabeled_trial_type</span> <span class='kw'>=</span> <span class='st'>"response"</span>)</div><div class='output co'>#&gt; <span class='message'>Parsed with column specification:</span>
 #&gt; <span class='message'>cols(</span>
 #&gt; <span class='message'>  onset = <span style='color: #00BB00;'>col_double()</span><span>,</span>
 #&gt; <span class='message'>  duration = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
 #&gt; <span class='message'>  trial_type = </span><span style='color: #BB0000;'>col_character()</span><span></span>
 #&gt; <span class='message'>)</span></div><div class='input'>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>psy_events</span>$<span class='no'>trial_type</span>)</div><div class='output co'>#&gt; negative_music positive_music       response          tones 
+#&gt;             21             21              8             55 </div><div class='input'>
 <span class='co'># orthogonal contrast code that test:</span>
 <span class='co'># 1. stimulus vs response</span>
 <span class='co'># 2. music vs tones</span>
@@ -180,26 +158,24 @@
                                           <span class='kw'>music_vs_tones</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0</span>, -<span class='fl'>2</span>)/<span class='fl'>3</span>,
                                           <span class='kw'>positive_music_vs_negative_music</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(-<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0</span>, <span class='fl'>0</span>)/<span class='fl'>2</span>))
 
-<span class='co'># for this example, we will choose SPM's default canonical hrf and upsample factor of 16</span>
-<span class='no'>upsample_factor</span> <span class='kw'>&lt;-</span> <span class='fl'>16</span>
-<span class='no'>hrf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='create_hrf_afni.html'>create_hrf_afni</a></span>(<span class='st'>"spmg1"</span>, <span class='no'>tr</span>, <span class='no'>upsample_factor</span>)</div><div class='output co'>#&gt; 3dDeconvolve -nodata 400 0.1875 -polort -1 -num_stimts 1 -stim_times 1 1D:0 SPMG1 -x1D /var/folders/qs/c3q2tkwj5xb7700v6bg00m480000gn/T//Rtmph08giU/fileff5514904653 -x1D_stop  </div><div class='input'>
 <span class='co'># run function</span>
-<span class='no'>psy_var</span> <span class='kw'>&lt;-</span> <span class='fu'>create_psy_var</span>(<span class='kw'>events</span> <span class='kw'>=</span> <span class='no'>psy_events</span>,
-                          <span class='kw'>contrast_table</span> <span class='kw'>=</span> <span class='no'>psy_contrast_table</span>,
-                          <span class='kw'>hrf</span> <span class='kw'>=</span> <span class='no'>hrf</span>,
-                          <span class='kw'>tr</span> <span class='kw'>=</span> <span class='no'>tr</span>,
-                          <span class='kw'>n_volumes</span> <span class='kw'>=</span> <span class='no'>n_volumes</span>,
-                          <span class='kw'>upsample_factor</span> <span class='kw'>=</span> <span class='no'>upsample_factor</span>,
-                          <span class='kw'>unlabeled_trial_type</span> <span class='kw'>=</span> <span class='st'>"response"</span>)</div><div class='output co'>#&gt; waver -FILE 0.1875 /var/folders/qs/c3q2tkwj5xb7700v6bg00m480000gn/T//Rtmph08giU/temp_convolution_afni//hrf.1D -input /var/folders/qs/c3q2tkwj5xb7700v6bg00m480000gn/T//Rtmph08giU/temp_convolution_afni//data.1D -numout 1680 
-#&gt; waver -FILE 0.1875 /var/folders/qs/c3q2tkwj5xb7700v6bg00m480000gn/T//Rtmph08giU/temp_convolution_afni//hrf.1D -input /var/folders/qs/c3q2tkwj5xb7700v6bg00m480000gn/T//Rtmph08giU/temp_convolution_afni//data.1D -numout 1680 
-#&gt; waver -FILE 0.1875 /var/folders/qs/c3q2tkwj5xb7700v6bg00m480000gn/T//Rtmph08giU/temp_convolution_afni//hrf.1D -input /var/folders/qs/c3q2tkwj5xb7700v6bg00m480000gn/T//Rtmph08giU/temp_convolution_afni//data.1D -numout 1680 </div><div class='input'>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/summary'>summary</a></span>(<span class='no'>psy_var</span>)</div><div class='output co'>#&gt;                      Length Class      Mode
-#&gt; trial_type_by_volume 2      data.frame list
-#&gt; contrast_table       3      data.frame list
-#&gt; contrast             3      data.frame list
-#&gt; upsample             3      data.frame list
-#&gt; convolve             3      data.frame list
-#&gt; downsample           3      data.frame list</div><div class='input'>
+<span class='no'>psy_contrast</span> <span class='kw'>&lt;-</span> <span class='fu'>contrast_code_categorical_variable</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>psy_events</span>,
+                                                   <span class='kw'>contrast</span> <span class='kw'>=</span> <span class='no'>psy_contrast_table</span>)
+
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='no'>psy_contrast</span>)</div><div class='output co'>#&gt;   volume trial_type psy_stimulus_vs_response psy_music_vs_tones
+#&gt; 1      1      tones                     0.25         -0.6666667
+#&gt; 2      2      tones                     0.25         -0.6666667
+#&gt; 3      3      tones                     0.25         -0.6666667
+#&gt; 4      4      tones                     0.25         -0.6666667
+#&gt; 5      5      tones                     0.25         -0.6666667
+#&gt; 6      6      tones                     0.25         -0.6666667
+#&gt;   psy_positive_music_vs_negative_music
+#&gt; 1                                    0
+#&gt; 2                                    0
+#&gt; 3                                    0
+#&gt; 4                                    0
+#&gt; 5                                    0
+#&gt; 6                                    0</div><div class='input'>
 # references:
 # Lepping RJ, Atchley RA, Chrysikou E, Martin LE, Clair AA, Ingram RE, et al. Neural processing of emotional musical and nonmusical stimuli in depression.  PlosONE.  In Press.
 # Lepping RJ, Atchley RA, Savage CR. Development of a Validated Emotionally Provocative Musical Stimulus Set for Research. Psychology of Music. 2015; online before print. doi:10.1177/0305735615604509.
@@ -213,7 +189,6 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

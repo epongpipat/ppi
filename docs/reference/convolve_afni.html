@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>create_ppi_var — create_ppi_var • ppi</title>
+<title>convolve_afni — convolve_afni • ppi</title>
 
 
 <!-- jquery -->
@@ -33,8 +33,8 @@
 
 
 
-<meta property="og:title" content="create_ppi_var — create_ppi_var" />
-<meta property="og:description" content="create_ppi_var" />
+<meta property="og:title" content="convolve_afni — convolve_afni" />
+<meta property="og:description" content="convolve_afni" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -96,36 +96,31 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>create_ppi_var</h1>
+    <h1>convolve_afni</h1>
     
-    <div class="hidden name"><code>create_ppi_var.Rd</code></div>
+    <div class="hidden name"><code>convolve_afni.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>create_ppi_var</p>
+    <p>convolve_afni</p>
     </div>
 
-    <pre class="usage"><span class='fu'>create_ppi_var</span>(<span class='no'>psy_var</span>, <span class='no'>phys_var</span>, <span class='no'>hrf</span>, <span class='no'>tr</span>, <span class='no'>n_volumes</span>,
-  <span class='kw'>upsample_factor</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>deconvolve</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>convolve_afni</span>(<span class='no'>data</span>, <span class='no'>hrf</span>, <span class='no'>tr</span>, <span class='no'>n_volumes</span>, <span class='kw'>upsample_factor</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>psy_var</th>
-      <td><p>psychological variable data (e.g., psy var that is contrast-coded and upsampled)</p></td>
-    </tr>
-    <tr>
-      <th>phys_var</th>
-      <td><p>physiological variable data (e.g., psy var that is detrended and upsampled)</p></td>
+      <th>data</th>
+      <td><p>data to convolve</p></td>
     </tr>
     <tr>
       <th>hrf</th>
-      <td><p>hemodynamic response function (hrf) time series data</p></td>
+      <td><p>hemodynamic response function (hrf) time series</p></td>
     </tr>
     <tr>
       <th>tr</th>
-      <td><p>repetition time (tr) in seconds</p></td>
+      <td><p>repition time (tr) in seconds</p></td>
     </tr>
     <tr>
       <th>n_volumes</th>
@@ -133,24 +128,16 @@
     </tr>
     <tr>
       <th>upsample_factor</th>
-      <td><p>factor to upsample data by for convolution and deconvolution step (default: NULL)</p></td>
-    </tr>
-    <tr>
-      <th>deconvolve</th>
-      <td><p>option to perform or not perform deconvolution step (default: TRUE)</p></td>
+      <td><p>factor to upsample data for convolution step</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>a list of datasets for each data wrangling step of the ppi variables</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
     </ul>
 
   </div>

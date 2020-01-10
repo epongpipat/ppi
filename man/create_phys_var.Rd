@@ -9,11 +9,11 @@ create_phys_var(phys, detrend_factor, upsample_factor = NULL, hrf)
 \arguments{
 \item{phys}{time series data}
 
-\item{detrend_factor}{factor to detrend the time series by}
+\item{detrend_factor}{factor to detrend the time series}
 
-\item{upsample_factor}{factor to upsample the time series by for the deconvolution step}
+\item{upsample_factor}{factor to upsample the time series for the deconvolution step}
 
-\item{hrf}{hemodynamic response function time series data}
+\item{hrf}{hemodynamic response function (hrf) time series data}
 }
 \value{
 a list of datasets for each data wrangling step of the physiological variables
@@ -24,3 +24,4 @@ create_phys_var
 \examples{
 # to be added
 }
+\concept{data_wrangling_wrapper_functions}

@@ -1,9 +1,9 @@
 #' @title create_design_matrix
-#'
-#' @param psy_var data of psy variable
-#' @param phys_var data of phys variable
-#' @param ppi_var data of ppi variable
-#' @param nuisance_var data of nuisance variables
+#' @concept data_wrangling_wrapper_functions
+#' @param psy_var psy variable data to add to design matrix
+#' @param phys_var phys variable data to add to design matrix
+#' @param ppi_var ppi variable data to add to design matrix
+#' @param nuisance_var nuisance variable data to add to design matrix
 #'
 #' @return design matrix
 #' @export

@@ -2,8 +2,8 @@ Package: ppi
 Type: Package
 Title: Psychophysiological Interaction (PPI)
 Version: 0.1.0
-Author: Ekarin Eric Pongpipat, M.A.
-Maintainer: The package maintainer <epongpipat@gmail.com>
+Author: Ekarin Eric Pongpipat
+Maintainer: Ekarin Eric Pongpipat <epongpipat@gmail.com>
 Description: A package to "easily" perform PPI analyses for task fMRI
 License: MIT
 Encoding: UTF-8

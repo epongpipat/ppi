@@ -20,3 +20,4 @@ create_hrf_afni
 hrf <- create_hrf_afni("spmg1", 1.5, 16)
 head(hrf)
 }
+\concept{data_wrangling}
