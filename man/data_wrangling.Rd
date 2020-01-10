@@ -14,7 +14,8 @@ data_wrangling(
   n_volumes,
   upsample_factor = NULL,
   deconvolve = TRUE,
-  nuisance_var = NULL
+  nuisance_var = NULL,
+  afni_path = NULL
 )
 }
 \arguments{
@@ -32,11 +33,13 @@ data_wrangling(
 
 \item{n_volumes}{number of volumes or time points}
 
-\item{upsample_factor}{factor to upsample psy and phys data for convolution and deconvolution step}
+\item{upsample_factor}{factor to upsample psy and phys data for convolution and deconvolution step (default: NULL)}
 
 \item{deconvolve}{perform deconvolution of phys and convolve of ppi term (also known as deconvolve-convolve or reconvolve step)}
 
 \item{nuisance_var}{data of nuisance variables to include in design matrix}
+
+\item{afni_path}{path to afni directory (default: NULL)}
 }
 \value{
 

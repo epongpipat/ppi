@@ -36,7 +36,7 @@
 
 
 <meta property="og:title" content="create_phys_var — create_phys_var" />
-<meta property="og:description" content="create_phys_var" />
+<meta property="og:description" content="creates data for each wrangling step of the physiological variable using the data wrangling functions: detrend(), upsample(), and deconvolve_afni()" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -106,10 +106,16 @@
     </div>
 
     <div class="ref-description">
-    <p>create_phys_var</p>
+    <p>creates data for each wrangling step of the physiological variable using the data wrangling functions: <code><a href='detrend.html'>detrend()</a></code>, <code><a href='upsample.html'>upsample()</a></code>, and <code>deconvolve_afni()</code></p>
     </div>
 
-    <pre class="usage"><span class='fu'>create_phys_var</span>(<span class='no'>phys</span>, <span class='no'>detrend_factor</span>, <span class='kw'>upsample_factor</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>hrf</span>)</pre>
+    <pre class="usage"><span class='fu'>create_phys_var</span>(
+  <span class='no'>phys</span>,
+  <span class='no'>detrend_factor</span>,
+  <span class='kw'>upsample_factor</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>hrf</span>,
+  <span class='kw'>afni_path</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -124,11 +130,15 @@
     </tr>
     <tr>
       <th>upsample_factor</th>
-      <td><p>factor to upsample the time series for the deconvolution step</p></td>
+      <td><p>factor to upsample the time series for the deconvolution step (default: NULL)</p></td>
     </tr>
     <tr>
       <th>hrf</th>
       <td><p>hemodynamic response function (hrf) time series data</p></td>
+    </tr>
+    <tr>
+      <th>afni_path</th>
+      <td><p>path to afni directory (default: NULL)</p></td>
     </tr>
     </table>
 

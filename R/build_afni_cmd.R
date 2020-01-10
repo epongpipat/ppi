@@ -1,3 +1,15 @@
+#' build_afni_cmd
+#' @concept support
+#' @param afni_list list that contains the program name and options to create command
+#' @return return afni command
+#' @export
+#' @import afnir
+#' @examples
+#' build_afni_cmd(afni_list = list(program = "3dcalc",
+#'                                 opt = list(a = "a.nii.gz",
+#'                                            b = "b.nii.gz",
+#'                                            expr = "'(a*b)'"),
+#'                                            prefix = c.nii.gz))
 build_afni_cmd <- function(afni_list) {
 
   afni_cmd <- afni_list$program
@@ -11,4 +23,5 @@ build_afni_cmd <- function(afni_list) {
 
   cat(afni_cmd, "\n")
   return(afni_cmd)
+
 }

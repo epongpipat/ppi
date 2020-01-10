@@ -1,4 +1,14 @@
-deconvolve_afni <- function(data, hrf) {
+#' @title deconvolve_afni
+#' @concept data_wrangling
+#' @param data data to deconvolve
+#' @param hrf hemodynamic response function (hrf) to deconvolve data
+#' @param afni_path path to afni directory (default: NULL)
+#'
+#' @return
+#' @export
+#'
+#' @examples
+deconvolve_afni <- function(data, hrf, afni_path = NULL) {
 
   # create temporary directory
   temp_dir <- paste0(tempdir(), "/temp_deconvolve_afni/")
@@ -14,16 +24,13 @@ deconvolve_afni <- function(data, hrf) {
 
   out_file <- paste0(temp_dir, "/data_deconvolved.1D")
 
-  afni_path <- get_afni()
   afni_func <- list()
   afni_func$program <- "3dTfitter"
   afni_func$opt$RHS <- in_file_data
   afni_func$opt$FALTUNG <- paste(in_file_hrf, out_file, "012 -2")
   afni_func$opt$l2lasso <- -6
-
   afni_cmd <- build_afni_cmd(afni_func)
-  sys_cmd <- paste0(afni_path, afni_cmd)
-  system(sys_cmd)
+  execute_afni_cmd(afni_cmd, afni_path)
 
   df_deconvolved <- suppressMessages(read_table2(out_file, col_names = FALSE, comment = "#")) %>%
     t() %>%

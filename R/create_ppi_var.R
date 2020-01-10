@@ -1,4 +1,5 @@
 #' @title create_ppi_var
+#' @description creates data for each step of the ppi variable by wrapping the functions: \code{convolve_afni()} and \code{downsample()}
 #' @concept data_wrangling_wrapper_functions
 #' @param psy_var psychological variable data (e.g., psy var that is contrast-coded and upsampled)
 #' @param phys_var physiological variable data (e.g., psy var that is detrended and upsampled)
@@ -7,17 +8,17 @@
 #' @param n_volumes number of volumes or time points
 #' @param upsample_factor factor to upsample data by for convolution and deconvolution step (default: NULL)
 #' @param deconvolve option to perform or not perform deconvolution step (default: TRUE)
-#'
+#' @param afni_path path to afni directory (default: NULL)
 #' @return a list of datasets for each data wrangling step of the ppi variables
 #' @export
 #'
 #' @examples
-create_ppi_var <- function(psy_var, phys_var, hrf, tr, n_volumes, upsample_factor = NULL, deconvolve = TRUE) {
+create_ppi_var <- function(psy_var, phys_var, hrf, tr, n_volumes, upsample_factor = NULL, deconvolve = TRUE, afni_path = NULL) {
   ppi_list <- list()
   ppi_list$interaction <- apply(as.matrix(psy_var), 2, function(x) x * as.matrix(phys_var)) %>% as.data.frame()
   colnames(ppi_list$interaction) <- str_replace(colnames(ppi_list$interaction), "psy_", "ppi_")
   if (deconvolve == TRUE) {
-    ppi_list$convolve <- apply(ppi_list$interaction, 2, function(x) convolve_afni(x, hrf, tr, n_volumes, upsample_factor)) %>% as.data.frame()
+    ppi_list$convolve <- apply(ppi_list$interaction, 2, function(x) convolve_afni(x, hrf, tr, n_volumes, upsample_factor, afni_path)) %>% as.data.frame()
     ppi_list$downsample <- apply(ppi_list$convolve, 2, function(x) downsample(x, upsample_factor)) %>% as.data.frame()
   } else if (deconvolve == FALSE) {
     ppi_list$downsample <- apply(ppi_list$interaction, 2, function(x) downsample(x, upsample_factor)) %>% as.data.frame()

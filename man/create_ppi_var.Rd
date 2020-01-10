@@ -11,7 +11,8 @@ create_ppi_var(
   tr,
   n_volumes,
   upsample_factor = NULL,
-  deconvolve = TRUE
+  deconvolve = TRUE,
+  afni_path = NULL
 )
 }
 \arguments{
@@ -28,11 +29,13 @@ create_ppi_var(
 \item{upsample_factor}{factor to upsample data by for convolution and deconvolution step (default: NULL)}
 
 \item{deconvolve}{option to perform or not perform deconvolution step (default: TRUE)}
+
+\item{afni_path}{path to afni directory (default: NULL)}
 }
 \value{
 a list of datasets for each data wrangling step of the ppi variables
 }
 \description{
-create_ppi_var
+creates data for each step of the ppi variable by wrapping the functions: \code{convolve_afni()} and \code{downsample()}
 }
 \concept{data_wrangling_wrapper_functions}

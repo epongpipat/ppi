@@ -1,5 +1,5 @@
 #' @title convolve_afni
-#'
+#' @concept data_wrangling
 #' @param data data to convolve
 #' @param hrf hemodynamic response function (hrf) time series
 #' @param tr repition time (tr) in seconds
@@ -10,7 +10,7 @@
 #' @export
 #' @import afnir furrr
 #' @examples
-convolve_afni <- function(data, hrf, tr, n_volumes, upsample_factor = NULL) {
+convolve_afni <- function(data, hrf, tr, n_volumes, upsample_factor = NULL, afni_path = NULL) {
 
   # create temporary working dir
   temp_dir <- paste0(tempdir(), "/temp_convolution_afni/")
@@ -34,19 +34,14 @@ convolve_afni <- function(data, hrf, tr, n_volumes, upsample_factor = NULL) {
   out_file <- paste0(temp_dir, "/data_convolved.1D")
 
   # create afni command
-  afni_path <- get_afni()
   afni_func <- list()
   afni_func$program <- "waver"
   afni_func$opt$FILE <- paste(tr, in_file_hrf)
   afni_func$opt$input <- paste0(in_file_data)
   afni_func$opt$numout <- n_volumes
   afni_cmd <- build_afni_cmd(afni_func)
-
-  # create system command
-  sys_cmd <- paste0(afni_path, afni_cmd, " > ", out_file)
-
-  # execute system command
-  system(sys_cmd)
+  sys_cmd <- paste0(afni_cmd, " > ", out_file)
+  execute_afni_cmd(afni_cmd, afni_path)
 
   # read output
   df_convolved <- read.csv(out_file, header = F, col.names = "data")

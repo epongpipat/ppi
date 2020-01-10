@@ -22,40 +22,26 @@ xfun::pkg_attach(packages, install = T, message = F)
 
 ## Parameters
 ```{r}
-hrf <- read.csv("/Volumes/shared/KK_KR_JLBS/Wave1/MRI/FMRI/PPI/hrf/SPM_upsampled_16_scaled.1D", header = F)
-tr <- 1.5
-n_volumes <- 210
-upsample_factor <- 16
-detrend_factor <- 2
+params$hrf <- read.csv(params$hrf_file, header = F)
+params$phys <- read.csv(params$phys_file, header = F)
 ```
 
-## Phys
+## Create physiological variable
 ```{r}
-base_dir <- "/Volumes/shared/KK_KR_JLBS/Wave1/MRI/FMRI/PPI/dj_individual_covariates/PHYS_Dosenbach160_001/"
-subj_list <- list.files(base_dir, "3tb")
-in_dir <- paste0(base_dir, subj_list, "/")
-
-df_phys <- tibble(dir = base_dir) %>%
-  mutate(subj = list(list.files(base_dir, "3tb"))) %>%
-  unnest() %>%
-  mutate(in_dir = paste0(dir, subj, "/"),
-         in_file = future_map(in_dir, function(x) list.files(x, "_eig.csv|_mean.csv"))) %>%
-  unnest() %>%
-  mutate(in_path = paste0(in_dir, in_file),
-         data = future_map(in_path, function(x) read.csv(x, header = F, col.names = "phys")),
-         phys = future_map(data, function(x) create_phys_var(x, detrend_factor, upsample_factor, hrf)))
+phys_var <- create_phys_var(params$phys_file, params$detrend_factor, params$upsample_factor, params$hrf)
 ```
 
 ## Save Data
 ```{r}
-for (i in 1:nrow(df_phys)){
-  save_list_data(df_phys$phys[[i]], df_phys$in_path[[i]])
-}
+save_list_data(phys_var, params$phys_file)
 ```
 
 ## Save Figures
 ```{r}
-for (i in 1:nrow(df_phys)) {
-  save_list_data_fig(df_phys$phys[[i]], df_phys$in_path[[i]])
-}
+save_list_data_fig(phys_var, params$phys_file)
+```
+
+## Session Information
+```{r}
+sessionInfo()
 ```

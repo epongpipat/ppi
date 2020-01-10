@@ -1,20 +1,20 @@
+#' @title detrend
+#' @concept data_wrangling
+#'
+#' @param data data to be detrended
+#' @param degree degree for data to be detrended
+#'
+#' @return detrended data
+#' @export
+#' @import readr dplyr broom
+#' @examples
 detrend <- function(data, degree) {
 
   if (degree < 0 || !is.numeric(degree)) {
     stop("degree must be an positive integer greater than or equal to 1")
   }
 
-  if (is.matrix(data) || is.data.frame(data)) {
-    data <- data[, 1]
-  }
-
-  require(xfun)
-  packages <- c("readr", "dplyr", "broom")
-  xfun::pkg_attach(packages, message = F, install = T)
-
-  residual <- lm(data ~ poly(1:length(data), degree)) %>%
-    augment() %>%
-    select(residual = .resid)
+  residual <- apply(as.matrix(data), 2, function(x) lm(x ~ poly(1:length(x), degree)) %>% augment() %>% select(residual = .resid))
 
   return(residual)
 

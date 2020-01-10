@@ -4,22 +4,30 @@
 \alias{create_phys_var}
 \title{create_phys_var}
 \usage{
-create_phys_var(phys, detrend_factor, upsample_factor = NULL, hrf)
+create_phys_var(
+  phys,
+  detrend_factor,
+  upsample_factor = NULL,
+  hrf,
+  afni_path = NULL
+)
 }
 \arguments{
 \item{phys}{time series data}
 
 \item{detrend_factor}{factor to detrend the time series}
 
-\item{upsample_factor}{factor to upsample the time series for the deconvolution step}
+\item{upsample_factor}{factor to upsample the time series for the deconvolution step (default: NULL)}
 
 \item{hrf}{hemodynamic response function (hrf) time series data}
+
+\item{afni_path}{path to afni directory (default: NULL)}
 }
 \value{
 a list of datasets for each data wrangling step of the physiological variables
 }
 \description{
-create_phys_var
+creates data for each wrangling step of the physiological variable using the data wrangling functions: \code{detrend()}, \code{upsample()}, and \code{deconvolve_afni()}
 }
 \examples{
 # to be added

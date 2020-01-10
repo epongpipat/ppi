@@ -8,6 +8,7 @@
 #' @param n_volumes number of volumes or time points
 #' @param upsample_factor factor to upsample the trial_type_by_volume data for the convolution step
 #' @param unlabeled_trial_type name of trial_type for unlabeleled trial types (default: "fixation")
+#' @param afni_path path to afni directory (default: NULL)
 #' @return a list of datasets for each data wrangling step of the psychological variables
 #' @export
 #'
@@ -64,13 +65,13 @@
 #' # Lepping RJ, Atchley RA, Martin LE, Brooks WM, Clair AA, Ingram RE, et al. Musical and nonmusical sounds evoke different patterns of neural activity: An fMRI study.  Psychonomic Society annual meeting; 2012 Nov 14-18; Minneapolis, MN 2012.
 #' # Lepping RJ, Atchley RA, Martin LE, Patrician TM, Ingram RE, Clair AA, et al. The effect of musical experiences and musical training on neural responses to emotionally evocative music and non-musical sounds.  Social and Affective Neuroscience Society annual conference 2013 Apr 12-13; San Francisco, CA 2013
 #' # Lepping RJ, Atchley RA, Patrician TM, Stroupe NN, Martin LE, Ingram RE, et al. Music to my ears: Neural responsiveness to emotional music and sounds in depression.  Society of Biological Psychiatry annual scientific convention 2013 May 16-18; San Francisco, CA 2013.
-create_psy_var <- function(events, contrast_table, hrf, tr, n_volumes, upsample_factor = NULL, unlabeled_trial_type = "fixation") {
+create_psy_var <- function(events, contrast_table, hrf, tr, n_volumes, upsample_factor = NULL, unlabeled_trial_type = "fixation", afni_path = NULL) {
   psy_list <- list()
   psy_list$trial_type_by_volume <- as.data.frame(create_trial_type_by_volume_list(events, tr, n_volumes, unlabeled_trial_type = unlabeled_trial_type))
   psy_list$contrast_table <- as.data.frame(contrast_table)
   psy_list$contrast <- as.data.frame(contrast_code_categorical_variable(psy_list$trial_type_by_volume, as.matrix(psy_list$contrast_table))) %>% select(contains("psy"))
   psy_list$upsample <- as.data.frame(apply(psy_list$contrast, 2, function(x) upsample(x, upsample_factor)))
-  psy_list$convolve <- as.data.frame(apply(psy_list$upsample, 2, function(x) convolve_afni(x, hrf, tr, n_volumes, upsample_factor)))
+  psy_list$convolve <- as.data.frame(apply(psy_list$upsample, 2, function(x) convolve_afni(x, hrf, tr, n_volumes, upsample_factor, afni_path)))
   psy_list$downsample <- as.data.frame(apply(psy_list$convolve, 2, function(x) downsample(x, upsample_factor)))
   return(psy_list)
 }

@@ -4,7 +4,14 @@
 \alias{convolve_afni}
 \title{convolve_afni}
 \usage{
-convolve_afni(data, hrf, tr, n_volumes, upsample_factor = NULL)
+convolve_afni(
+  data,
+  hrf,
+  tr,
+  n_volumes,
+  upsample_factor = NULL,
+  afni_path = NULL
+)
 }
 \arguments{
 \item{data}{data to convolve}
@@ -23,3 +30,4 @@ convolve_afni(data, hrf, tr, n_volumes, upsample_factor = NULL)
 \description{
 convolve_afni
 }
+\concept{data_wrangling}

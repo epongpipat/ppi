@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>data_wrangling — data_wrangling • ppi</title>
+<title>build_afni_cmd — build_afni_cmd • ppi</title>
 
 
 <!-- jquery -->
@@ -35,8 +35,8 @@
 
 
 
-<meta property="og:title" content="data_wrangling — data_wrangling" />
-<meta property="og:description" content="uber data wrangling wrapper function to create data for each step of data wrangling for each psy, phys, and ppi variables to ultimately create the design matrix. This function is a wrapper of create_hrf_afni(), create_psy_var(), create_phys_var(), create_ppi_var(), and create_design_matrix()" />
+<meta property="og:title" content="build_afni_cmd — build_afni_cmd" />
+<meta property="og:description" content="build_afni_cmd" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -100,87 +100,36 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>data_wrangling</h1>
+    <h1>build_afni_cmd</h1>
     
-    <div class="hidden name"><code>data_wrangling.Rd</code></div>
+    <div class="hidden name"><code>build_afni_cmd.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>uber data wrangling wrapper function to create data for each step of data wrangling for each psy, phys, and ppi variables to ultimately create the design matrix. This function is a wrapper of <code><a href='create_hrf_afni.html'>create_hrf_afni()</a></code>, <code><a href='create_psy_var.html'>create_psy_var()</a></code>, <code><a href='create_phys_var.html'>create_phys_var()</a></code>, <code><a href='create_ppi_var.html'>create_ppi_var()</a></code>, and <code><a href='create_design_matrix.html'>create_design_matrix()</a></code></p>
+    <p>build_afni_cmd</p>
     </div>
 
-    <pre class="usage"><span class='fu'>data_wrangling</span>(
-  <span class='no'>psy_events_data</span>,
-  <span class='no'>psy_contrast_table</span>,
-  <span class='no'>phys_data</span>,
-  <span class='no'>detrend_factor</span>,
-  <span class='no'>hrf_name</span>,
-  <span class='no'>tr</span>,
-  <span class='no'>n_volumes</span>,
-  <span class='kw'>upsample_factor</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>deconvolve</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>nuisance_var</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>afni_path</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
-)</pre>
+    <pre class="usage"><span class='fu'>build_afni_cmd</span>(<span class='no'>afni_list</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>psy_events_data</th>
-      <td><p>events data with columns of onset, duration, and trial_type</p></td>
-    </tr>
-    <tr>
-      <th>psy_contrast_table</th>
-      <td><p>contrast code</p></td>
-    </tr>
-    <tr>
-      <th>phys_data</th>
-      <td><p>time series data of physiological variable (seed ROI)</p></td>
-    </tr>
-    <tr>
-      <th>detrend_factor</th>
-      <td><p>factor to detrend time series</p></td>
-    </tr>
-    <tr>
-      <th>hrf_name</th>
-      <td><p>name of hemodynamic response function (hrf) to use during convolution and deconvolution step</p></td>
-    </tr>
-    <tr>
-      <th>tr</th>
-      <td><p>repition time (tr) in seconds</p></td>
-    </tr>
-    <tr>
-      <th>n_volumes</th>
-      <td><p>number of volumes or time points</p></td>
-    </tr>
-    <tr>
-      <th>upsample_factor</th>
-      <td><p>factor to upsample psy and phys data for convolution and deconvolution step (default: NULL)</p></td>
-    </tr>
-    <tr>
-      <th>deconvolve</th>
-      <td><p>perform deconvolution of phys and convolve of ppi term (also known as deconvolve-convolve or reconvolve step)</p></td>
-    </tr>
-    <tr>
-      <th>nuisance_var</th>
-      <td><p>data of nuisance variables to include in design matrix</p></td>
-    </tr>
-    <tr>
-      <th>afni_path</th>
-      <td><p>path to afni directory (default: NULL)</p></td>
+      <th>afni_list</th>
+      <td><p>list that contains the program name and options to create command</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    
-
-
+    <p>return afni command</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'># to be added
-</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>build_afni_cmd</span>(<span class='kw'>afni_list</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>program</span> <span class='kw'>=</span> <span class='st'>"3dcalc"</span>,
+                                <span class='kw'>opt</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='st'>"a.nii.gz"</span>,
+                                           <span class='kw'>b</span> <span class='kw'>=</span> <span class='st'>"b.nii.gz"</span>,
+                                           <span class='kw'>expr</span> <span class='kw'>=</span> <span class='st'>"'(a*b)'"</span>),
+                                           <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='no'>c.nii.gz</span>))</div><div class='output co'>#&gt; <span class='error'>Error in build_afni_cmd(afni_list = list(program = "3dcalc", opt = list(a = "a.nii.gz",     b = "b.nii.gz", expr = "'(a*b)'"), prefix = c.nii.gz)): object 'c.nii.gz' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

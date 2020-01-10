@@ -36,7 +36,7 @@
 
 
 <meta property="og:title" content="create_ppi_var — create_ppi_var" />
-<meta property="og:description" content="create_ppi_var" />
+<meta property="og:description" content="creates data for each step of the ppi variable by wrapping the functions: convolve_afni() and downsample()" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -106,7 +106,7 @@
     </div>
 
     <div class="ref-description">
-    <p>create_ppi_var</p>
+    <p>creates data for each step of the ppi variable by wrapping the functions: <code><a href='convolve_afni.html'>convolve_afni()</a></code> and <code><a href='downsample.html'>downsample()</a></code></p>
     </div>
 
     <pre class="usage"><span class='fu'>create_ppi_var</span>(
@@ -116,7 +116,8 @@
   <span class='no'>tr</span>,
   <span class='no'>n_volumes</span>,
   <span class='kw'>upsample_factor</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>deconvolve</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+  <span class='kw'>deconvolve</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>afni_path</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -149,6 +150,10 @@
     <tr>
       <th>deconvolve</th>
       <td><p>option to perform or not perform deconvolution step (default: TRUE)</p></td>
+    </tr>
+    <tr>
+      <th>afni_path</th>
+      <td><p>path to afni directory (default: NULL)</p></td>
     </tr>
     </table>
 

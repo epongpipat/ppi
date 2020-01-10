@@ -11,7 +11,8 @@ create_psy_var(
   tr,
   n_volumes,
   upsample_factor = NULL,
-  unlabeled_trial_type = "fixation"
+  unlabeled_trial_type = "fixation",
+  afni_path = NULL
 )
 }
 \arguments{
@@ -28,6 +29,8 @@ create_psy_var(
 \item{upsample_factor}{factor to upsample the trial_type_by_volume data for the convolution step}
 
 \item{unlabeled_trial_type}{name of trial_type for unlabeleled trial types (default: "fixation")}
+
+\item{afni_path}{path to afni directory (default: NULL)}
 }
 \value{
 a list of datasets for each data wrangling step of the psychological variables
