@@ -12,17 +12,13 @@
 #' @examples
 convolve_afni <- function(data, hrf, tr, n_volumes, upsample_factor = NULL, afni_path = NULL) {
 
-  # create temporary working dir
-  temp_dir <- paste0(tempdir(), "/temp_convolution_afni/")
-  dir.create(temp_dir)
-
   # create temporary data file
   data <- as.matrix(data)
-  in_file_data <- paste0(temp_dir, "/data.1D")
+  in_file_data <- tempfile()
   write.table(data, in_file_data, col.names = F, row.names = F)
 
   # create temporary hemodynamic response function (HRF) file
-  in_file_hrf <- paste0(temp_dir, "/hrf.1D")
+  in_file_hrf <- tempfile()
   write.table(hrf, in_file_hrf, col.names = F, row.names = F)
 
   # apply upsample if specified
@@ -31,7 +27,7 @@ convolve_afni <- function(data, hrf, tr, n_volumes, upsample_factor = NULL, afni
     n_volumes <- n_volumes * upsample_factor
   }
 
-  out_file <- paste0(temp_dir, "/data_convolved.1D")
+  out_file <- tempfile()
 
   # create afni command
   afni_func <- list()
@@ -47,7 +43,9 @@ convolve_afni <- function(data, hrf, tr, n_volumes, upsample_factor = NULL, afni
   df_convolved <- read.csv(out_file, header = F, col.names = "data")
 
   # remove temporary files
-  unlink(temp_dir, recursive = T)
+  file.remove(in_file_data)
+  file.remove(in_file_hrf)
+  file.remove(out_file)
 
   return(df_convolved$data)
 

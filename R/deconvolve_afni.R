@@ -11,18 +11,18 @@
 deconvolve_afni <- function(data, hrf, afni_path = NULL) {
 
   # create temporary directory
-  temp_dir <- paste0(tempdir(), "/temp_deconvolve_afni/")
-  dir.create(temp_dir)
+  # temp_dir <- paste0(tempdir(), "/temp_deconvolve_afni/")
+  # dir.create(temp_dir)
 
   # create temporary data file
-  in_file_data <- paste0(temp_dir, "/data.1D")
+  in_file_data <- tempfile()
   write.table(data, in_file_data, col.names = F, row.names = F)
 
   # create temporary hrf file
-  in_file_hrf <- paste0(temp_dir, "/hrf.1D")
+  in_file_hrf <- tempfile()
   write.table(hrf, in_file_hrf, col.names = F, row.names = F)
 
-  out_file <- paste0(temp_dir, "/data_deconvolved.1D")
+  out_file <- tempfile()
 
   afni_func <- list()
   afni_func$program <- "3dTfitter"
@@ -39,7 +39,9 @@ deconvolve_afni <- function(data, hrf, afni_path = NULL) {
   colnames(df_deconvolved) <- "data"
 
   # remove temporary files
-  unlink(temp_dir, recursive = T)
+  file.remove(in_file_data)
+  file.remove(in_file_hrf)
+  file.remove(out_file)
 
   return(df_deconvolved$data)
 }
