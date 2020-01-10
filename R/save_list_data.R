@@ -1,3 +1,12 @@
+#' @title save_list_data
+#'
+#' @param data
+#' @param in_file
+#'
+#' @return
+#' @export
+#'
+#' @examples
 save_list_data <- function(data, in_file) {
   if (is.list(data)) {
     names <- names(data)

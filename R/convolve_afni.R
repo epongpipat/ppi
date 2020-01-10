@@ -14,11 +14,11 @@ convolve_afni <- function(data, hrf, tr, n_volumes, upsample_factor = NULL, afni
 
   # create temporary data file
   data <- as.matrix(data)
-  in_file_data <- tempfile()
+  in_file_data <- paste0(tempfile(), ".1D")
   write.table(data, in_file_data, col.names = F, row.names = F)
 
   # create temporary hemodynamic response function (HRF) file
-  in_file_hrf <- tempfile()
+  in_file_hrf <- paste0(tempfile(), ".1D")
   write.table(hrf, in_file_hrf, col.names = F, row.names = F)
 
   # apply upsample if specified
@@ -27,7 +27,7 @@ convolve_afni <- function(data, hrf, tr, n_volumes, upsample_factor = NULL, afni
     n_volumes <- n_volumes * upsample_factor
   }
 
-  out_file <- tempfile()
+  out_file <- paste0(tempfile(), ".1D")
 
   # create afni command
   afni_func <- list()
