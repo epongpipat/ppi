@@ -1,9 +1,9 @@
 #' @title create_phys_var
-#'
+#' @concept data_wrangling_wrapper_functions
 #' @param phys time series data
-#' @param detrend_factor factor to detrend the time series by
-#' @param upsample_factor factor to upsample the time series by for the deconvolution step
-#' @param hrf hemodynamic response function time series data
+#' @param detrend_factor factor to detrend the time series
+#' @param upsample_factor factor to upsample the time series for the deconvolution step
+#' @param hrf hemodynamic response function (hrf) time series data
 #'
 #' @return a list of datasets for each data wrangling step of the physiological variables
 #' @export

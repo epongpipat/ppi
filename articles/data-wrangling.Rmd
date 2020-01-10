@@ -1,0 +1,136 @@
+---
+title: "Data Wrangling"
+author: "Ekarin Eric Pongpipat, M.A."
+date: "`r paste0('Created on 2019-01-09. Updated on ', Sys.Date())`"
+output: 
+  html_document:
+    highlight: textmate
+    theme: lumen
+    code_folding: hide
+    code_download: true
+    toc: yes
+    toc_depth: 3
+    toc_float:
+      collapsed: yes
+      smooth_scroll: yes
+---
+
+## R Packages
+
+```{r, warning = F}
+packages <- c("tidyverse", "eepR", "furrr", "ggpubr", "ppi")
+xfun::pkg_attach(packages, install = T, message = F)
+```
+
+## Define Parameters
+```{r}
+params <- list(tr = 1.5,
+               n_volumes = 260,
+               hrf_name = "spmg1",
+               upsample_factor = 16,
+               detrend_factor = 2,
+               psy_contrast_table <- cbind(nback_vs_baseline = c(1, 1, 1, 1, -4)/5,
+                                           task_vs_control = c(-3, 1, 1, 1, 0)/4,
+                                           linear_task = c(0, -1, 0, 1, 0),
+                                           quadratic_task = c(0, -1, 2, -1, 0)/3))
+
+params
+```
+
+## Load Data
+
+### PSY
+
+```{r, message = F, warning = F}
+df_psy <- read.csv(events_file) %>%
+  rename(onset = start, trial_type = block) %>%
+  mutate(duration = ifelse(trial_type == "0-back", 10 * 2.5, 20 * 2.5)) %>%
+  select(run, onset, duration, trial_type) %>%
+  group_by(run) %>%
+  nest() %>%
+  mutate(data = map(data, as.data.frame)) %>%
+  ungroup() %>%
+  select(run, data_psy = data)
+```
+
+### PHYS
+```{r, message = F, warning = F}
+dir_phys <- "/Volumes/shared/KK_KR_JLBS/Wave1/MRI/FMRI/PPI/Nback_individual_covariates/PHYS_MNI_42_-42_42/3tb1780/"
+files_phys <- list.files(dir_phys, "_mean.1D")
+path_phys <- paste0(dir_phys, files_phys)
+df_phys <- tibble(file = files_phys,
+                  path = path_phys) %>%
+  mutate(run = str_remove(file, "_mean.1D"),
+         run = str_remove(run, "r"),
+         run = as.integer(run),
+         data = future_map(path, function(x) read.csv(x, header = F, col.names = "data"))) %>%
+  select(run, data_phys = data)
+```
+
+## Data Wrangling
+```{r, message = F, warning = F}
+df_wrangling <- full_join(df_psy, df_phys, by = "run") %>%
+  mutate(data_wrangling = NA)
+
+for (i in 1:nrow(df_wrangling)) {
+  df_wrangling$data_wrangling[i] <- list(data_wrangling(psy_events_data = df_wrangling$data_psy[[i]], 
+                                          psy_contrast_table = psy_contrast_table, 
+                                          phys_data = df_wrangling$data_phys[[i]],
+                                          detrend_factor = 2, 
+                                          hrf_name = "spmg1",
+                                          tr = 1.5, 
+                                          n_volumes = 260, 
+                                          upsample_factor = 16, 
+                                          deconvolve = TRUE))
+}
+```
+
+## Design Matrix
+```{r, warning = F}
+df_design_mat <- df_wrangling %>%
+  mutate(design_mat = map(data_wrangling, "design_matrix")) %>%
+  select(run, design_mat) %>%
+  unnest()
+
+head(df_design_mat)
+```
+
+```{r}
+func_fig_data_heat_map <- function(data) {
+  colnames(data) <- paste0(str_pad(1:ncol(data), 2, "left", "0"), "_", colnames(data))
+  apply(data, 2, scale_min_max) %>%
+    as.data.frame() %>%
+    mutate(volume = row_number()) %>%
+    gather(., variable, value, -volume) %>%
+    ggplot(., aes(variable, volume, fill = value)) +
+    geom_raster() + 
+    scale_fill_distiller(palette = "Greys", direction = 1) + 
+    theme_minimal() +
+    theme(axis.text.x = element_text(hjust = 1, angle = 45)) +
+    labs(x = NULL)
+}
+
+func_fig_data_ts_long <- function(data) {
+  colnames(data) <- paste0(str_pad(1:ncol(data), 2, "left", "0"), "_", colnames(data))
+  data %>%
+  mutate(volume = row_number()) %>%
+  gather(., variable, value, -volume) %>%
+  ggplot(., aes(volume, value)) +
+  geom_line() +
+  facet_wrap(~ variable, scales = "free_y", ncol = 1) +
+  theme_minimal()
+}
+
+func_fig_data_heat_map(df_design_mat)
+```
+
+```{r, fig.width = 8, fig.height = 12}
+func_fig_data_ts_long(df_design_mat)
+```
+
+## Save
+```{r}
+if (!is.null(out_file)) {
+  write.csv(df_design_mat_final, out_file)
+}
+```

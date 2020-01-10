@@ -1,12 +1,18 @@
+#' @title upsample
+#' @concept data_wrangling
+#' @param data data to upsample
+#' @param upsample_factor factor to upsample data
+#'
+#' @return
+#' @export
+#' @import readr
+#' @examples
+#' # to be added
 upsample <- function(data, upsample_factor) {
 
   if (!is.numeric(upsample_factor) || upsample_factor <= 0) {
     stop("upsample_factor must be an integer greater than 1")
   }
-
-  require(xfun)
-  packages <- c("readr")
-  xfun::pkg_attach(packages, message = F, install = T)
 
   if (is.matrix(data) || is.data.frame(data)) {
     data <- as.data.frame(data)

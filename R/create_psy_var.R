@@ -1,20 +1,72 @@
 #' @title create_psy_var
-#'
+#' @description creates data for each wrangling step of the psychological variable using the data wrangling functions: \code{create_trial_type_by_volume_list()}, \code{contrast_code_categorical_variable()}, \code{upsample()}, \code{convolve_afni()}, \code{downsample()}
+#' @concept data_wrangling_wrapper_functions
 #' @param events events data with columns of onset, duration, and trial_type
 #' @param contrast_table table of contrast codes
 #' @param hrf hemodynamic response function (hrf) time series
-#' @param tr retrieval time (tr) in seconds
+#' @param tr repetition time (tr) in seconds
 #' @param n_volumes number of volumes or time points
-#' @param upsample_factor factor to upsample the trial_type_by_volume data during the convolution step
-#'
+#' @param upsample_factor factor to upsample the trial_type_by_volume data for the convolution step
+#' @param unlabeled_trial_type name of trial_type for unlabeleled trial types (default: "fixation")
 #' @return a list of datasets for each data wrangling step of the psychological variables
 #' @export
 #'
 #' @examples
-#' # to be added
-create_psy_var <- function(events, contrast_table, hrf, tr, n_volumes, upsample_factor = NULL) {
+#' library(dplyr)
+#'
+#' # this examples uses the following data from openneuro.org
+#' # https://openneuro.org/datasets/ds000171/versions/00001
+#'
+#' # in this dataset, participants listen to either positive music,
+#' # negative music, or tones (control). Positive and negative musical stimulus
+#' # are presented for 31.5 seconds and tones are presented for 33 seoncds.
+#' # After each stimulus, participants have 3 seconds to report their valence
+#' # (from very sad to very happy) and arousal (from very passive to very #
+#' # active). the repitition time (tr) for this dataset was 3 and the number of
+#' # volumes collected for this was run 105.
+#'
+#'
+#' # mri parameters
+#' tr <- 3
+#' n_volumes <- 105
+#'
+#' # read events from openneuro.org
+#' psy_events <- readr::read_tsv(url("https://openneuro.org/crn/datasets/ds000171/snapshots/00001/files/sub-control01:func:sub-control01_task-music_run-1_events.tsv")) %>%
+#'   mutate(trial_type = as.factor(trial_type))
+#'
+#' # orthogonal contrast code that test:
+#' # 1. stimulus vs response
+#' # 2. music vs tones
+#' # 3. positive music vs negative music
+#' psy_contrast_table <- as.data.frame(cbind(stimulus_vs_response = c(1, 1, -3, 1)/4,
+#'                                           music_vs_tones = c(1, 1, 0, -2)/3,
+#'                                           positive_music_vs_negative_music = c(-1, 1, 0, 0)/2))
+#'
+#' # for this example, we will choose SPM's default canonical hrf and upsample factor of 16
+#' upsample_factor <- 16
+#' hrf <- create_hrf_afni("spmg1", tr, upsample_factor)
+#'
+#' # run function
+#' psy_var <- create_psy_var(events = psy_events,
+#'                           contrast_table = psy_contrast_table,
+#'                           hrf = hrf,
+#'                           tr = tr,
+#'                           n_volumes = n_volumes,
+#'                           upsample_factor = upsample_factor,
+#'                           unlabeled_trial_type = "response")
+#'
+#' summary(psy_var)
+#'
+#' # references:
+#' # Lepping RJ, Atchley RA, Chrysikou E, Martin LE, Clair AA, Ingram RE, et al. Neural processing of emotional musical and nonmusical stimuli in depression.  PlosONE.  In Press.
+#' # Lepping RJ, Atchley RA, Savage CR. Development of a Validated Emotionally Provocative Musical Stimulus Set for Research. Psychology of Music. 2015; online before print. doi:10.1177/0305735615604509.
+#' # Lepping RJ, Atchley RA, Martin LE, Patrician TM, Stroupe N, Brooks WM, et al. Limbic responses to positive and negative emotionally evocative music: An fMRI study.  Society for Neuroscience annual meeting 2012 Oct 13-18; New Orleans, LA 2012.
+#' # Lepping RJ, Atchley RA, Martin LE, Brooks WM, Clair AA, Ingram RE, et al. Musical and nonmusical sounds evoke different patterns of neural activity: An fMRI study.  Psychonomic Society annual meeting; 2012 Nov 14-18; Minneapolis, MN 2012.
+#' # Lepping RJ, Atchley RA, Martin LE, Patrician TM, Ingram RE, Clair AA, et al. The effect of musical experiences and musical training on neural responses to emotionally evocative music and non-musical sounds.  Social and Affective Neuroscience Society annual conference 2013 Apr 12-13; San Francisco, CA 2013
+#' # Lepping RJ, Atchley RA, Patrician TM, Stroupe NN, Martin LE, Ingram RE, et al. Music to my ears: Neural responsiveness to emotional music and sounds in depression.  Society of Biological Psychiatry annual scientific convention 2013 May 16-18; San Francisco, CA 2013.
+create_psy_var <- function(events, contrast_table, hrf, tr, n_volumes, upsample_factor = NULL, unlabeled_trial_type = "fixation") {
   psy_list <- list()
-  psy_list$trial_type_by_volume <- as.data.frame(create_trial_type_by_volume_list(events, tr, n_volumes))
+  psy_list$trial_type_by_volume <- as.data.frame(create_trial_type_by_volume_list(events, tr, n_volumes, unlabeled_trial_type = unlabeled_trial_type))
   psy_list$contrast_table <- as.data.frame(contrast_table)
   psy_list$contrast <- as.data.frame(contrast_code_categorical_variable(psy_list$trial_type_by_volume, as.matrix(psy_list$contrast_table))) %>% select(contains("psy"))
   psy_list$upsample <- as.data.frame(apply(psy_list$contrast, 2, function(x) upsample(x, upsample_factor)))

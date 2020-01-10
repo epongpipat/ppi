@@ -4,28 +4,21 @@
 \alias{create_ppi_var}
 \title{create_ppi_var}
 \usage{
-create_ppi_var(
-  psy_var,
-  phys_var,
-  hrf,
-  tr,
-  n_volumes,
-  upsample_factor = NULL,
-  deconvolve = TRUE
-)
+create_ppi_var(psy_var, phys_var, hrf, tr, n_volumes,
+  upsample_factor = NULL, deconvolve = TRUE)
 }
 \arguments{
-\item{psy_var}{psychological variables (e.g., contrast-coded and upsampled)}
+\item{psy_var}{psychological variable data (e.g., psy var that is contrast-coded and upsampled)}
 
-\item{phys_var}{physiological variables (e.g., detrended and upsampled)}
+\item{phys_var}{physiological variable data (e.g., psy var that is detrended and upsampled)}
 
 \item{hrf}{hemodynamic response function (hrf) time series data}
 
-\item{tr}{retrieval time (tr) in seconds}
+\item{tr}{repetition time (tr) in seconds}
 
 \item{n_volumes}{number of volumes or time points}
 
-\item{upsample_factor}{factor to upsample data by for convolution and deconvolution step}
+\item{upsample_factor}{factor to upsample data by for convolution and deconvolution step (default: NULL)}
 
 \item{deconvolve}{option to perform or not perform deconvolution step (default: TRUE)}
 }
@@ -35,3 +28,4 @@ a list of datasets for each data wrangling step of the ppi variables
 \description{
 create_ppi_var
 }
+\concept{data_wrangling_wrapper_functions}

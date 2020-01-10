@@ -1,7 +1,16 @@
+#' @title convolve_afni
+#'
+#' @param data data to convolve
+#' @param hrf hemodynamic response function (hrf) time series
+#' @param tr repition time (tr) in seconds
+#' @param n_volumes number of volumes or time points
+#' @param upsample_factor factor to upsample data for convolution step
+#'
+#' @return
+#' @export
+#' @import afnir furrr
+#' @examples
 convolve_afni <- function(data, hrf, tr, n_volumes, upsample_factor = NULL) {
-
-  library(afnir)
-  library(furrr)
 
   # create temporary working dir
   temp_dir <- paste0(tempdir(), "/temp_convolution_afni/")

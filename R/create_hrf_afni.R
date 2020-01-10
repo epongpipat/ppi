@@ -1,5 +1,5 @@
 #' @title create_hrf_afni
-#'
+#' @concept data_wrangling
 #' @param hrf name of the hemodynamic response function. can be gam, block or spmg1
 #' @param tr retrieval time (tr) in seconds
 #' @param upsample_factor number of volumes or time points
