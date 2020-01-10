@@ -1,0 +1,61 @@
+---
+title: "PPI Data Wrangling: Create Physiological Variable"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    highlight: textmate
+    theme: lumen
+    code_folding: hide
+    code_download: true
+    toc: yes
+    toc_depth: 3
+    toc_float:
+      collapsed: yes
+      smooth_scroll: yes
+---
+
+## R Libraries
+```{r}
+packages <- c("tidyverse", "furrr", "ggpubr", "ppi")
+xfun::pkg_attach(packages, install = T, message = F)
+```
+
+## Parameters
+```{r}
+hrf <- read.csv("/Volumes/shared/KK_KR_JLBS/Wave1/MRI/FMRI/PPI/hrf/SPM_upsampled_16_scaled.1D", header = F)
+tr <- 1.5
+n_volumes <- 210
+upsample_factor <- 16
+detrend_factor <- 2
+```
+
+## Phys
+```{r}
+base_dir <- "/Volumes/shared/KK_KR_JLBS/Wave1/MRI/FMRI/PPI/dj_individual_covariates/PHYS_Dosenbach160_001/"
+subj_list <- list.files(base_dir, "3tb")
+in_dir <- paste0(base_dir, subj_list, "/")
+
+df_phys <- tibble(dir = base_dir) %>%
+  mutate(subj = list(list.files(base_dir, "3tb"))) %>%
+  unnest() %>%
+  mutate(in_dir = paste0(dir, subj, "/"),
+         in_file = future_map(in_dir, function(x) list.files(x, "_eig.csv|_mean.csv"))) %>%
+  unnest() %>%
+  mutate(in_path = paste0(in_dir, in_file),
+         data = future_map(in_path, function(x) read.csv(x, header = F, col.names = "phys")),
+         phys = future_map(data, function(x) create_phys_var(x, detrend_factor, upsample_factor, hrf)))
+```
+
+## Save Data
+```{r}
+for (i in 1:nrow(df_phys)){
+  save_list_data(df_phys$phys[[i]], df_phys$in_path[[i]])
+}
+```
+
+## Save Figures
+```{r}
+for (i in 1:nrow(df_phys)) {
+  save_list_data_fig(df_phys$phys[[i]], df_phys$in_path[[i]])
+}
+```
