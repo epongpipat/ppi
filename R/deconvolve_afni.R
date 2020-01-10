@@ -15,14 +15,14 @@ deconvolve_afni <- function(data, hrf, afni_path = NULL) {
   # dir.create(temp_dir)
 
   # create temporary data file
-  in_file_data <- tempfile()
+  in_file_data <- paste0(tempfile(), ".1D")
   write.table(data, in_file_data, col.names = F, row.names = F)
 
   # create temporary hrf file
-  in_file_hrf <- tempfile()
+  in_file_hrf <- paste0(tempfile(), ".1D")
   write.table(hrf, in_file_hrf, col.names = F, row.names = F)
 
-  out_file <- tempfile()
+  out_file <- paste0(tempfile(), ".1D")
 
   afni_func <- list()
   afni_func$program <- "3dTfitter"
