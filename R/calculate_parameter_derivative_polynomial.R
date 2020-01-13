@@ -1,5 +1,5 @@
-#' calculate_parameter_temporal_derivative_polynomial
-#'
+#' @title calculate_parameter_temporal_derivative_polynomial
+#' @concept data_wrangling
 #' @param data data to have temporal derivatives and polynomial calculated
 #' @param temporal_derivative temporal derivative value (default: 1)
 #' @param polynomial polynomial value (default: 2)
