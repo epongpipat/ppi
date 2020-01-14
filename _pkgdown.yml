@@ -1,5 +1,8 @@
 destination: docs
 reference:
+  - title: Data Extraction
+    contents:
+    - has_concept("data_extraction")
   - title: Data Wrangling
     contents:
     - has_concept("data_wrangling")

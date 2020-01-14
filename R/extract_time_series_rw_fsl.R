@@ -1,4 +1,17 @@
-extract_time_series_fsl <- function(in_nii, in_mask_nii, out_path, statistic = "mean", overwrite = F) {
+#' @title extract_time_series_rw_fsl
+#' @concept data_extraction
+#' @param in_nii
+#' @param in_mask_nii
+#' @param out_path
+#' @param statistic
+#' @param overwrite
+#' @param fsl_path
+#'
+#' @return
+#' @export
+#' @import fslr
+#' @examples
+extract_time_series_rw_fsl <- function(in_nii, in_mask_nii, out_path, statistic = "mean", overwrite = F, fsl_path = NULL) {
   # check input -----
   if (!file.exists(in_nii)) {
     stop(glue("{in_nii} does not exist."))
@@ -16,19 +29,17 @@ extract_time_series_fsl <- function(in_nii, in_mask_nii, out_path, statistic = "
     stop(glue("{statistic} must be mean, eig, or eigenvariate."))
   }
 
-  # load packages -----
-  require("xfun")
-  packages <- c("fslr")
-  xfun::pkg_attach(packages, message = F, install = T)
-
   # write and run fsl command -----
-  fsl_path <- fslr::get.fsl()
+  if (is.null(fsl_path)) {
+    fsl_path <- fslr::get.fsl()
+  }
 
   if (statistic == "mean") {
     fsl_cmd <- glue("fslmeants -i {in_nii} -m {in_mask_nii} -o {out_path}")
   } else if (statistic %in% c("eig", "eigenvariate")) {
     fsl_cmd <- glue("fslmeants -i {in_nii} -m {in_mask_nii} --eig -o {out_path}")
   }
+  cat(fsl_cmd, "\n")
 
   fsl_full_cmd <- paste0(fsl_path, fsl_cmd)
   system(fsl_full_cmd)
