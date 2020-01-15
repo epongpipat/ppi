@@ -149,12 +149,16 @@
 
 
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>7500</span>:<span class='fl'>15000</span>, <span class='fl'>10</span>, <span class='no'>T</span>)/<span class='fl'>100</span>
+<span class='no'>hrf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='create_hrf_afni.html'>create_hrf_afni</a></span>(<span class='st'>"spmg1"</span>, <span class='fl'>16</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Setting afni.path to /Users/eep170030/abin</span></div><div class='output co'>#&gt; 3dDeconvolve -nodata 25 16 -polort -1 -num_stimts 1 -stim_times 1 1D:0 SPMG1 -x1D /var/folders/_2/600bt_js7d5dpsn7nbfcpy4x88r01g/T//RtmpoPOnuw/file1634c59ee82f1 -x1D_stop  </div><div class='input'><span class='fu'>convolve_afni</span>(<span class='no'>data</span>, <span class='no'>hrf</span>, <span class='fl'>1.5</span>, <span class='fl'>100</span>, <span class='fl'>16</span>)</div><div class='output co'>#&gt; waver -FILE 0.09375 /var/folders/_2/600bt_js7d5dpsn7nbfcpy4x88r01g/T//RtmpoPOnuw/file1634c447e336b.1D -input /var/folders/_2/600bt_js7d5dpsn7nbfcpy4x88r01g/T//RtmpoPOnuw/file1634c39d6ca57.1D -numout 1600 </div><div class='output co'>#&gt; logical(0)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>

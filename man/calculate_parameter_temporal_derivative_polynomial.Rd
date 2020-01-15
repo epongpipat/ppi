@@ -18,12 +18,14 @@ calculate_parameter_temporal_derivative_polynomial(
 \item{polynomial}{polynomial value (default: 2)}
 }
 \value{
-
+data.frame of original data along with its temporal derivatives and its polynomial
 }
 \description{
 calculate_parameter_temporal_derivative_polynomial
 }
 \examples{
-# to be added
+data <- data.frame(cbind(roi_1 = sample(7500:15000, 10, T)/100,
+                         roi_2 = sample(7500:15000, 10, T)/100))
+calculate_parameter_temporal_derivative_polynomial(data)
 }
 \concept{data_wrangling}

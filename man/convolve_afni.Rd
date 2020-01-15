@@ -30,4 +30,9 @@ convolve_afni(
 \description{
 convolve_afni
 }
+\examples{
+data <- sample(7500:15000, 10, T)/100
+hrf <- create_hrf_afni("spmg1", 16)
+convolve_afni(data, hrf, 1.5, 100, 16)
+}
 \concept{data_wrangling}

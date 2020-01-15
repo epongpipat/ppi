@@ -134,13 +134,33 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    
-
-
+    <p>data.frame of original data along with its temporal derivatives and its polynomial</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'># to be added
-</div></pre>
+    <pre class="examples"><div class='input'><span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(<span class='kw'>roi_1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>7500</span>:<span class='fl'>15000</span>, <span class='fl'>10</span>, <span class='no'>T</span>)/<span class='fl'>100</span>,
+                         <span class='kw'>roi_2</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>7500</span>:<span class='fl'>15000</span>, <span class='fl'>10</span>, <span class='no'>T</span>)/<span class='fl'>100</span>))
+<span class='fu'>calculate_parameter_temporal_derivative_polynomial</span>(<span class='no'>data</span>)</div><div class='output co'>#&gt;     roi_1  roi_2 roi_1_td_1 roi_2_td_1 roi_1_poly_2 roi_2_poly_2
+#&gt; 1  127.92  97.44       0.00       0.00    16363.526     9494.554
+#&gt; 2  130.26 121.12       2.34      23.68    16967.668    14670.054
+#&gt; 3  141.03  92.90      10.77     -28.22    19889.461     8630.410
+#&gt; 4   96.10 121.31     -44.93      28.41     9235.210    14716.116
+#&gt; 5   79.84  93.70     -16.26     -27.61     6374.426     8779.690
+#&gt; 6  134.89 116.72      55.05      23.02    18195.312    13623.558
+#&gt; 7  101.06  83.97     -33.83     -32.75    10213.124     7050.961
+#&gt; 8  145.70 140.89      44.64      56.92    21228.490    19849.992
+#&gt; 9   89.75 101.14     -55.95     -39.75     8055.062    10229.300
+#&gt; 10 107.72 109.98      17.97       8.84    11603.598    12095.600
+#&gt;    roi_1_td_1_poly_2 roi_2_td_1_poly_2
+#&gt; 1             0.0000            0.0000
+#&gt; 2             5.4756          560.7424
+#&gt; 3           115.9929          796.3684
+#&gt; 4          2018.7049          807.1281
+#&gt; 5           264.3876          762.3121
+#&gt; 6          3030.5025          529.9204
+#&gt; 7          1144.4689         1072.5625
+#&gt; 8          1992.7296         3239.8864
+#&gt; 9          3130.4025         1580.0625
+#&gt; 10          322.9209           78.1456</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -4,11 +4,13 @@
 #' @param temporal_derivative temporal derivative value (default: 1)
 #' @param polynomial polynomial value (default: 2)
 #'
-#' @return
+#' @return data.frame of original data along with its temporal derivatives and its polynomial
 #' @export
 #' @import dplyr
 #' @examples
-#' # to be added
+#' data <- data.frame(cbind(roi_1 = sample(7500:15000, 10, T)/100,
+#'                          roi_2 = sample(7500:15000, 10, T)/100))
+#' calculate_parameter_temporal_derivative_polynomial(data)
 calculate_parameter_temporal_derivative_polynomial <- function(data, temporal_derivative = 1, polynomial = 2) {
 
   # check parameters

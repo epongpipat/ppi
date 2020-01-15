@@ -10,6 +10,9 @@
 #' @export
 #' @import afnir furrr
 #' @examples
+#' data <- sample(7500:15000, 10, T)/100
+#' hrf <- create_hrf_afni("spmg1", 16)
+#' convolve_afni(data, hrf, 1.5, 100, 16)
 convolve_afni <- function(data, hrf, tr, n_volumes, upsample_factor = NULL, afni_path = NULL) {
 
   # create temporary data file
@@ -37,7 +40,7 @@ convolve_afni <- function(data, hrf, tr, n_volumes, upsample_factor = NULL, afni
   afni_func$opt$numout <- n_volumes
   afni_cmd <- build_afni_cmd(afni_func)
   sys_cmd <- paste0(afni_cmd, " > ", out_file)
-  execute_afni_cmd(afni_cmd, afni_path)
+  execute_afni_cmd(sys_cmd, afni_path)
 
   # read output
   df_convolved <- read.csv(out_file, header = F, col.names = "data")
