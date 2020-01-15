@@ -182,7 +182,7 @@
 
 <span class='co'># for this example, we will choose SPM's default canonical hrf and upsample factor of 16</span>
 <span class='no'>upsample_factor</span> <span class='kw'>&lt;-</span> <span class='fl'>16</span>
-<span class='no'>hrf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='create_hrf_afni.html'>create_hrf_afni</a></span>(<span class='st'>"spmg1"</span>, <span class='no'>tr</span>, <span class='no'>upsample_factor</span>)</div><div class='output co'>#&gt; 3dDeconvolve -nodata 400 0.1875 -polort -1 -num_stimts 1 -stim_times 1 1D:0 SPMG1 -x1D /var/folders/_2/600bt_js7d5dpsn7nbfcpy4x88r01g/T//RtmpoPOnuw/file1634c1b58f805 -x1D_stop  </div><div class='input'>
+<span class='no'>hrf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='create_hrf_afni.html'>create_hrf_afni</a></span>(<span class='st'>"spmg1"</span>, <span class='no'>tr</span>, <span class='no'>upsample_factor</span>)</div><div class='output co'>#&gt; 3dDeconvolve -nodata 400 0.1875 -polort -1 -num_stimts 1 -stim_times 1 1D:0 SPMG1 -x1D /var/folders/_2/600bt_js7d5dpsn7nbfcpy4x88r01g/T//RtmpZMePzy/file17b217ecbc225 -x1D_stop  </div><div class='input'>
 <span class='co'># run function</span>
 <span class='no'>psy_trial_type_by_volume</span> <span class='kw'>&lt;-</span> <span class='fu'>create_trial_type_by_volume_list</span>(<span class='kw'>events</span> <span class='kw'>=</span> <span class='no'>psy_events</span>,
                           <span class='kw'>tr</span> <span class='kw'>=</span> <span class='no'>tr</span>,

@@ -1,20 +1,24 @@
 #' @title save_list_data
-#'
-#' @param data
-#' @param in_file
-#'
-#' @return
+#' @concept helper
+#' @param data list data to save
+#' @param out_dir directory to save list data
+#' @param out_prefix prefix of files to save (default: NULL)
 #' @export
 #'
-#' @examples
-save_list_data <- function(data, in_file) {
-  if (is.list(data)) {
-    names <- names(data)
-    for (j in 1:length(data)) {
-      out_path <- str_replace(in_file, ".csv", paste0("_", names[j], ".csv"))
-      write.csv(data[[j]], out_path, row.names = F)
-    }
-  } else {
+save_list_data <- function(data, out_dir, out_prefix = NULL) {
+
+  if (!is.list(data)) {
     stop("data must be a list")
+  }
+
+  names <- names(data)
+
+  if (!is.null(out_prefix)) {
+    out_dir <- paste0(out_dir, out_prefix)
+  }
+
+  for (j in 1:length(data)) {
+    out_path <- paste0(out_dir, names[j], ".csv")
+    write.csv(data[[j]], out_path, row.names = F)
   }
 }

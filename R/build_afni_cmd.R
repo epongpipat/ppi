@@ -1,5 +1,5 @@
 #' build_afni_cmd
-#' @concept support
+#' @concept helper
 #' @param afni_list list that contains the program name and options to create command
 #' @return return afni command
 #' @export

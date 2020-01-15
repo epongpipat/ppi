@@ -22,4 +22,4 @@ build_afni_cmd(afni_list = list(program = "3dcalc",
                                            expr = "'(a*b)'"),
                                            prefix = c.nii.gz))
 }
-\concept{support}
+\concept{helper}

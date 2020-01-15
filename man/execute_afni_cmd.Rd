@@ -17,3 +17,4 @@ execute_afni_cmd
 \examples{
 to be added
 }
+\concept{helper}
