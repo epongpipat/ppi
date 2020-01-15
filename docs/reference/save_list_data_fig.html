@@ -109,14 +109,26 @@
     <p>save_list_data_fig</p>
     </div>
 
-    <pre class="usage"><span class='fu'>save_list_data_fig</span>(<span class='no'>data</span>, <span class='no'>in_file</span>)</pre>
+    <pre class="usage"><span class='fu'>save_list_data_fig</span>(<span class='no'>data</span>, <span class='no'>out_dir</span>, <span class='kw'>out_prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>out_suffix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>in_file</th>
-      <td></td>
+      <th>data</th>
+      <td><p>list data to create and save time series figure</p></td>
+    </tr>
+    <tr>
+      <th>out_dir</th>
+      <td><p>directory to save figures</p></td>
+    </tr>
+    <tr>
+      <th>out_prefix</th>
+      <td><p>prefix of figures to save (default: NULL)</p></td>
+    </tr>
+    <tr>
+      <th>out_suffix</th>
+      <td><p>suffix of figures to save (default: NULL)</p></td>
     </tr>
     </table>
 
