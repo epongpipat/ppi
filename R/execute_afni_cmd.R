@@ -1,4 +1,4 @@
-#' @execute_afni_cmd
+#' @title execute_afni_cmd
 #'
 #' @param afni_cmd afni command to execute within R
 #' @param afni_path afni path (default: NULL). the default option will use \code{afnir::get_afni()} to obtain the path
