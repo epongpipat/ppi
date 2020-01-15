@@ -13,7 +13,7 @@ save_list_data(data, out_dir, out_prefix = NULL, out_suffix = NULL)
 
 \item{out_prefix}{prefix of files to save (default: NULL)}
 
-\item{out_suffix}{suffix of the files to save (default: NULL)}
+\item{out_suffix}{suffix of files to save (default: NULL)}
 }
 \value{
 

@@ -4,10 +4,16 @@
 \alias{save_list_data_fig}
 \title{save_list_data_fig}
 \usage{
-save_list_data_fig(data, in_file)
+save_list_data_fig(data, out_dir, out_prefix = NULL, out_suffix = NULL)
 }
 \arguments{
-\item{in_file}{}
+\item{data}{list data to create and save time series figure}
+
+\item{out_dir}{directory to save figures}
+
+\item{out_prefix}{prefix of figures to save (default: NULL)}
+
+\item{out_suffix}{suffix of figures to save (default: NULL)}
 }
 \value{
 
@@ -15,3 +21,4 @@ save_list_data_fig(data, in_file)
 \description{
 save_list_data_fig
 }
+\concept{helper}

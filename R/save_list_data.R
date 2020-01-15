@@ -3,7 +3,7 @@
 #' @param data list data to save
 #' @param out_dir directory to save list data
 #' @param out_prefix prefix of files to save (default: NULL)
-#' @param out_suffix suffix of the files to save (default: NULL)
+#' @param out_suffix suffix of files to save (default: NULL)
 #' @return
 #' @export
 #' @examples
