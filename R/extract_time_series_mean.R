@@ -1,38 +1,27 @@
-extract_time_series_mean <- function(in_nii, in_mask_nii, out_path, overwrite = F) {
+#' @title extract_time_series_mean
+#' @concept data_extraction
+#' @param data data to extract mean time series from
+#' @param mask mask to apply and extract mean time series from. mask can also be a 4D array with a different regions of interest in each 4th dimension
+#' @param labels labels the correspond to the mask regions of interest (default: NULL)
+#'
+#' @return data.frame of time/volume (row) by region
+#' @export
+#' @import dplyr
+#' @examples
+extract_time_series_mean <- function(data, mask, labels = NULL) {
 
-  # check input -----
-  if (!file.exists(in_nii)) {
-    stop(glue("{in_nii} does not exist."))
+  if (length(dim(mask)) == 4) {
+    data_ts <- apply(data, 4, function(x) apply(mask, 4, function(y) x[y > 0] %>% .[. > 0] %>% mean())) %>% t() %>% as.data.frame()
+  } else {
+    data_ts <- apply(data, 4, function(x) x[mask > 0] %>% .[. > 0] %>% mean()) %>% as.data.frame()
   }
 
-  if (!file.exists(in_mask_nii)) {
-    stop(glue("{in_mask} does not exist."))
+  if (!is.null(labels)) {
+    colnames(data_ts) <- labels
+  } else {
+    colnames(data_ts) <- paste0("roi_", 1:ncol(data_ts))
   }
 
-  if (file.exists(out_path) & overwrite == F) {
-    stop(glue("{out_path} already exists and overwrite is set to FALSE."))
-  }
+  return(data_ts)
 
-  # load packages -----
-  require("xfun")
-  packages <- c("oro.nifti")
-  xfun::pkg_attach(packages, message = F, install = T)
-
-  df_file <- oro.nifti::readNIfTI(in_nii)
-  df_mask <- oro.nifti::readNIfTI(in_mask_nii)
-
-  bold_mean <- NULL
-  for (i in 1:dim(df_file)[4]) {
-    df_vol <- df_file[,,,i]
-    temp_bold_voxels <- df_vol[df_mask@.Data == 1]
-    temp_bold_voxels_thr <- temp_bold_voxels[temp_bold_voxels > 0]
-
-    # calculate mean
-    temp_bold_mean <- mean(temp_bold_voxels_thr)
-    bold_mean <- c(bold_mean, temp_bold_mean)
-  }
-
-  bold_mean <- tibble(bold_mean)
-
-  write_csv(bold_mean, out_path, col_names = F)
 }

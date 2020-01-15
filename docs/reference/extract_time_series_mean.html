@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>create_hrf_afni — create_hrf_afni • ppi</title>
+<title>extract_time_series_mean — extract_time_series_mean • ppi</title>
 
 
 <!-- jquery -->
@@ -35,8 +35,8 @@
 
 
 
-<meta property="og:title" content="create_hrf_afni — create_hrf_afni" />
-<meta property="og:description" content="create_hrf_afni" />
+<meta property="og:title" content="extract_time_series_mean — extract_time_series_mean" />
+<meta property="og:description" content="extract_time_series_mean" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -100,55 +100,44 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>create_hrf_afni</h1>
+    <h1>extract_time_series_mean</h1>
     
-    <div class="hidden name"><code>create_hrf_afni.Rd</code></div>
+    <div class="hidden name"><code>extract_time_series_mean.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>create_hrf_afni</p>
+    <p>extract_time_series_mean</p>
     </div>
 
-    <pre class="usage"><span class='fu'>create_hrf_afni</span>(<span class='no'>hrf</span>, <span class='no'>tr</span>, <span class='kw'>upsample_factor</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>extract_time_series_mean</span>(<span class='no'>data</span>, <span class='no'>mask</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>hrf</th>
-      <td><p>name of the hemodynamic response function. can be gam, block or spmg1</p></td>
+      <th>data</th>
+      <td><p>data to extract mean time series from</p></td>
     </tr>
     <tr>
-      <th>tr</th>
-      <td><p>retrieval time (tr) in seconds</p></td>
+      <th>mask</th>
+      <td><p>mask to apply and extract mean time series from. mask can also be a 4D array with a different regions of interest in each 4th dimension</p></td>
     </tr>
     <tr>
-      <th>upsample_factor</th>
-      <td><p>number of volumes or time points</p></td>
+      <th>labels</th>
+      <td><p>labels the correspond to the mask regions of interest (default: NULL)</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    
+    <p>data.frame of time/volume (row) by region</p>
 
-
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>hrf</span> <span class='kw'>&lt;-</span> <span class='fu'>create_hrf_afni</span>(<span class='st'>"spmg1"</span>, <span class='fl'>1.5</span>, <span class='fl'>16</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Setting afni.path to /Users/eep170030/abin</span></div><div class='output co'>#&gt; 3dDeconvolve -nodata 400 0.09375 -polort -1 -num_stimts 1 -stim_times 1 1D:0 SPMG1 -x1D /var/folders/_2/600bt_js7d5dpsn7nbfcpy4x88r01g/T//RtmpA3U88i/file68306372b2b5 -x1D_stop  </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>hrf</span>)</div><div class='output co'>#&gt;            hrf
-#&gt; 1 0.000000e+00
-#&gt; 2 3.132328e-07
-#&gt; 3 9.126454e-06
-#&gt; 4 6.310202e-05
-#&gt; 5 2.421151e-04
-#&gt; 6 6.727547e-04</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
-      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>

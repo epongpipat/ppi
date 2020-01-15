@@ -14,7 +14,7 @@ extract_time_series_rw_fsl(
 )
 }
 \arguments{
-\item{overwrite}{}
+\item{fsl_path}{}
 }
 \value{
 
