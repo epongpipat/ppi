@@ -4,7 +4,7 @@
 \alias{save_list_data}
 \title{save_list_data}
 \usage{
-save_list_data(data, out_dir, out_prefix = NULL)
+save_list_data(data, out_dir, out_prefix = NULL, out_suffix = NULL)
 }
 \arguments{
 \item{data}{list data to save}
@@ -12,6 +12,11 @@ save_list_data(data, out_dir, out_prefix = NULL)
 \item{out_dir}{directory to save list data}
 
 \item{out_prefix}{prefix of files to save (default: NULL)}
+
+\item{out_suffix}{suffix of the files to save (default: NULL)}
+}
+\value{
+
 }
 \description{
 save_list_data

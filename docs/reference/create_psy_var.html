@@ -198,7 +198,7 @@
 
 <span class='co'># for this example, we will choose SPM's default canonical hrf and upsample factor of 16</span>
 <span class='no'>upsample_factor</span> <span class='kw'>&lt;-</span> <span class='fl'>16</span>
-<span class='no'>hrf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='create_hrf_afni.html'>create_hrf_afni</a></span>(<span class='st'>"spmg1"</span>, <span class='no'>tr</span>, <span class='no'>upsample_factor</span>)</div><div class='output co'>#&gt; 3dDeconvolve -nodata 400 0.1875 -polort -1 -num_stimts 1 -stim_times 1 1D:0 SPMG1 -x1D /var/folders/_2/600bt_js7d5dpsn7nbfcpy4x88r01g/T//RtmpZMePzy/file17b21293c3c9a -x1D_stop  </div><div class='input'>
+<span class='no'>hrf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='create_hrf_afni.html'>create_hrf_afni</a></span>(<span class='st'>"spmg1"</span>, <span class='no'>tr</span>, <span class='no'>upsample_factor</span>)</div><div class='output co'>#&gt; 3dDeconvolve -nodata 400 0.1875 -polort -1 -num_stimts 1 -stim_times 1 1D:0 SPMG1 -x1D /var/folders/_2/600bt_js7d5dpsn7nbfcpy4x88r01g/T//RtmpAYcSNF/file7b30c49568 -x1D_stop  </div><div class='input'>
 <span class='co'># run function</span>
 <span class='no'>psy_var</span> <span class='kw'>&lt;-</span> <span class='fu'>create_psy_var</span>(<span class='kw'>events</span> <span class='kw'>=</span> <span class='no'>psy_events</span>,
                           <span class='kw'>contrast_table</span> <span class='kw'>=</span> <span class='no'>psy_contrast_table</span>,
@@ -206,9 +206,9 @@
                           <span class='kw'>tr</span> <span class='kw'>=</span> <span class='no'>tr</span>,
                           <span class='kw'>n_volumes</span> <span class='kw'>=</span> <span class='no'>n_volumes</span>,
                           <span class='kw'>upsample_factor</span> <span class='kw'>=</span> <span class='no'>upsample_factor</span>,
-                          <span class='kw'>unlabeled_trial_type</span> <span class='kw'>=</span> <span class='st'>"response"</span>)</div><div class='output co'>#&gt; waver -FILE 0.1875 /var/folders/_2/600bt_js7d5dpsn7nbfcpy4x88r01g/T//RtmpZMePzy/file17b2145987c3f.1D -input /var/folders/_2/600bt_js7d5dpsn7nbfcpy4x88r01g/T//RtmpZMePzy/file17b2131aeb79c.1D -numout 1680 
-#&gt; waver -FILE 0.1875 /var/folders/_2/600bt_js7d5dpsn7nbfcpy4x88r01g/T//RtmpZMePzy/file17b21175ae093.1D -input /var/folders/_2/600bt_js7d5dpsn7nbfcpy4x88r01g/T//RtmpZMePzy/file17b216684c7d2.1D -numout 1680 
-#&gt; waver -FILE 0.1875 /var/folders/_2/600bt_js7d5dpsn7nbfcpy4x88r01g/T//RtmpZMePzy/file17b2115a5cc80.1D -input /var/folders/_2/600bt_js7d5dpsn7nbfcpy4x88r01g/T//RtmpZMePzy/file17b211632b26.1D -numout 1680 </div><div class='input'>
+                          <span class='kw'>unlabeled_trial_type</span> <span class='kw'>=</span> <span class='st'>"response"</span>)</div><div class='output co'>#&gt; waver -FILE 0.1875 /var/folders/_2/600bt_js7d5dpsn7nbfcpy4x88r01g/T//RtmpAYcSNF/file7b5e4468b3.1D -input /var/folders/_2/600bt_js7d5dpsn7nbfcpy4x88r01g/T//RtmpAYcSNF/file7b3a2cf7db.1D -numout 1680 
+#&gt; waver -FILE 0.1875 /var/folders/_2/600bt_js7d5dpsn7nbfcpy4x88r01g/T//RtmpAYcSNF/file7b1d84975b.1D -input /var/folders/_2/600bt_js7d5dpsn7nbfcpy4x88r01g/T//RtmpAYcSNF/file7b277161.1D -numout 1680 
+#&gt; waver -FILE 0.1875 /var/folders/_2/600bt_js7d5dpsn7nbfcpy4x88r01g/T//RtmpAYcSNF/file7b3703d14.1D -input /var/folders/_2/600bt_js7d5dpsn7nbfcpy4x88r01g/T//RtmpAYcSNF/file7be1114db.1D -numout 1680 </div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>psy_var</span>)</div><div class='output co'>#&gt;                      Length Class      Mode
 #&gt; trial_type_by_volume 2      data.frame list
 #&gt; contrast_table       3      data.frame list

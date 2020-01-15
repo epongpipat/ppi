@@ -3,9 +3,11 @@
 #' @param data list data to save
 #' @param out_dir directory to save list data
 #' @param out_prefix prefix of files to save (default: NULL)
+#' @param out_suffix suffix of the files to save (default: NULL)
+#' @return
 #' @export
-#'
-save_list_data <- function(data, out_dir, out_prefix = NULL) {
+#' @examples
+save_list_data <- function(data, out_dir, out_prefix = NULL, out_suffix = NULL) {
 
   if (!is.list(data)) {
     stop("data must be a list")
@@ -18,7 +20,15 @@ save_list_data <- function(data, out_dir, out_prefix = NULL) {
   }
 
   for (j in 1:length(data)) {
-    out_path <- paste0(out_dir, names[j], ".csv")
+
+
+    if (!is.null(out_suffix)) {
+      out_ending <- paste0(out_suffix, ".csv")
+    } else {
+      out_ending <- ".csv"
+    }
+
+    out_path <- paste0(out_dir, names[j], out_ending)
     write.csv(data[[j]], out_path, row.names = F)
   }
 }
