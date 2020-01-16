@@ -11,6 +11,13 @@
 #' @examples
 #' hrf <- create_hrf_afni("spmg1", 1.5, 16)
 #' head(hrf)
+#'
+#' # visualize
+#' as.data.frame(hrf) %>%
+#'   mutate(vol = row_number()) %>%
+#'   ggplot(., aes(vol, hrf)) +
+#'   geom_line() +
+#'   theme_minimal()
 create_hrf_afni <- function(hrf, tr, upsample_factor = NULL) {
 
   df_hrf <- tribble(~hrf_name, ~hrf_duration,

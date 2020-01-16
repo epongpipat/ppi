@@ -9,7 +9,7 @@
 #' @param tr repition time (tr) in seconds
 #' @param n_volumes number of volumes or time points
 #' @param upsample_factor factor to upsample psy and phys data for convolution and deconvolution step (default: NULL)
-#' @param deconvolve perform deconvolution of phys and convolve of ppi term (also known as deconvolve-convolve or reconvolve step)
+#' @param deconvolve perform deconvolution of phys and convolve of ppi term (also known as deconvolve-convolve or reconvolve step) (default: TRUE)
 #' @param nuisance_var data of nuisance variables to include in design matrix
 #' @param afni_path path to afni directory (default: NULL)
 #' @return
@@ -17,15 +17,45 @@
 #'
 #' @examples
 #' # to be added
-data_wrangling <- function(psy_events_data, psy_contrast_table, phys_data,
-                           detrend_factor, hrf_name, tr, n_volumes,
-                           upsample_factor = NULL, deconvolve = TRUE,
-                           nuisance_var = NULL, afni_path = NULL) {
+data_wrangling <- function(psy_events_data,
+                           psy_unlabeled_trial_type,
+                           psy_contrast_table,
+                           phys_data,
+                           detrend_factor,
+                           hrf_name,
+                           tr,
+                           n_volumes,
+                           upsample_factor = NULL,
+                           deconvolve = TRUE,
+                           nuisance_var = NULL,
+                           afni_path = NULL) {
+
+  # # mri parameters
+  # tr <- 3
+  # n_volumes <- 105
+  #
+  # psy_events <- readr::read_tsv(url("https://openneuro.org/crn/datasets/ds000171/snapshots/00001/files/sub-control01:func:sub-control01_task-music_run-1_events.tsv")) %>%
+  #   mutate(trial_type = as.factor(trial_type))
+  #
+  # psy_contrast_table <- cbind(stimulus_vs_response = c(1, 1, -3, 1)/4,
+  #                             music_vs_tones = c(1, 1, 0, -2)/3,
+  #                             positive_music_vs_negative_music = c(-1, 1, 0, 0)/2)
+  #
+  # # for this example, we will choose SPM's default canonical hrf and upsample factor of 16
+  # upsample_factor <- 16
+  # hrf <- create_hrf_afni("spmg1", tr, upsample_factor)
+  #
+  # phys_left_parietal <- "~/Desktop/sub-control01_task-music_run-1_bold_space-subj_vox-32-24-38.csv"
+  #
+  # phys_data <- read_csv(phys_left_parietal, col_names = "seed")
+  # afni_path <- NULL
+  # psy_unlabeled_trial_type <- "response"
+
   data_wrangling <- list()
   data_wrangling$hrf <- create_hrf_afni(hrf_name, tr, upsample_factor)
   data_wrangling$psy_var <- create_psy_var(psy_events_data, psy_contrast_table,
                                            data_wrangling$hrf, tr, n_volumes,
-                                           upsample_factor, afni_path)
+                                           upsample_factor, psy_unlabeled_trial_type, afni_path)
   data_wrangling$phys_var <- create_phys_var(phys_data, detrend_factor,
                                              upsample_factor, data_wrangling$hrf, afni_path)
 

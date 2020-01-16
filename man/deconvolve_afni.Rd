@@ -13,9 +13,6 @@ deconvolve_afni(data, hrf, afni_path = NULL)
 
 \item{afni_path}{path to afni directory (default: NULL)}
 }
-\value{
-
-}
 \description{
 deconvolve_afni
 }

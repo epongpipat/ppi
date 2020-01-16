@@ -11,9 +11,6 @@ contrast_code_categorical_variable(data, contrast)
 
 \item{contrast}{contrast code}
 }
-\value{
-
-}
 \description{
 contrast_code_categorical_variable
 }

@@ -11,9 +11,6 @@ downsample(data, downsample_factor)
 
 \item{downsample_factor}{factor to downsample data}
 }
-\value{
-
-}
 \description{
 downsample
 }
