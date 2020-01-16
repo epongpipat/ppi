@@ -4,8 +4,13 @@
 \alias{create_phys_var}
 \title{create_phys_var}
 \usage{
-create_phys_var(phys, detrend_factor, upsample_factor = NULL, hrf,
-  afni_path = NULL)
+create_phys_var(
+  phys,
+  detrend_factor,
+  upsample_factor = NULL,
+  hrf,
+  afni_path = NULL
+)
 }
 \arguments{
 \item{phys}{time series data}

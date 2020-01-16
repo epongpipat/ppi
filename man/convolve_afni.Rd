@@ -4,8 +4,14 @@
 \alias{convolve_afni}
 \title{convolve_afni}
 \usage{
-convolve_afni(data, hrf, tr, n_volumes, upsample_factor = NULL,
-  afni_path = NULL)
+convolve_afni(
+  data,
+  hrf,
+  tr,
+  n_volumes,
+  upsample_factor = NULL,
+  afni_path = NULL
+)
 }
 \arguments{
 \item{data}{data to convolve}
@@ -17,6 +23,9 @@ convolve_afni(data, hrf, tr, n_volumes, upsample_factor = NULL,
 \item{n_volumes}{number of volumes or time points}
 
 \item{upsample_factor}{factor to upsample data for convolution step}
+}
+\value{
+
 }
 \description{
 convolve_afni

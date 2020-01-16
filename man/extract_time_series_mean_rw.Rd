@@ -4,8 +4,13 @@
 \alias{extract_time_series_mean_rw}
 \title{extract_time_series_mean_rw}
 \usage{
-extract_time_series_mean_rw(in_path_data, in_path_mask,
-  in_path_labels = NULL, out_path, overwrite = FALSE)
+extract_time_series_mean_rw(
+  in_path_data,
+  in_path_mask,
+  in_path_labels = NULL,
+  out_path,
+  overwrite = FALSE
+)
 }
 \arguments{
 \item{in_path_data}{path to nifti data for time series extraction}
@@ -17,6 +22,9 @@ extract_time_series_mean_rw(in_path_data, in_path_mask,
 \item{out_path}{path to output .csv file of time/volume (rows) by regions of interest (column)}
 
 \item{overwrite}{option to overwrite out_path file (default: FALSE)}
+}
+\value{
+
 }
 \description{
 extract_time_series_mean_rw

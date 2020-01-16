@@ -13,6 +13,9 @@ create_hrf_afni(hrf, tr, upsample_factor = NULL)
 
 \item{upsample_factor}{number of volumes or time points}
 }
+\value{
+
+}
 \description{
 create_hrf_afni
 }
@@ -21,10 +24,6 @@ hrf <- create_hrf_afni("spmg1", 1.5, 16)
 head(hrf)
 
 # visualize
-as.data.frame(hrf) \%>\%
-  mutate(vol = row_number()) \%>\%
-  ggplot(., aes(vol, hrf)) +
-  geom_line() +
-  theme_minimal()
+create_ts_fig(hrf, "SPMG1")
 }
 \concept{data_wrangling}

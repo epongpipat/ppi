@@ -5,7 +5,7 @@
 #'
 #' @return time series figure with volume on the x-axis and value on the y-axis
 #' @export
-#' @import ggplot2 dplyr
+#' @import ggplot2 dplyr stringr
 #' @examples
 create_ts_fig <- function(data, title = NULL) {
   if (ncol(data) == 1) {

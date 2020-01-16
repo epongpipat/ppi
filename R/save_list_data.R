@@ -13,6 +13,10 @@ save_list_data <- function(data, out_dir, out_prefix = NULL, out_suffix = NULL) 
     stop("data must be a list")
   }
 
+  if (!dir.exists(out_dir)) {
+    dir.create(out_dir, recursive = T)
+  }
+
   names <- names(data)
 
   if (!is.null(out_prefix)) {

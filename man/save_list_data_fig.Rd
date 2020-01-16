@@ -15,6 +15,9 @@ save_list_data_fig(data, out_dir, out_prefix = NULL, out_suffix = NULL)
 
 \item{out_suffix}{suffix of figures to save (default: NULL)}
 }
+\value{
+
+}
 \description{
 save_list_data_fig
 }

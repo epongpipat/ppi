@@ -5,12 +5,12 @@
 #' @param psy_contrast_table contrast code
 #' @param phys_data time series data of physiological variable (seed ROI)
 #' @param detrend_factor factor to detrend time series
-#' @param hrf_name name of hemodynamic response function (hrf) to use during convolution and deconvolution step
+#' @param hrf hemodynamic response function time series data for convolution and deconvolution step
 #' @param tr repition time (tr) in seconds
 #' @param n_volumes number of volumes or time points
 #' @param upsample_factor factor to upsample psy and phys data for convolution and deconvolution step (default: NULL)
 #' @param deconvolve perform deconvolution of phys and convolve of ppi term (also known as deconvolve-convolve or reconvolve step) (default: TRUE)
-#' @param nuisance_var data of nuisance variables to include in design matrix
+#' @param nuisance_var data of nuisance variables to include in design matrix (default: NULL)
 #' @param afni_path path to afni directory (default: NULL)
 #' @return
 #' @export
@@ -22,7 +22,7 @@ data_wrangling <- function(psy_events_data,
                            psy_contrast_table,
                            phys_data,
                            detrend_factor,
-                           hrf_name,
+                           hrf,
                            tr,
                            n_volumes,
                            upsample_factor = NULL,
@@ -52,7 +52,7 @@ data_wrangling <- function(psy_events_data,
   # psy_unlabeled_trial_type <- "response"
 
   data_wrangling <- list()
-  data_wrangling$hrf <- create_hrf_afni(hrf_name, tr, upsample_factor)
+  data_wrangling$hrf <- hrf
   data_wrangling$psy_var <- create_psy_var(psy_events_data, psy_contrast_table,
                                            data_wrangling$hrf, tr, n_volumes,
                                            upsample_factor, psy_unlabeled_trial_type, afni_path)
