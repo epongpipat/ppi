@@ -2,7 +2,7 @@
 % Please edit documentation in R/save_list_data_fig.R
 \name{save_list_data_fig}
 \alias{save_list_data_fig}
-\title{save_list_data_fig}
+\title{save_ts_fig_from_list_data}
 \usage{
 save_list_data_fig(data, out_dir, out_prefix = NULL, out_suffix = NULL)
 }
@@ -19,6 +19,6 @@ save_list_data_fig(data, out_dir, out_prefix = NULL, out_suffix = NULL)
 
 }
 \description{
-save_list_data_fig
+save_ts_fig_from_list_data
 }
 \concept{helper}

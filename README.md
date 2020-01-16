@@ -26,9 +26,10 @@ This package relies on a variety of R packages (i.e., `tidyverse`, `afnir`, `fur
 
 Note: AFNI and FSL functions will eventually (hopefully) be replaced so that the package only uses R.
 
-## References for PPI:
+## PPI References:
 
 Friston, K. J., Buechel, C., Fink, G. R., Morris, J., Rolls, E., & Dolan, R. J. (1997). Psychophysiological and modulatory interactions in neuroimaging. NeuroImage, 6(3), 218–229. https://doi.org/10.1006/nimg.1997.0291
+
 Gitelman, D. R., Penny, W. D., Ashburner, J., & Friston, K. J. (2003). Modeling regional and psychophysiologic interactions in fMRI: The importance of hemodynamic deconvolution. NeuroImage, 19(1), 200–207. https://doi.org/10.1016/S1053-8119(03)00058-2
 
 McLaren, D. G., Ries, M. L., Xu, G., & Johnson, S. C. (2012). A generalized form of context-dependent psychophysiological interactions (gPPI): A comparison to standard approaches. NeuroImage, 61(4), 1277–1286. https://doi.org/10.1016/j.neuroimage.2012.03.068

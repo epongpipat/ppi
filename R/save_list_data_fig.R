@@ -1,4 +1,4 @@
-#' @title save_list_data_fig
+#' @title save_ts_fig_from_list_data
 #' @concept helper
 #' @param data list data to create and save time series figure
 #' @param out_dir directory to save figures
