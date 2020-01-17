@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>convolve_afni — convolve_afni • ppi</title>
+<title>scale_min_max — scale_min_max • ppi</title>
 
 
 <!-- jquery -->
@@ -35,8 +35,8 @@
 
 
 
-<meta property="og:title" content="convolve_afni — convolve_afni" />
-<meta property="og:description" content="convolve_afni" />
+<meta property="og:title" content="scale_min_max — scale_min_max" />
+<meta property="og:description" content="scale_min_max" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -100,46 +100,31 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>convolve_afni</h1>
+    <h1>scale_min_max</h1>
     
-    <div class="hidden name"><code>convolve_afni.Rd</code></div>
+    <div class="hidden name"><code>scale_min_max.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>convolve_afni</p>
+    <p>scale_min_max</p>
     </div>
 
-    <pre class="usage"><span class='fu'>convolve_afni</span>(
-  <span class='no'>data</span>,
-  <span class='no'>hrf</span>,
-  <span class='no'>tr</span>,
-  <span class='no'>n_volumes</span>,
-  <span class='kw'>upsample_factor</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>afni_path</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
-)</pre>
+    <pre class="usage"><span class='fu'>scale_min_max</span>(<span class='no'>data</span>, <span class='kw'>min</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>max</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>data to convolve</p></td>
+      <td><p>data to scale</p></td>
     </tr>
     <tr>
-      <th>hrf</th>
-      <td><p>hemodynamic response function (hrf) time series</p></td>
+      <th>min</th>
+      <td><p>minimum value of the data (default: NULL)</p></td>
     </tr>
     <tr>
-      <th>tr</th>
-      <td><p>repition time (tr) in seconds</p></td>
-    </tr>
-    <tr>
-      <th>n_volumes</th>
-      <td><p>number of volumes or time points</p></td>
-    </tr>
-    <tr>
-      <th>upsample_factor</th>
-      <td><p>factor to upsample data for convolution step</p></td>
+      <th>max</th>
+      <td><p>maximum value of the data (default: NULL)</p></td>
     </tr>
     </table>
 
@@ -149,16 +134,12 @@
 
 
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>7500</span>:<span class='fl'>15000</span>, <span class='fl'>10</span>, <span class='no'>T</span>)/<span class='fl'>100</span>
-<span class='no'>hrf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='create_hrf_afni.html'>create_hrf_afni</a></span>(<span class='st'>"spmg1"</span>, <span class='fl'>16</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Setting afni.path to /Users/eep170030/abin</span></div><div class='output co'>#&gt; 3dDeconvolve -nodata 25 16 -polort -1 -num_stimts 1 -stim_times 1 1D:0 SPMG1 -x1D /var/folders/_2/600bt_js7d5dpsn7nbfcpy4x88r01g/T//RtmpzcVDLI/file6f463a4e3c49 -x1D_stop  </div><div class='input'><span class='fu'>convolve_afni</span>(<span class='no'>data</span>, <span class='no'>hrf</span>, <span class='fl'>1.5</span>, <span class='fl'>100</span>, <span class='fl'>16</span>)</div><div class='output co'>#&gt; waver -FILE 0.09375 /var/folders/_2/600bt_js7d5dpsn7nbfcpy4x88r01g/T//RtmpzcVDLI/file6f461a00a7e8.1D -input /var/folders/_2/600bt_js7d5dpsn7nbfcpy4x88r01g/T//RtmpzcVDLI/file6f466657fa86.1D -numout 1600 </div><div class='output co'>#&gt; logical(0)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
-      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
