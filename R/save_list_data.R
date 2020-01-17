@@ -7,7 +7,7 @@
 #' @return
 #' @export
 #' @examples
-save_list_data <- function(data, out_dir, out_prefix = NULL, out_suffix = NULL) {
+save_list_data <- function(data, out_dir, out_prefix = NULL, out_suffix = NULL, col_names = TRUE) {
 
   if (!is.list(data)) {
     stop("data must be a list")
@@ -33,6 +33,8 @@ save_list_data <- function(data, out_dir, out_prefix = NULL, out_suffix = NULL) 
     }
 
     out_path <- paste0(out_dir, names[j], out_ending)
-    write.csv(data[[j]], out_path, row.names = F)
+
+
+    write.csv(data[[j]], out_path, row.names = FALSE, col.names = col_names)
   }
 }

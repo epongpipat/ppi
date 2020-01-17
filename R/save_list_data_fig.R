@@ -32,7 +32,7 @@ save_list_data_fig <- function(data, out_dir, out_prefix = NULL, out_suffix = NU
     fig <- create_ts_fig(data[[j]], title = names[j])
 
     out_path <- paste0(out_dir, names[j], out_ending)
-    ggsave(out_path, fig, width = 6, height = 2 * ncol(data[[j]]), units = "in")
+    ggsave(out_path, fig, width = 6, height = 2 * ncol(data[[j]]), units = "in", limitsize = FALSE)
 
   }
 
