@@ -4,20 +4,11 @@
 \alias{extract_time_series_rw_fsl}
 \title{extract_time_series_rw_fsl}
 \usage{
-extract_time_series_rw_fsl(
-  in_nii,
-  in_mask_nii,
-  out_path,
-  statistic = "mean",
-  overwrite = F,
-  fsl_path = NULL
-)
+extract_time_series_rw_fsl(in_nii, in_mask_nii, out_path,
+  statistic = "mean", overwrite = F, fsl_path = NULL)
 }
 \arguments{
 \item{fsl_path}{}
-}
-\value{
-
 }
 \description{
 extract_time_series_rw_fsl

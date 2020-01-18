@@ -28,49 +28,69 @@ data_wrangling <- function(psy_events_data,
                            upsample_factor = NULL,
                            deconvolve = TRUE,
                            nuisance_var = NULL,
-                           afni_path = NULL) {
+                           afni_path = NULL,
+                           afni_quiet = FALSE) {
 
-  # # mri parameters
-  # tr <- 3
-  # n_volumes <- 105
-  #
-  # psy_events <- readr::read_tsv(url("https://openneuro.org/crn/datasets/ds000171/snapshots/00001/files/sub-control01:func:sub-control01_task-music_run-1_events.tsv")) %>%
-  #   mutate(trial_type = as.factor(trial_type))
-  #
-  # psy_contrast_table <- cbind(stimulus_vs_response = c(1, 1, -3, 1)/4,
-  #                             music_vs_tones = c(1, 1, 0, -2)/3,
-  #                             positive_music_vs_negative_music = c(-1, 1, 0, 0)/2)
-  #
-  # # for this example, we will choose SPM's default canonical hrf and upsample factor of 16
-  # upsample_factor <- 16
-  # hrf <- create_hrf_afni("spmg1", tr, upsample_factor)
-  #
-  # phys_left_parietal <- "~/Desktop/sub-control01_task-music_run-1_bold_space-subj_vox-32-24-38.csv"
-  #
-  # phys_data <- read_csv(phys_left_parietal, col_names = "seed")
-  # afni_path <- NULL
-  # psy_unlabeled_trial_type <- "response"
-
+  # save everything as a list
   data_wrangling <- list()
-  data_wrangling$hrf <- hrf
-  data_wrangling$psy_var <- create_psy_var(psy_events_data, psy_contrast_table,
-                                           data_wrangling$hrf, tr, n_volumes,
-                                           upsample_factor, psy_unlabeled_trial_type, afni_path)
-  data_wrangling$phys_var <- create_phys_var(phys_data, detrend_factor,
-                                             upsample_factor, data_wrangling$hrf, afni_path)
 
+  # set parameters ----
+  # set mri parameters
+  data_wrangling$params$mri$tr <- tr
+  data_wrangling$params$mri$n_volumes <- n_volumes
+
+  # set ppi parameters
+  data_wrangling$params$ppi$upsample_factor <- upsample_factor
+  data_wrangling$params$ppi$detrend_factor <- detrend_factor
+  data_wrangling$params$ppi$deconvolve <- deconvolve
+  data_wrangling$params$hrf <- hrf
+
+  # set afni path
+  data_wrangling$params$afni_path <- afni_path
+
+  # create psychological variables ----
+  data_wrangling$psy_var <- create_psy_var(psy_events_data,
+                                           psy_contrast_table,
+                                           hrf,
+                                           tr,
+                                           n_volumes,
+                                           upsample_factor,
+                                           psy_unlabeled_trial_type,
+                                           afni_path,
+                                           afni_quiet)
+
+  # create physiological variables ----
+  data_wrangling$phys_var <- create_phys_var(phys_data,
+                                             detrend_factor,
+                                             upsample_factor,
+                                             hrf,
+                                             afni_path,
+                                             afni_quiet)
+
+  # create psychophysiological interaction (ppi) variables ----
   if (deconvolve == TRUE) {
     data_wrangling$ppi_var <- create_ppi_var(data_wrangling$psy_var$upsample,
                                              data_wrangling$phys_var$deconvolve,
-                                             data_wrangling$hrf, tr, n_volumes,
-                                             upsample_factor, deconvolve, afni_path)
+                                             hrf,
+                                             tr,
+                                             n_volumes,
+                                             upsample_factor,
+                                             deconvolve,
+                                             afni_path,
+                                             afni_quiet)
   } else if (deconvolve == FALSE) {
     data_wrangling$ppi_var <- create_ppi_var(data_wrangling$psy_var$upsample,
                                              data_wrangling$phys_var$upsample,
-                                             data_wrangling$hrf, tr, n_volumes,
-                                             upsample_factor, deconvolve, afni_path)
+                                             hrf,
+                                             tr,
+                                             n_volumes,
+                                             upsample_factor,
+                                             deconvolve,
+                                             afni_path,
+                                             afni_quiet)
   }
 
+  # create design matrix ----
   data_wrangling$design_matrix <- create_design_matrix(data_wrangling$psy_var$downsample,
                                                        data_wrangling$phys_var$detrend,
                                                        data_wrangling$ppi_var$downsample,

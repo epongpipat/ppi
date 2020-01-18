@@ -4,7 +4,7 @@
 \alias{deconvolve_afni}
 \title{deconvolve_afni}
 \usage{
-deconvolve_afni(data, hrf, afni_path = NULL)
+deconvolve_afni(data, hrf, afni_path = NULL, afni_quiet = FALSE)
 }
 \arguments{
 \item{data}{data to deconvolve}
@@ -12,9 +12,6 @@ deconvolve_afni(data, hrf, afni_path = NULL)
 \item{hrf}{hemodynamic response function (hrf) to deconvolve data}
 
 \item{afni_path}{path to afni directory (default: NULL)}
-}
-\value{
-
 }
 \description{
 deconvolve_afni

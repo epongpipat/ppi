@@ -17,7 +17,7 @@ output:
 
 ## R Libraries
 ```{r}
-packages <- c("ppi", "tidyverse")
+packages <- c("ppi", "tidyverse", "broom", "car", "performance", "bootPermBroom")
 xfun::pkg_attach(packages, message = F, install = T)
 ```
 
@@ -53,7 +53,7 @@ data_wrangled_right <- data_wrangling(psy_events, psy_unlabeled_trial_type, psy_
 
 ## Analysis
 
-### Seed-to-Seed
+### ROI-to-ROI
 ```{r}
 design_matrix <- array(0, dim = c(105, 7, 2))
 design_matrix[,,1] <- as.matrix(data_wrangled_left$design_matrix)
@@ -61,8 +61,10 @@ design_matrix[,,2] <- as.matrix(data_wrangled_right$design_matrix)
 
 target_data <- cbind(phys_seed, phys_target)
 
+model <- model_glm_roi2roi(target_data, design_matrix)
+
 func_analyze <- function(y, X) {
-  data <- merge(y, X)
+  data <- as.data.frame(cbind(y, X))
   colnames(data)[1] <- "target"
   model <- lm(target ~ ., data)
   return(model)
@@ -70,34 +72,66 @@ func_analyze <- function(y, X) {
 
 model <- apply(design_matrix, 3, function(x) apply(target_data, 2, function(y) func_analyze(y, x)))
 
+
 # extract estimate for each predictor
-tidy_4d <- array(NA, c(2, 2, 8, 4))
-residual <- array(NA, c(2, 2, ))
+tidy_4d <- array(NA, c(2, 2, 8, 6))
+performance_3d <- array(NA, c(2, 2, 5))
+residual_3d <- array(NA, c(2, 2, n_volumes))
+tolerance_3d <- array(NA, c(2, 2, 7))
 n_seed <- length(model)
 idx <- 1
 for (i in 1:n_seed) {
   n_target <- length(model[[i]])
   for (j in 1:n_target) {
-      tidy_4d[i,j,,] <- broom::tidy(model[[i]][[j]]) %>% select(-term) %>% as.matrix()
-      idx <- idx + 1
+    temp_model <- model[[i]][[j]]
+    tidy_4d[i,j,,] <- tidy(temp_model) %>% tidy_lm_add_r_squared(., 105) %>% select(-term) %>% as.matrix()
+    performance_3d[i,j,] <- model_performance(temp_model) %>% as.matrix()
+    residual_3d[i,j,] <- temp_model$residuals
+    tolerance_3d[i,j,] <- 1/vif(temp_model)
+    idx <- idx + 1
   }
 }
 
-estimates <- tidy_4d[,,,1]
-se <- tidy_4d[,,,2]
-t_stat <- tidy_4d[,,,3]
-p_stat <- tidy_4d[,,,4]
 
+# create 3d array of seed by target by statistic ----
+# 1. omnibus model rsquared
+# 2. omnibus model adjusted rsquared
+# 3. omnibus model rmse
+# 4  estimate
+# 5. se
+# 6. t-stat
+# 7. p-value
+# 8. r-squared
+# 9. adjusted r-squared
+model_summary <- list()
+model_summary$model_rsq <- performance_3d[,,3] %>% as.data.frame()
+model_summary$model_rsq_adj <- performance_3d[,,4] %>% as.data.frame()
+model_summary$model_rmse <- performance_3d[,,5] %>% as.data.frame()
 
-
-broom::augment(model[[i]][[j]]) %>% select()
+for (i in 1:8) {
+  model_summary$estimates[[i]] <- tidy_4d[,,i,1] %>% as.data.frame()
+  model_summary$se[[i]] <- tidy_4d[,,i,2] %>% as.data.frame()
+  model_summary$t_stat[[i]] <- tidy_4d[,,i,3] %>% as.data.frame()
+  model_summary$p_value[[i]] <- tidy_4d[,,i,4] %>% as.data.frame()
+  model_summary$rsq[[i]] <- tidy_4d[,,i,5] %>% as.data.frame()
+  model_summary$rsq_adj[[i]] <- tidy_4d[,,i,6] %>% as.data.frame()
+}
 ```
 
-```{r}
+## Visualization
 
-```
-
-### Cor()
+### ROI-to-ROI
 ```{r}
-cor(phys_seed, phys_target)
+labels <- c("parietal_l", "parietal_r")
+
+temp_data <- as.data.frame(model_summary$model_rsq)
+colnames(temp_data) <- labels
+temp_data <- temp_data %>% 
+  mutate(seed_roi = labels) %>%
+  gather(., target_roi, value, -seed_roi)
+
+ggplot(temp_data, aes(seed_roi, target_roi, fill = value)) +
+  geom_raster() +
+  theme_minimal() +
+  scale_fill_distiller(palette = "Greys", direction = 1)
 ```

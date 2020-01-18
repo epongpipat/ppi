@@ -10,13 +10,20 @@
 #' @export
 #'
 #' @examples
-#' # to be added
-create_phys_var <- function(phys, detrend_factor, upsample_factor = NULL, hrf, afni_path = NULL) {
+#' df <- read_csv("examples/sub-control01_task-music_run-1_bold_space-subj_vox-32-24-38")
+#' phys_ts_file <- "examples/sub-control01_task-music_run-1_bold_space-subj_vox-32-24-38.csv"
+#' phys_ts <- read.csv(phys_ts_file, header = F)
+#' hrf <- create_hrf_afni("spmg1", 3, NULL)
+#' phys_var <- create_phys_var(phys_ts_file, 2, 16, hrf)
+#' summary(test)
+create_phys_var <- function(phys, detrend_factor, upsample_factor = NULL, hrf, afni_path = NULL, afni_quiet = FALSE) {
   phys_list <- list()
   phys_list$detrend <- detrend(phys, detrend_factor) %>% as.data.frame() %>% rename(phys = residual)
   phys_list$upsample <- upsample(phys_list$detrend, upsample_factor) %>% as.data.frame()
   colnames(phys_list$upsample) <- "phys"
-  phys_list$deconvolve <- deconvolve_afni(phys_list$upsample, hrf, afni_path) %>% as.data.frame()
+  phys_list$deconvolve <- deconvolve_afni(phys_list$upsample, hrf, afni_path, afni_quiet) %>% as.data.frame()
   colnames(phys_list$deconvolve) <- "phys"
   return(phys_list)
 }
+
+

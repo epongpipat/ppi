@@ -4,7 +4,7 @@
 \alias{build_afni_cmd}
 \title{build_afni_cmd}
 \usage{
-build_afni_cmd(afni_list)
+build_afni_cmd(afni_list, quiet = FALSE)
 }
 \arguments{
 \item{afni_list}{list that contains the program name and options to create command}

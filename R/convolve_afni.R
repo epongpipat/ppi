@@ -13,7 +13,7 @@
 #' data <- sample(7500:15000, 10, T)/100
 #' hrf <- create_hrf_afni("spmg1", 16)
 #' convolve_afni(data, hrf, 1.5, 100, 16)
-convolve_afni <- function(data, hrf, tr, n_volumes, upsample_factor = NULL, afni_path = NULL) {
+convolve_afni <- function(data, hrf, tr, n_volumes, upsample_factor = NULL, afni_path = NULL, afni_quiet = FALSE) {
 
   # create temporary data file
   data <- as.matrix(data)
@@ -38,7 +38,7 @@ convolve_afni <- function(data, hrf, tr, n_volumes, upsample_factor = NULL, afni
   afni_func$opt$FILE <- paste(tr, in_file_hrf)
   afni_func$opt$input <- paste0(in_file_data)
   afni_func$opt$numout <- n_volumes
-  afni_cmd <- build_afni_cmd(afni_func)
+  afni_cmd <- build_afni_cmd(afni_func, afni_quiet)
   sys_cmd <- paste0(afni_cmd, " > ", out_file)
   execute_afni_cmd(sys_cmd, afni_path)
 

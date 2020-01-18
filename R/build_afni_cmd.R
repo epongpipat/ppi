@@ -10,7 +10,7 @@
 #'                                            b = "b.nii.gz",
 #'                                            expr = "'(a*b)'"),
 #'                                            prefix = c.nii.gz))
-build_afni_cmd <- function(afni_list) {
+build_afni_cmd <- function(afni_list, quiet = FALSE) {
 
   afni_cmd <- afni_list$program
 
@@ -21,7 +21,10 @@ build_afni_cmd <- function(afni_list) {
     afni_cmd <- paste(afni_cmd, temp_afni_opt)
   }
 
-  cat(afni_cmd, "\n")
+  if (quiet == FALSE) {
+    cat(afni_cmd, "\n")
+  }
+
   return(afni_cmd)
 
 }

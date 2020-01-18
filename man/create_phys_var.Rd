@@ -4,13 +4,8 @@
 \alias{create_phys_var}
 \title{create_phys_var}
 \usage{
-create_phys_var(
-  phys,
-  detrend_factor,
-  upsample_factor = NULL,
-  hrf,
-  afni_path = NULL
-)
+create_phys_var(phys, detrend_factor, upsample_factor = NULL, hrf,
+  afni_path = NULL, afni_quiet = FALSE)
 }
 \arguments{
 \item{phys}{time series data}
@@ -30,6 +25,11 @@ a list of datasets for each data wrangling step of the physiological variables
 creates data for each wrangling step of the physiological variable using the data wrangling functions: \code{detrend()}, \code{upsample()}, and \code{deconvolve_afni()}
 }
 \examples{
-# to be added
+df <- read_csv("examples/sub-control01_task-music_run-1_bold_space-subj_vox-32-24-38")
+phys_ts_file <- "examples/sub-control01_task-music_run-1_bold_space-subj_vox-32-24-38.csv"
+phys_ts <- read.csv(phys_ts_file, header = F)
+hrf <- create_hrf_afni("spmg1", 3, NULL)
+phys_var <- create_phys_var(phys_ts_file, 2, 16, hrf)
+summary(test)
 }
 \concept{data_wrangling_wrapper_functions}

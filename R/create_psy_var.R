@@ -65,7 +65,7 @@
 #' # Lepping RJ, Atchley RA, Martin LE, Brooks WM, Clair AA, Ingram RE, et al. Musical and nonmusical sounds evoke different patterns of neural activity: An fMRI study.  Psychonomic Society annual meeting; 2012 Nov 14-18; Minneapolis, MN 2012.
 #' # Lepping RJ, Atchley RA, Martin LE, Patrician TM, Ingram RE, Clair AA, et al. The effect of musical experiences and musical training on neural responses to emotionally evocative music and non-musical sounds.  Social and Affective Neuroscience Society annual conference 2013 Apr 12-13; San Francisco, CA 2013
 #' # Lepping RJ, Atchley RA, Patrician TM, Stroupe NN, Martin LE, Ingram RE, et al. Music to my ears: Neural responsiveness to emotional music and sounds in depression.  Society of Biological Psychiatry annual scientific convention 2013 May 16-18; San Francisco, CA 2013.
-create_psy_var <- function(events, contrast_table, hrf, tr, n_volumes, upsample_factor = NULL, unlabeled_trial_type = "fixation", afni_path = NULL) {
+create_psy_var <- function(events, contrast_table, hrf, tr, n_volumes, upsample_factor = NULL, unlabeled_trial_type = "fixation", afni_path = NULL, afni_quiet = FALSE) {
   psy_list <- list()
   psy_list$trial_type_by_volume <- as.data.frame(create_trial_type_by_volume_list(events, tr, n_volumes, unlabeled_trial_type = unlabeled_trial_type))
   psy_list$contrast_table <- as.data.frame(contrast_table)
