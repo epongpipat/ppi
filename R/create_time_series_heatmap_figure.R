@@ -13,14 +13,16 @@ create_time_series_heatmap_figure <- function(data, title = NULL, transpose = FA
   data_long <- data %>%
     mutate(vol = row_number()) %>%
     gather(., "phys", "value", -vol) %>%
-    mutate(phys = as.numeric(phys))
+    mutate(phys = as.numeric(phys),
+           vol = as.numeric(vol),
+           value = as.numeric(value))
   max_value <- max(abs(data_long$value))
   fig <- ggplot(data_long, aes(vol, phys, fill = value)) +
     geom_raster() +
     theme_minimal() +
     scale_fill_distiller(palette = "RdBu", direction = -1, limits = c(-max_value, max_value)) +
     scale_x_continuous(breaks = seq(0, nrow(data), 50)) +
-    scale_y_continuous(breaks = seq(0, nrow(data), 50)) +
+    scale_y_continuous(breaks = seq(0, ncol(data), 50)) +
     labs(title = title,
          x = "Volume",
          y = "ROI",
