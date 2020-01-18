@@ -1,4 +1,4 @@
-#' @title create_ts_fig
+#' @title create_time_series_atlas_figure
 #' @concept visualization
 #' @param data data to create time series figure
 #' @param title title of figure (default: NULL)
@@ -7,7 +7,7 @@
 #' @export
 #' @import ggplot2 dplyr stringr tidyr
 #' @examples
-create_ts_fig <- function(data, title = NULL, scales = NULL, nrow = NULL, ncol = NULL) {
+create_time_series_atlas_figure <- function(data, title = NULL, nrow = NULL, ncol = NULL, scales = NULL) {
   if (ncol(data) == 1) {
     colnames(data) <- "value"
     fig <- data %>%
@@ -30,4 +30,3 @@ create_ts_fig <- function(data, title = NULL, scales = NULL, nrow = NULL, ncol =
 
   return(fig)
 }
-

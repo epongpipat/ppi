@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>convolve_afni — convolve_afni • ppi</title>
+<title>save_heatmap_figure_from_list_data — save_heatmap_figure_from_list_data • ppi</title>
 
 
 <!-- jquery -->
@@ -35,8 +35,8 @@
 
 
 
-<meta property="og:title" content="convolve_afni — convolve_afni" />
-<meta property="og:description" content="convolve_afni" />
+<meta property="og:title" content="save_heatmap_figure_from_list_data — save_heatmap_figure_from_list_data" />
+<meta property="og:description" content="save_heatmap_figure_from_list_data" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -100,22 +100,24 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>convolve_afni</h1>
+    <h1>save_heatmap_figure_from_list_data</h1>
     
-    <div class="hidden name"><code>convolve_afni.Rd</code></div>
+    <div class="hidden name"><code>save_heatmap_figure_from_list_data.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>convolve_afni</p>
+    <p>save_heatmap_figure_from_list_data</p>
     </div>
 
-    <pre class="usage"><span class='fu'>convolve_afni</span>(
+    <pre class="usage"><span class='fu'>save_heatmap_figure_from_list_data</span>(
   <span class='no'>data</span>,
-  <span class='no'>hrf</span>,
-  <span class='no'>tr</span>,
-  <span class='no'>n_volumes</span>,
-  <span class='kw'>upsample_factor</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>afni_path</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+  <span class='no'>out_dir</span>,
+  <span class='kw'>out_prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>out_suffix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>transpose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>height</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>units</span> <span class='kw'>=</span> <span class='st'>"in"</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -123,23 +125,19 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>data to convolve</p></td>
+      <td><p>list data to create and save time series figure</p></td>
     </tr>
     <tr>
-      <th>hrf</th>
-      <td><p>hemodynamic response function (hrf) time series</p></td>
+      <th>out_dir</th>
+      <td><p>directory to save figures</p></td>
     </tr>
     <tr>
-      <th>tr</th>
-      <td><p>repition time (tr) in seconds</p></td>
+      <th>out_prefix</th>
+      <td><p>prefix of figures to save (default: NULL)</p></td>
     </tr>
     <tr>
-      <th>n_volumes</th>
-      <td><p>number of volumes or time points</p></td>
-    </tr>
-    <tr>
-      <th>upsample_factor</th>
-      <td><p>factor to upsample data for convolution step</p></td>
+      <th>out_suffix</th>
+      <td><p>suffix of figures to save (default: NULL)</p></td>
     </tr>
     </table>
 
@@ -149,16 +147,12 @@
 
 
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>7500</span>:<span class='fl'>15000</span>, <span class='fl'>10</span>, <span class='no'>T</span>)/<span class='fl'>100</span>
-<span class='no'>hrf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='create_hrf_afni.html'>create_hrf_afni</a></span>(<span class='st'>"spmg1"</span>, <span class='fl'>16</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Setting afni.path to /Users/eep170030/abin</span></div><div class='output co'>#&gt; 3dDeconvolve -nodata 25 16 -polort -1 -num_stimts 1 -stim_times 1 1D:0 SPMG1 -x1D /var/folders/_2/600bt_js7d5dpsn7nbfcpy4x88r01g/T//Rtmpq0CnDN/file13c6a18639a5a -x1D_stop  </div><div class='input'><span class='fu'>convolve_afni</span>(<span class='no'>data</span>, <span class='no'>hrf</span>, <span class='fl'>1.5</span>, <span class='fl'>100</span>, <span class='fl'>16</span>)</div><div class='output co'>#&gt; waver -FILE 0.09375 /var/folders/_2/600bt_js7d5dpsn7nbfcpy4x88r01g/T//Rtmpq0CnDN/file13c6a312df7c6.1D -input /var/folders/_2/600bt_js7d5dpsn7nbfcpy4x88r01g/T//Rtmpq0CnDN/file13c6a332a9738.1D -numout 1600 </div><div class='output co'>#&gt; logical(0)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
-      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
