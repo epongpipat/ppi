@@ -14,35 +14,28 @@ devtools::install_github("epongpipat/ppi")
 
 ## Data Wrangling
 
-Events file and physiological time series to design matrix in
-    seconds\!
+From 3-column format events file (i.e., onset, duration, trial\_type)
+and physiological time series from region of interest to PPI design
+matrix under 4 seconds\!
 
 ``` r
 library(ppi)
-```
-
-    ## Warning: replacing previous import 'dplyr::collapse' by 'glue::collapse'
-    ## when loading 'ppi'
-
-``` r
 library(dplyr)
 
-
-# define hrf
+# define hrf ----
 hrf <- create_hrf_afni(hrf = "spmg1", tr = 3, upsample_factor = 16)
 ```
 
-    ## Warning in get_afni(): Setting afni.path to /Users/epongpipat/abin
-
-    ## 3dDeconvolve -nodata 400 0.1875 -polort -1 -num_stimts 1 -stim_times 1 1D:0 SPMG1 -x1D /var/folders/qs/c3q2tkwj5xb7700v6bg00m480000gn/T//Rtmpb8uiYt/file47a75e3f90db -x1D_stop
+    ## 3dDeconvolve -nodata 400 0.1875 -polort -1 -num_stimts 1 -stim_times 1 1D:0 SPMG1 -x1D /var/folders/qs/c3q2tkwj5xb7700v6bg00m480000gn/T//RtmpRh1vFK/file4c9861b8b5ec -x1D_stop
 
 ``` r
-# read events from openneuro.org
+# load events file ----
 psy_url <- "https://openneuro.org/crn/datasets/ds000171/snapshots/00001/files/sub-control01:func:sub-control01_task-music_run-1_events.tsv"
 psy_events <- readr::read_tsv(url(psy_url)) %>%
   mutate(trial_type = as.factor(trial_type))
 
-# orthogonal contrast code that test:
+# define contrast code ----
+# orthogonal contrast code:
 # 1. stimulus vs response
 # 2. music vs tones
 # 3. positive music vs negative music
@@ -50,9 +43,11 @@ psy_contrast_table <- cbind(stimulus_vs_response = c(1, 1, -3, 1)/4,
                             music_vs_tones = c(1, 1, 0, -2)/3,
                             positive_music_vs_negative_music = c(-1, 1, 0, 0)/2)
 
+# load physiological time series data from region of interest ----
 phys_file <- "examples/sub-control01_task-music_run-1_bold_space-subj_vox-32-24-38.csv"
 phys_data <- readr::read_csv(phys_file, col_names = F)
 
+tictoc::tic()
 data_wrangling <- data_wrangling(psy_events_data = psy_events, 
                                  psy_unlabeled_trial_type = "response", 
                                  psy_contrast_table = psy_contrast_table, 
@@ -62,23 +57,26 @@ data_wrangling <- data_wrangling(psy_events_data = psy_events,
                                  tr = 3, 
                                  n_volumes = 105, 
                                  upsample_factor = 16, 
-                                 deconvolve = TRUE)
+                                 deconvolve = TRUE,
+                                 afni_quiet = TRUE)
 ```
 
-    ## waver -FILE 0.1875 /var/folders/qs/c3q2tkwj5xb7700v6bg00m480000gn/T//Rtmpb8uiYt/file47a7cf8d86e.1D -input /var/folders/qs/c3q2tkwj5xb7700v6bg00m480000gn/T//Rtmpb8uiYt/file47a77420abf2.1D -numout 1680 
-    ## waver -FILE 0.1875 /var/folders/qs/c3q2tkwj5xb7700v6bg00m480000gn/T//Rtmpb8uiYt/file47a730c89cda.1D -input /var/folders/qs/c3q2tkwj5xb7700v6bg00m480000gn/T//Rtmpb8uiYt/file47a764f57c9e.1D -numout 1680 
-    ## waver -FILE 0.1875 /var/folders/qs/c3q2tkwj5xb7700v6bg00m480000gn/T//Rtmpb8uiYt/file47a72821e31e.1D -input /var/folders/qs/c3q2tkwj5xb7700v6bg00m480000gn/T//Rtmpb8uiYt/file47a7250bc6b2.1D -numout 1680 
-    ## 3dTfitter -RHS /var/folders/qs/c3q2tkwj5xb7700v6bg00m480000gn/T//Rtmpb8uiYt/file47a735b702c4.1D -FALTUNG /var/folders/qs/c3q2tkwj5xb7700v6bg00m480000gn/T//Rtmpb8uiYt/file47a7216ad69.1D /var/folders/qs/c3q2tkwj5xb7700v6bg00m480000gn/T//Rtmpb8uiYt/file47a71ed2c991.1D 012 -2 -l2lasso -6 
-    ## waver -FILE 0.1875 /var/folders/qs/c3q2tkwj5xb7700v6bg00m480000gn/T//Rtmpb8uiYt/file47a7595e8b4d.1D -input /var/folders/qs/c3q2tkwj5xb7700v6bg00m480000gn/T//Rtmpb8uiYt/file47a720af5e66.1D -numout 1680 
-    ## waver -FILE 0.1875 /var/folders/qs/c3q2tkwj5xb7700v6bg00m480000gn/T//Rtmpb8uiYt/file47a77e4df698.1D -input /var/folders/qs/c3q2tkwj5xb7700v6bg00m480000gn/T//Rtmpb8uiYt/file47a75baffa1e.1D -numout 1680 
-    ## waver -FILE 0.1875 /var/folders/qs/c3q2tkwj5xb7700v6bg00m480000gn/T//Rtmpb8uiYt/file47a717dbddd0.1D -input /var/folders/qs/c3q2tkwj5xb7700v6bg00m480000gn/T//Rtmpb8uiYt/file47a744f0b86c.1D -numout 1680
+    ## waver -FILE 0.1875 /var/folders/qs/c3q2tkwj5xb7700v6bg00m480000gn/T//RtmpRh1vFK/file4c9845578787.1D -input /var/folders/qs/c3q2tkwj5xb7700v6bg00m480000gn/T//RtmpRh1vFK/file4c98383d5fb9.1D -numout 1680 
+    ## waver -FILE 0.1875 /var/folders/qs/c3q2tkwj5xb7700v6bg00m480000gn/T//RtmpRh1vFK/file4c984c26bbdb.1D -input /var/folders/qs/c3q2tkwj5xb7700v6bg00m480000gn/T//RtmpRh1vFK/file4c9860142b4c.1D -numout 1680 
+    ## waver -FILE 0.1875 /var/folders/qs/c3q2tkwj5xb7700v6bg00m480000gn/T//RtmpRh1vFK/file4c983623b3bd.1D -input /var/folders/qs/c3q2tkwj5xb7700v6bg00m480000gn/T//RtmpRh1vFK/file4c983a1cc279.1D -numout 1680
+
+``` r
+tictoc::toc()
+```
+
+    ## 2.675 sec elapsed
 
 ``` r
 summary(data_wrangling)
 ```
 
     ##               Length Class      Mode
-    ## hrf           1      data.frame list
+    ## params        3      -none-     list
     ## psy_var       6      -none-     list
     ## phys_var      3      -none-     list
     ## ppi_var       3      -none-     list

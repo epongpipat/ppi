@@ -14,7 +14,7 @@
 #'
 #' # visualize
 #' create_ts_fig(hrf, "SPMG1")
-create_hrf_afni <- function(hrf, tr, upsample_factor = NULL) {
+create_hrf_afni <- function(hrf, tr, upsample_factor = NULL, afni_path = NULL, afni_quiet = TRUE) {
 
   df_hrf <- tribble(~hrf_name, ~hrf_duration,
                     "gam", 12,
@@ -30,9 +30,6 @@ create_hrf_afni <- function(hrf, tr, upsample_factor = NULL) {
     n_volumes <- n_volumes * upsample_factor
     tr <- tr / upsample_factor
   }
-
-  # get afni path ----
-  afni_path <- get_afni()
 
   # build afni cmd list ----
   afni_func <- list()
@@ -54,13 +51,8 @@ create_hrf_afni <- function(hrf, tr, upsample_factor = NULL) {
   afni_func$opt$x1D <- out_file
   afni_func$opt$x1D_stop <- ""
 
-  afni_cmd <- build_afni_cmd(afni_func)
-
-  # full command ----
-  sys_cmd <- paste0(afni_path, afni_cmd)
-
-  # execute command ----
-  system(sys_cmd)
+  afni_cmd <- build_afni_cmd(afni_func, afni_quiet)
+  execute_afni_cmd(afni_cmd, afni_path)
 
   # rename to defined out_file ----
   afni_out_file <- paste0(out_file, ".xmat.1D")
