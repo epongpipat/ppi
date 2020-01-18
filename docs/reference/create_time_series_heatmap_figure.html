@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>save_ts_fig_from_list_data — save_list_data_fig • ppi</title>
+<title>create_time_series_heatmap_figure — create_time_series_heatmap_figure • ppi</title>
 
 
 <!-- jquery -->
@@ -35,8 +35,8 @@
 
 
 
-<meta property="og:title" content="save_ts_fig_from_list_data — save_list_data_fig" />
-<meta property="og:description" content="save_ts_fig_from_list_data" />
+<meta property="og:title" content="create_time_series_heatmap_figure — create_time_series_heatmap_figure" />
+<meta property="og:description" content="create_time_series_heatmap_figure" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -100,54 +100,33 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>save_ts_fig_from_list_data</h1>
+    <h1>create_time_series_heatmap_figure</h1>
     
-    <div class="hidden name"><code>save_list_data_fig.Rd</code></div>
+    <div class="hidden name"><code>create_time_series_heatmap_figure.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>save_ts_fig_from_list_data</p>
+    <p>create_time_series_heatmap_figure</p>
     </div>
 
-    <pre class="usage"><span class='fu'>save_list_data_fig</span>(
-  <span class='no'>data</span>,
-  <span class='no'>out_dir</span>,
-  <span class='kw'>out_prefix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>out_suffix</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>scales</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>height</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>units</span> <span class='kw'>=</span> <span class='st'>"in"</span>
-)</pre>
+    <pre class="usage"><span class='fu'>create_time_series_heatmap_figure</span>(<span class='no'>data</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>transpose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>list data to create and save time series figure</p></td>
+      <td><p>data of volume/time points (row) by region of interest (column) for heatmap figure</p></td>
     </tr>
     <tr>
-      <th>out_dir</th>
-      <td><p>directory to save figures</p></td>
-    </tr>
-    <tr>
-      <th>out_prefix</th>
-      <td><p>prefix of figures to save (default: NULL)</p></td>
-    </tr>
-    <tr>
-      <th>out_suffix</th>
-      <td><p>suffix of figures to save (default: NULL)</p></td>
+      <th>title</th>
+      <td><p>title of figure (default: NULL)</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    
-
-
+    <p>heatmap of volume by region of interest</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
