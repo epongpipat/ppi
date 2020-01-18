@@ -1,5 +1,5 @@
 #' @title create_time_series_heatmap_figure
-#'
+#' @concept visualization
 #' @param data data of volume/time points (row) by region of interest (column) for heatmap figure
 #' @param title title of figure (default: NULL)
 #' @return heatmap of volume by region of interest

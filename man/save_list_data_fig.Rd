@@ -12,8 +12,8 @@ save_list_data_fig(
   scales = NULL,
   nrow = NULL,
   ncol = NULL,
-  width = NULL,
-  height = NULL,
+  width = NA,
+  height = NA,
   units = "in"
 )
 }

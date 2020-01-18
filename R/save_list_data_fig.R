@@ -8,7 +8,7 @@
 #' @export
 #'
 #' @examples
-save_list_data_fig <- function(data, out_dir, out_prefix = NULL, out_suffix = NULL, scales = NULL, nrow = NULL, ncol = NULL, width = NULL, height = NULL, units = "in") {
+save_list_data_fig <- function(data, out_dir, out_prefix = NULL, out_suffix = NULL, scales = NULL, nrow = NULL, ncol = NULL, width = NA, height = NA, units = "in") {
 
   if (!is.list(data)) {
     stop("data must be a list")

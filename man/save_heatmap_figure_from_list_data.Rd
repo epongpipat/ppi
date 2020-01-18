@@ -9,9 +9,6 @@ save_heatmap_figure_from_list_data(
   out_dir,
   out_prefix = NULL,
   out_suffix = NULL,
-  scales = NULL,
-  nrow = NULL,
-  ncol = NULL,
   transpose = NULL
 )
 }
