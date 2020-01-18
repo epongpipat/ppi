@@ -9,7 +9,7 @@ save_heatmap_figure_from_list_data(
   out_dir,
   out_prefix = NULL,
   out_suffix = NULL,
-  transpose = NULL
+  transpose = FALSE
 )
 }
 \arguments{
