@@ -4,7 +4,8 @@
 \alias{create_hrf_afni}
 \title{create_hrf_afni}
 \usage{
-create_hrf_afni(hrf, tr, upsample_factor = NULL)
+create_hrf_afni(hrf, tr, upsample_factor = NULL, afni_path = NULL,
+  afni_quiet = TRUE)
 }
 \arguments{
 \item{hrf}{name of the hemodynamic response function. can be gam, block or spmg1}

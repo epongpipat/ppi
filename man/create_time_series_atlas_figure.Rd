@@ -4,13 +4,8 @@
 \alias{create_time_series_atlas_figure}
 \title{create_time_series_atlas_figure}
 \usage{
-create_time_series_atlas_figure(
-  data,
-  title = NULL,
-  nrow = NULL,
-  ncol = NULL,
-  scales = NULL
-)
+create_time_series_atlas_figure(data, title = NULL, nrow = NULL,
+  ncol = NULL, scales = NULL)
 }
 \arguments{
 \item{data}{data to create time series figure}

@@ -1,7 +1,8 @@
 
 # `ppi` : Psychophysiological Interaction (PPI)
 
-A neuroimaging package to “easily” perform PPI analyses for task fMRI.
+A neuroimaging package to “easily” perform PPI analyses for task
+functional magnetic resonsnace imaging (fMRI).
 
 Note: This package is still being developed and will likely change a
 lot. Please use cautiously.
@@ -14,9 +15,9 @@ devtools::install_github("epongpipat/ppi")
 
 ## Data Wrangling
 
-From 3-column format events file (i.e., onset, duration, trial\_type)
-and physiological time series from region of interest to PPI design
-matrix under 4 seconds\!
+Go from a 3-column format events file (i.e., columns of onset, duration,
+trial\_type) and a physiological time series from a region of interest
+to a PPI design matrix in seconds\!
 
 ``` r
 library(ppi)
@@ -24,11 +25,7 @@ library(dplyr)
 
 # define hrf ----
 hrf <- create_hrf_afni(hrf = "spmg1", tr = 3, upsample_factor = 16)
-```
 
-    ## 3dDeconvolve -nodata 400 0.1875 -polort -1 -num_stimts 1 -stim_times 1 1D:0 SPMG1 -x1D /var/folders/qs/c3q2tkwj5xb7700v6bg00m480000gn/T//RtmpRh1vFK/file4c9861b8b5ec -x1D_stop
-
-``` r
 # load events file ----
 psy_url <- "https://openneuro.org/crn/datasets/ds000171/snapshots/00001/files/sub-control01:func:sub-control01_task-music_run-1_events.tsv"
 psy_events <- readr::read_tsv(url(psy_url)) %>%
@@ -59,32 +56,59 @@ data_wrangling <- data_wrangling(psy_events_data = psy_events,
                                  upsample_factor = 16, 
                                  deconvolve = TRUE,
                                  afni_quiet = TRUE)
-```
-
-    ## waver -FILE 0.1875 /var/folders/qs/c3q2tkwj5xb7700v6bg00m480000gn/T//RtmpRh1vFK/file4c9845578787.1D -input /var/folders/qs/c3q2tkwj5xb7700v6bg00m480000gn/T//RtmpRh1vFK/file4c98383d5fb9.1D -numout 1680 
-    ## waver -FILE 0.1875 /var/folders/qs/c3q2tkwj5xb7700v6bg00m480000gn/T//RtmpRh1vFK/file4c984c26bbdb.1D -input /var/folders/qs/c3q2tkwj5xb7700v6bg00m480000gn/T//RtmpRh1vFK/file4c9860142b4c.1D -numout 1680 
-    ## waver -FILE 0.1875 /var/folders/qs/c3q2tkwj5xb7700v6bg00m480000gn/T//RtmpRh1vFK/file4c983623b3bd.1D -input /var/folders/qs/c3q2tkwj5xb7700v6bg00m480000gn/T//RtmpRh1vFK/file4c983a1cc279.1D -numout 1680
-
-``` r
 tictoc::toc()
 ```
 
-    ## 2.675 sec elapsed
+    ## 2.852 sec elapsed
+
+Everything is saved as a list, which includes the input parameters and
+every single step of the data wrangling pipeline.
 
 ``` r
-summary(data_wrangling)
+Hmisc::list.tree(data_wrangling, depth = 3)
 ```
 
-    ##               Length Class      Mode
-    ## params        3      -none-     list
-    ## psy_var       6      -none-     list
-    ## phys_var      3      -none-     list
-    ## ppi_var       3      -none-     list
-    ## design_matrix 7      data.frame list
+    ##  data_wrangling = list 5 (224984 bytes)
+    ## .  params = list 3
+    ## . .  mri = list 2
+    ## . .  ppi = list 3
+    ## . .  hrf = list 1( data.frame )
+    ## .  psy_var = list 6
+    ## . .  trial_type_by_volume = list 2( data.frame )
+    ## . .  contrast_table = list 3( data.frame )
+    ## . .  contrast = list 3( data.frame )
+    ## . .  upsample = list 3( data.frame )
+    ## . .  convolve = list 3( data.frame )
+    ## . .  downsample = list 3( data.frame )
+    ## .  phys_var = list 3
+    ## . .  detrend = list 1( data.frame )
+    ## . .  upsample = list 1( data.frame )
+    ## . .  deconvolve = list 1( data.frame )
+    ## .  ppi_var = list 3
+    ## . .  interaction = list 3( data.frame )
+    ## . .  convolve = list 3( data.frame )
+    ## . .  downsample = list 3( data.frame )
+    ## .  design_matrix = list 7( data.frame )
+    ## . .  psy_stimulus_vs_response = double 105= 0 0.10078 1.5873 ...
+    ## . .  psy_music_vs_tones = double 105= 0 -0.26874 -4.2329 ...
+    ## . .  psy_positive_music_vs_negative_music = double 105= 0 0 0 0 0 0 0 0 ...
+    ## . .  phys = double 105= 3.0961 6.6414 9.1888 ...
+    ## . .  ppi_stimulus_vs_response = double 105= 0 0.13324 1.1015 ...
+    ## . .  ppi_music_vs_tones = double 105= 0 -0.35531 -2.9373 ...
+    ## . .  ppi_positive_music_vs_negative_music = double 105= 0 0 0 0 0 0 0 0 ...
+    ## . A  row.names = integer 105= 1 2 3 4 5 6 7 8 ...
 
-## Analysis (Under Construction)
+#### Need more flexibility?
 
-## Visualization (Under Construction)
+You can create each individual set of variables using
+`create_psy_var()`, `create_phys_var()`, and `create_ppi_var()` or
+create every step of each variable using
+[these](https://ekarinpongpipat.com/ppi/reference/index.html#section-data-wrangling)
+data wrangling functions.
+
+## Under Development
+
+Analysis and visualization steps are currently being developed.
 
 ## Acknowledgements
 

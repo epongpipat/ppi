@@ -4,7 +4,8 @@
 \alias{create_time_series_heatmap_figure}
 \title{create_time_series_heatmap_figure}
 \usage{
-create_time_series_heatmap_figure(data, title = NULL, transpose = FALSE)
+create_time_series_heatmap_figure(data, title = NULL,
+  transpose = FALSE)
 }
 \arguments{
 \item{data}{data of volume/time points (row) by region of interest (column) for heatmap figure}

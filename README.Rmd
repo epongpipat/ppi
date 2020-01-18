@@ -4,7 +4,7 @@ output: github_document
 
 # `ppi` : Psychophysiological Interaction (PPI)
 
-A neuroimaging package to "easily" perform PPI analyses for task fMRI.
+A neuroimaging package to "easily" perform PPI analyses for task functional magnetic resonsnace imaging (fMRI).
 
 Note: This package is still being developed and will likely change a lot. Please use cautiously.
 
@@ -15,7 +15,7 @@ devtools::install_github("epongpipat/ppi")
 
 ## Data Wrangling
 
-Go from a 3-column format events file (i.e., onset, duration, trial_type) and a physiological time series from a region of interest to a PPI design matrix in under **4** seconds!
+Go from a 3-column format events file (i.e., columns of onset, duration, trial_type) and a physiological time series from a region of interest to a PPI design matrix in seconds!
 
 ```{r, message = F, warning = F}
 library(ppi)
@@ -55,13 +55,27 @@ data_wrangling <- data_wrangling(psy_events_data = psy_events,
                                  deconvolve = TRUE,
                                  afni_quiet = TRUE)
 tictoc::toc()
-
-summary(data_wrangling)
 ```
 
-## Analysis (Under Construction)
+Everything is saved as a list, which includes the input parameters and every single step of the data wrangling pipeline.
 
-## Visualization (Under Construction)
+```{r}
+Hmisc::list.tree(data_wrangling, depth = 3)
+```
+
+#### Need more flexibility?
+
+You can create each individual set of variables using `create_psy_var()`, `create_phys_var()`, and `create_ppi_var()` or create every step of each variable using [these](https://ekarinpongpipat.com/ppi/reference/index.html#section-data-wrangling) data wrangling functions.
+
+## Under Development
+
+#### Analysis 
+```{r}
+model <- model_glm_roi2roi(data_wrangling$phys$detrend, data_wrangling$design_matrix)
+model
+```
+
+#### Visualization
 
 ## Acknowledgements
 This package relies on a variety of R packages (i.e., `tidyverse`, `afnir`, `furrr`) and neuroimaging programs (i.e, AFNI and FSL).

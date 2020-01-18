@@ -13,6 +13,8 @@ reference:
     contents:
     - has_concept("data_wrangling_uber_functions")
   - title: Analyses
+    contents:
+    - has_concept("analysis")
   - title: Visualization
     contents:
     - has_concept("visualization")

@@ -4,7 +4,8 @@
 \alias{create_ts_fig}
 \title{create_ts_fig}
 \usage{
-create_ts_fig(data, title = NULL, scales = NULL, nrow = NULL, ncol = NULL)
+create_ts_fig(data, title = NULL, scales = NULL, nrow = NULL,
+  ncol = NULL)
 }
 \arguments{
 \item{data}{data to create time series figure}

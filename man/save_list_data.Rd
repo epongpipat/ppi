@@ -4,13 +4,8 @@
 \alias{save_list_data}
 \title{save_list_data}
 \usage{
-save_list_data(
-  data,
-  out_dir,
-  out_prefix = NULL,
-  out_suffix = NULL,
-  col_names = TRUE
-)
+save_list_data(data, out_dir, out_prefix = NULL, out_suffix = NULL,
+  col_names = TRUE)
 }
 \arguments{
 \item{data}{list data to save}
