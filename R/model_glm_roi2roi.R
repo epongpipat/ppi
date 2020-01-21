@@ -1,5 +1,5 @@
 #' @title model_glm_roi2roi
-#'
+#' @concept analysis
 #' @param target_roi data to predict. can be also be a list or multiple columns if there are more than one target roi
 #' @param design_matrix predictors. can be also be list or a 3d array if there are more than one set of predictors
 #'
@@ -21,7 +21,8 @@ model_glm_roi2roi <- function(target_roi, design_matrix) {
 
   # set up data ----
   data <- tibble(n_target = 1:n_target) %>%
-    mutate(n_seed = list(1:n_seed)) %>%
+    mutate(n_seed = list(1:n_seed),
+           n_model = row_number()) %>%
     unnest() %>%
     mutate(y = future_map(n_target, function(x) as.matrix(target_roi[, x])),
            X = future_map(n_seed, function(x) as.matrix(design_matrix_3d[,,x])))
@@ -32,10 +33,11 @@ model_glm_roi2roi <- function(target_roi, design_matrix) {
     mutate(model = future_map2(y, X, function(y, X) lm(y ~ X)),
            vif_tol = future_map(X, get_vif_tolerance),
            residual = future_map(model, "residuals"),
+           residual = future_map(residual, as.data.frame),
            tidy = future_map(model, tidy),
-           tidy = future_map2(tidy, X, function(x, y) bootPermBroom::tidy_lm_add_r_squared(x, nrow(y))),
-           glance = future_map(model, glance))
+           tidy = future_map2(tidy, X, function(x, y) bootPermBroom::tidy_lm_add_r_squared(x, nrow(y)) %>% as.data.frame()),
+           glance = future_map(model, function(x) glance(x) %>% as.data.frame()))
 
-  return(data_summary)
+  return(data_analysis)
 
 }

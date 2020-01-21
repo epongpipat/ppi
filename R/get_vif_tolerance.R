@@ -20,5 +20,5 @@ get_vif_tolerance <- function(predictors) {
     mutate(vif = 1 / (1 - r_sq),
            tolerance = 1 / vif) %>%
     ungroup()
-  return(data)
+  return(as.data.frame(data))
 }

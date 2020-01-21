@@ -25,8 +25,11 @@ visualize_time_series <- function(data, title = NULL, scales = NULL, nrow = NULL
   }
 
   fig <- fig +
+    labs(title = title) +
     theme_minimal() +
-    labs(title = title)
+    theme(panel.grid.major = element_line(linetype = "dotted"),
+          panel.grid.minor = element_line(linetype = "dotted"))
+
 
   return(fig)
 }

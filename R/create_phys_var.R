@@ -18,7 +18,7 @@
 #' summary(test)
 create_phys_var <- function(phys, detrend_factor, upsample_factor = NULL, hrf, afni_path = NULL, afni_quiet = FALSE) {
   phys_list <- list()
-  phys_list$input <- phys
+  phys_list$input <- as.data.frame(phys)
   phys_list$detrend <- detrend(phys, detrend_factor) %>% as.data.frame() %>% rename(phys = residual)
   phys_list$upsample <- upsample(phys_list$detrend, upsample_factor) %>% as.data.frame()
   colnames(phys_list$upsample) <- "phys"

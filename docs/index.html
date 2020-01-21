@@ -121,22 +121,24 @@
 <a class="sourceLine" id="cb2-35" data-line-number="35">                                 <span class="dt">deconvolve =</span> <span class="ot">TRUE</span>,</a>
 <a class="sourceLine" id="cb2-36" data-line-number="36">                                 <span class="dt">afni_quiet =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb2-37" data-line-number="37">tictoc<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/tictoc/topics/tic">toc</a></span>()</a></code></pre></div>
-<pre><code>## 2.082 sec elapsed</code></pre>
+<pre><code>## 3.038 sec elapsed</code></pre>
 <p>Everything is saved as a list, which includes the input parameters and every single step of the data wrangling pipeline.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">Hmisc<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/Hmisc/topics/list.tree">list.tree</a></span>(data_wrangling, <span class="dt">depth =</span> <span class="dv">3</span>)</a></code></pre></div>
-<pre><code>##  data_wrangling = list 5 (224984 bytes)
+<pre><code>##  data_wrangling = list 5 (231016 bytes)
 ## .  params = list 3
 ## . .  mri = list 2
 ## . .  ppi = list 3
 ## . .  hrf = list 1( data.frame )
-## .  psy_var = list 6
+## .  psy_var = list 7
+## . .  events = list 3( spec_tbl_df tbl_df tbl data.frame )
 ## . .  trial_type_by_volume = list 2( data.frame )
 ## . .  contrast_table = list 3( data.frame )
 ## . .  contrast = list 3( data.frame )
 ## . .  upsample = list 3( data.frame )
 ## . .  convolve = list 3( data.frame )
 ## . .  downsample = list 3( data.frame )
-## .  phys_var = list 3
+## .  phys_var = list 4
+## . .  input = list 1( spec_tbl_df tbl_df tbl data.frame )
 ## . .  detrend = list 1( data.frame )
 ## . .  upsample = list 1( data.frame )
 ## . .  deconvolve = list 1( data.frame )
@@ -165,22 +167,27 @@
 <div id="analysis" class="section level4">
 <h4 class="hasAnchor">
 <a href="#analysis" class="anchor"></a>Analysis</h4>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">model &lt;-<span class="st"> </span><span class="kw"><a href="reference/model_glm_roi2roi.html">model_glm_roi2roi</a></span>(data_wrangling<span class="op">$</span>phys<span class="op">$</span>detrend, data_wrangling<span class="op">$</span>design_matrix)</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">model</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">tictoc<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/tictoc/topics/tic">tic</a></span>()</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">model &lt;-<span class="st"> </span><span class="kw"><a href="reference/model_glm_roi2roi.html">model_glm_roi2roi</a></span>(data_wrangling<span class="op">$</span>phys<span class="op">$</span>detrend, data_wrangling<span class="op">$</span>design_matrix)</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">tictoc<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/tictoc/topics/tic">toc</a></span>()</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">model</a>
+<a class="sourceLine" id="cb6-6" data-line-number="6">Hmisc<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/Hmisc/topics/list.tree">list.tree</a></span>(model, <span class="dt">depth =</span> <span class="dv">3</span>)</a></code></pre></div>
 </div>
 <div id="visualization" class="section level4">
 <h4 class="hasAnchor">
 <a href="#visualization" class="anchor"></a>Visualization</h4>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="reference/visualize_time_series.html">visualize_time_series</a></span>(<span class="dt">data =</span> data_wrangling<span class="op">$</span>design_matrix, </a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">                      <span class="dt">scales =</span> <span class="st">"free_y"</span>)</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="kw"><a href="reference/visualize_time_series_heatmap.html">visualize_time_series_heatmap</a></span>(<span class="dt">data =</span> data_wrangling<span class="op">$</span>design_matrix, </a>
-<a class="sourceLine" id="cb7-4" data-line-number="4">                              <span class="dt">scale_data =</span> <span class="st">"min-max"</span>,</a>
-<a class="sourceLine" id="cb7-5" data-line-number="5">                              <span class="dt">title =</span> <span class="st">"design matrix"</span>,</a>
-<a class="sourceLine" id="cb7-6" data-line-number="6">                              <span class="dt">variable_label =</span> <span class="ot">NULL</span>,</a>
-<a class="sourceLine" id="cb7-7" data-line-number="7">                              <span class="dt">caption =</span> <span class="st">"Note: Each predictor has been scaled to min-max."</span>,</a>
-<a class="sourceLine" id="cb7-8" data-line-number="8">                              <span class="dt">palette =</span> <span class="st">"Greys"</span>, </a>
-<a class="sourceLine" id="cb7-9" data-line-number="9">                              <span class="dt">direction =</span> <span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb7-10" data-line-number="10">                              <span class="dt">transpose =</span> T)</a></code></pre></div>
+<a class="sourceLine" id="cb7-2" data-line-number="2">                      <span class="dt">scales =</span> <span class="st">"free_y"</span>)</a></code></pre></div>
+<p><img src="index_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="reference/visualize_time_series_heatmap.html">visualize_time_series_heatmap</a></span>(<span class="dt">data =</span> data_wrangling<span class="op">$</span>design_matrix, </a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">                              <span class="dt">scale_data =</span> <span class="st">"min-max"</span>,</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">                              <span class="dt">title =</span> <span class="st">"design matrix"</span>,</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4">                              <span class="dt">caption =</span> <span class="st">"Note: Each predictor has been scaled to min-max."</span>,</a>
+<a class="sourceLine" id="cb8-5" data-line-number="5">                              <span class="dt">palette =</span> <span class="st">"Greys"</span>, </a>
+<a class="sourceLine" id="cb8-6" data-line-number="6">                              <span class="dt">direction =</span> <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb8-7" data-line-number="7">                              <span class="dt">transpose =</span> T)</a></code></pre></div>
+<p><img src="index_files/figure-html/unnamed-chunk-5-2.png" width="700"></p>
 </div>
 </div>
 <div id="acknowledgements" class="section level2">

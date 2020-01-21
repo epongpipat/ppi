@@ -55,7 +55,8 @@ visualize_time_series_heatmap <- function(data,
          x = variable_label,
          fill = NULL,
          caption = caption) +
-    theme(axis.text.y = element_text(hjust = 1, angle = 45))
+    theme(axis.text.y = element_text(hjust = 1, angle = 45),
+          panel.grid.minor = element_line(linetype = "dotted"))
 
   if (scale_data != "min-max") {
     fig <- fig +

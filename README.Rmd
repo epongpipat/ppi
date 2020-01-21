@@ -75,18 +75,22 @@ You can create each individual set of variables using `create_psy_var()`, `creat
 
 #### Analysis 
 ```{r, eval = F}
+tictoc::tic()
 model <- model_glm_roi2roi(data_wrangling$phys$detrend, data_wrangling$design_matrix)
+tictoc::toc()
+
 model
+Hmisc::list.tree(model, depth = 3)
 ```
 
 #### Visualization
-```{r, eval = F}
+
+```{r}
 visualize_time_series(data = data_wrangling$design_matrix, 
                       scales = "free_y")
 visualize_time_series_heatmap(data = data_wrangling$design_matrix, 
                               scale_data = "min-max",
                               title = "design matrix",
-                              variable_label = NULL,
                               caption = "Note: Each predictor has been scaled to min-max.",
                               palette = "Greys", 
                               direction = 1,

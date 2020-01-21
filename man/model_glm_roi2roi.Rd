@@ -14,3 +14,4 @@ model_glm_roi2roi(target_roi, design_matrix)
 \description{
 model_glm_roi2roi
 }
+\concept{analysis}
