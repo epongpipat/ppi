@@ -187,7 +187,8 @@
 
 <span class='co'># for this example, we will choose SPM's default canonical hrf and upsample factor of 16</span>
 <span class='no'>upsample_factor</span> <span class='kw'>&lt;-</span> <span class='fl'>16</span>
-<span class='no'>hrf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='create_hrf_afni.html'>create_hrf_afni</a></span>(<span class='st'>"spmg1"</span>, <span class='no'>tr</span>, <span class='no'>upsample_factor</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: cannot rename file '/var/folders/_2/600bt_js7d5dpsn7nbfcpy4x88r01g/T//RtmpySTR1D/file1335e3c119d93.xmat.1D' to '/var/folders/_2/600bt_js7d5dpsn7nbfcpy4x88r01g/T//RtmpySTR1D/file1335e3c119d93', reason 'No such file or directory'</span></div><div class='input'>
+<span class='no'>hrf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='create_hrf_afni.html'>create_hrf_afni</a></span>(<span class='st'>"spmg1"</span>, <span class='no'>tr</span>, <span class='no'>upsample_factor</span>)
+
 <span class='co'># run function</span>
 <span class='no'>psy_trial_type_by_volume</span> <span class='kw'>&lt;-</span> <span class='fu'>create_trial_type_by_volume_list</span>(<span class='kw'>events</span> <span class='kw'>=</span> <span class='no'>psy_events</span>,
                           <span class='kw'>tr</span> <span class='kw'>=</span> <span class='no'>tr</span>,

@@ -29,7 +29,7 @@ save_heatmap_figure_from_list_data <- function(data, out_dir, out_prefix = NULL,
       out_ending <- ".png"
     }
 
-    fig <- create_time_series_heatmap_figure(data[[j]], title = names[j], transpose)
+    fig <- visualize_time_series_heatmap(data[[j]], title = names[j], transpose = transpose)
 
     out_path <- paste0(out_dir, names[j], out_ending)
     ggsave(out_path, fig, width = width, height = height, units = units)
