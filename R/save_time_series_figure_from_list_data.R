@@ -1,4 +1,4 @@
-#' @title save_heatmap_figure_from_list_data
+#' @title save_time_series_figure_from_list_data
 #' @concept helper
 #' @param data list data to create and save time series figure
 #' @param out_dir directory to save figures
@@ -8,7 +8,7 @@
 #' @export
 #'
 #' @examples
-save_heatmap_figure_from_list_data <- function(data, out_dir, out_prefix = NULL, out_suffix = NULL, transpose = FALSE, width = NA, height = NA, units = "in") {
+save_time_series_figure_from_list_data <- function(data, out_dir, out_prefix = NULL, out_suffix = NULL, scales = NULL, nrow = NULL, ncol = NULL, width = NA, height = NA, units = "in") {
 
   if (!is.list(data)) {
     stop("data must be a list")
@@ -29,10 +29,11 @@ save_heatmap_figure_from_list_data <- function(data, out_dir, out_prefix = NULL,
       out_ending <- ".png"
     }
 
-    fig <- visualize_time_series_heatmap(data[[j]], title = names[j], transpose = transpose)
+    fig <- visualize_time_series(data[[j]], title = names[j], scales = scales, nrow = nrow, ncol = ncol)
 
     out_path <- paste0(out_dir, names[j], out_ending)
-    ggsave(out_path, fig, width = width, height = height, units = units)
+
+    ggsave(out_path, fig, width = width, height = height, units = "in")
 
   }
 
