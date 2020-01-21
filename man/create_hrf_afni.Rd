@@ -22,6 +22,6 @@ hrf <- create_hrf_afni("spmg1", 1.5, 16)
 head(hrf)
 
 # visualize
-create_ts_fig(hrf, "SPMG1")
+visualize_time_series(hrf, "SPMG1")
 }
 \concept{data_wrangling}

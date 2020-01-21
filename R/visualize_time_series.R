@@ -15,7 +15,7 @@ visualize_time_series <- function(data, title = NULL, scales = NULL, nrow = NULL
       ggplot(., aes(volume, value)) +
       geom_line()
   } else {
-    colnames(data) <- paste(str_pad(1:ncol(data), nchar(ncol(data)), "left", 0), "_", colnames(data))
+    colnames(data) <- paste0(str_pad(1:ncol(data), nchar(ncol(data)), "left", 0), "_", colnames(data))
     fig <- data %>%
       mutate(volume = row_number()) %>%
       gather(., "variable", "value", -volume) %>%

@@ -9,11 +9,12 @@
 visualize_time_series_heatmap <- function(data,
                                           scale_data = FALSE,
                                           title = NULL,
-                                          variable_label = "variable",
                                           caption = NULL,
+                                          reverse_volume_axis = FALSE,
+                                          variable_axis_label = "variable",
                                           numeric_variable_names = FALSE,
                                           palette = "RdBu",
-                                          direction = 1,
+                                          palette_direction = 1,
                                           transpose = FALSE) {
 
   if (numeric_variable_names == F) {
@@ -52,7 +53,7 @@ visualize_time_series_heatmap <- function(data,
     geom_raster() +
     theme_minimal() +
     labs(title = title,
-         x = variable_label,
+         x = variable_axis_label,
          fill = NULL,
          caption = caption) +
     theme(axis.text.y = element_text(hjust = 1, angle = 45),
@@ -60,19 +61,24 @@ visualize_time_series_heatmap <- function(data,
 
   if (scale_data != "min-max") {
     fig <- fig +
-      scale_fill_distiller(palette = palette, direction = direction, limits = c(-max_value, max_value))
+      scale_fill_distiller(palette = palette, direction = palette_direction, limits = c(-max_value, max_value))
   } else {
     fig <- fig +
-      scale_fill_distiller(palette = palette, direction = direction)
+      scale_fill_distiller(palette = palette, direction = palette_direction)
   }
 
   if (transpose == TRUE) {
     fig <- fig +
       coord_flip() +
       labs(x = "volume",
-           y = variable_label) +
+           y = variable_axis_label) +
       theme(axis.text.y = NULL,
             axis.text.x = element_text(hjust = 1, angle = 45))
+  }
+
+  if (reverse_volume_axis == TRUE) {
+    fig <- fig +
+      scale_x_reverse()
   }
 
   return(fig)

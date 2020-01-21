@@ -92,8 +92,9 @@ visualize_time_series_heatmap(data = data_wrangling$design_matrix,
                               scale_data = "min-max",
                               title = "design matrix",
                               caption = "Note: Each predictor has been scaled to min-max.",
+                              reverse_volume_axis = T,
                               palette = "Greys", 
-                              direction = 1,
+                              palette_direction = 1,
                               transpose = T)
 ```
 

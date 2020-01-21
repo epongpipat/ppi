@@ -13,7 +13,7 @@
 #' head(hrf)
 #'
 #' # visualize
-#' create_ts_fig(hrf, "SPMG1")
+#' visualize_time_series(hrf, "SPMG1")
 create_hrf_afni <- function(hrf, tr, upsample_factor = NULL, afni_path = NULL, afni_quiet = TRUE) {
 
   df_hrf <- tribble(~hrf_name, ~hrf_duration,

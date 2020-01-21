@@ -121,16 +121,16 @@
 <a class="sourceLine" id="cb2-35" data-line-number="35">                                 <span class="dt">deconvolve =</span> <span class="ot">TRUE</span>,</a>
 <a class="sourceLine" id="cb2-36" data-line-number="36">                                 <span class="dt">afni_quiet =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb2-37" data-line-number="37">tictoc<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/tictoc/topics/tic">toc</a></span>()</a></code></pre></div>
-<pre><code>## 3.038 sec elapsed</code></pre>
+<pre><code>## 2.318 sec elapsed</code></pre>
 <p>Everything is saved as a list, which includes the input parameters and every single step of the data wrangling pipeline.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">Hmisc<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/Hmisc/topics/list.tree">list.tree</a></span>(data_wrangling, <span class="dt">depth =</span> <span class="dv">3</span>)</a></code></pre></div>
-<pre><code>##  data_wrangling = list 5 (231016 bytes)
+<pre><code>##  data_wrangling = list 5 (230616 bytes)
 ## .  params = list 3
 ## . .  mri = list 2
 ## . .  ppi = list 3
 ## . .  hrf = list 1( data.frame )
 ## .  psy_var = list 7
-## . .  events = list 3( spec_tbl_df tbl_df tbl data.frame )
+## . .  events = list 3( data.frame )
 ## . .  trial_type_by_volume = list 2( data.frame )
 ## . .  contrast_table = list 3( data.frame )
 ## . .  contrast = list 3( data.frame )
@@ -138,7 +138,7 @@
 ## . .  convolve = list 3( data.frame )
 ## . .  downsample = list 3( data.frame )
 ## .  phys_var = list 4
-## . .  input = list 1( spec_tbl_df tbl_df tbl data.frame )
+## . .  input = list 1( data.frame )
 ## . .  detrend = list 1( data.frame )
 ## . .  upsample = list 1( data.frame )
 ## . .  deconvolve = list 1( data.frame )
