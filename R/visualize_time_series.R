@@ -1,4 +1,4 @@
-#' @title create_ts_fig
+#' @title visualize_time_series
 #' @concept visualization
 #' @param data data to create time series figure
 #' @param title title of figure (default: NULL)
@@ -7,7 +7,7 @@
 #' @export
 #' @import ggplot2 dplyr stringr tidyr
 #' @examples
-create_ts_fig <- function(data, title = NULL, scales = NULL, nrow = NULL, ncol = NULL) {
+visualize_time_series <- function(data, title = NULL, scales = NULL, nrow = NULL, ncol = NULL) {
   if (ncol(data) == 1) {
     colnames(data) <- "value"
     fig <- data %>%

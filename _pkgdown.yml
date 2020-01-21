@@ -1,4 +1,9 @@
 destination: docs
+
+authors:
+  Ekarin Eric Pongpipat:
+  href: https://ekarinpongpipat.com
+
 reference:
   - title: Data Extraction
     contents:

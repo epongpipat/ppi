@@ -67,6 +67,7 @@
 #' # Lepping RJ, Atchley RA, Patrician TM, Stroupe NN, Martin LE, Ingram RE, et al. Music to my ears: Neural responsiveness to emotional music and sounds in depression.  Society of Biological Psychiatry annual scientific convention 2013 May 16-18; San Francisco, CA 2013.
 create_psy_var <- function(events, contrast_table, hrf, tr, n_volumes, upsample_factor = NULL, unlabeled_trial_type = "fixation", afni_path = NULL, afni_quiet = FALSE) {
   psy_list <- list()
+  psy_list$events <- events
   psy_list$trial_type_by_volume <- as.data.frame(create_trial_type_by_volume_list(events, tr, n_volumes, unlabeled_trial_type = unlabeled_trial_type))
   psy_list$contrast_table <- as.data.frame(contrast_table)
   psy_list$contrast <- as.data.frame(contrast_code_categorical_variable(psy_list$trial_type_by_volume, as.matrix(psy_list$contrast_table))) %>% select(contains("psy"))

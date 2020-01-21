@@ -4,6 +4,10 @@ output: github_document
 
 # `ppi` : Psychophysiological Interaction (PPI)
 
+<!-- badges: start -->
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+<!-- badges: end -->
+
 A neuroimaging package to "easily" perform PPI analyses for task functional magnetic resonsnace imaging (fMRI).
 
 Note: This package is still being developed and will likely change a lot. Please use cautiously.
@@ -70,12 +74,24 @@ You can create each individual set of variables using `create_psy_var()`, `creat
 ## Under Development
 
 #### Analysis 
-```{r}
+```{r, eval = F}
 model <- model_glm_roi2roi(data_wrangling$phys$detrend, data_wrangling$design_matrix)
 model
 ```
 
 #### Visualization
+```{r, eval = F}
+visualize_time_series(data = data_wrangling$design_matrix, 
+                      scales = "free_y")
+visualize_time_series_heatmap(data = data_wrangling$design_matrix, 
+                              scale_data = "min-max",
+                              title = "design matrix",
+                              variable_label = NULL,
+                              caption = "Note: Each predictor has been scaled to min-max.",
+                              palette = "Greys", 
+                              direction = 1,
+                              transpose = T)
+```
 
 ## Acknowledgements
 This package relies on a variety of R packages (i.e., `tidyverse`, `afnir`, `furrr`) and neuroimaging programs (i.e, AFNI and FSL).

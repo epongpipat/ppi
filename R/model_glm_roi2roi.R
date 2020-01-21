@@ -3,7 +3,6 @@
 #' @param target_roi data to predict. can be also be a list or multiple columns if there are more than one target roi
 #' @param design_matrix predictors. can be also be list or a 3d array if there are more than one set of predictors
 #'
-#'
 #' @return
 #' @export
 #'
