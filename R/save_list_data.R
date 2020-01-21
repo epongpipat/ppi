@@ -35,9 +35,9 @@ save_list_data <- function(data, out_dir, out_prefix = NULL, out_suffix = NULL, 
     out_path <- paste0(out_dir, names[j], out_ending)
 
     if (col_names == TRUE) {
-      write.csv(data[[j]], out_path, row.names = FALSE)
+      write.table(data[[j]], out_path, sep = ",", row.names = FALSE)
     } else {
-      write.csv(data[[j]], out_path, row.names = FALSE, col.names = FALSE)
+      write.table(data[[j]], out_path, sep = ",", row.names = FALSE, col.names = FALSE)
     }
 
   }

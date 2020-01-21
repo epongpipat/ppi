@@ -29,7 +29,7 @@ save_list_data_fig <- function(data, out_dir, out_prefix = NULL, out_suffix = NU
       out_ending <- ".png"
     }
 
-    fig <- create_ts_fig(data[[j]], title = names[j], scales = scales, nrow = nrow, ncol = ncol)
+    fig <- visualize_time_series(data[[j]], title = names[j], scales = scales, nrow = nrow, ncol = ncol)
 
     out_path <- paste0(out_dir, names[j], out_ending)
 
