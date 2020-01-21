@@ -13,6 +13,9 @@ scale_min_max(data, min = NULL, max = NULL)
 
 \item{max}{maximum value of the data (default: NULL)}
 }
+\value{
+
+}
 \description{
 scale_min_max
 }

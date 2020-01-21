@@ -4,10 +4,18 @@
 \alias{visualize_time_series_heatmap}
 \title{visualize_time_series_heatmap}
 \usage{
-visualize_time_series_heatmap(data, scale_data = FALSE, title = NULL,
-  variable_label = "variable", caption = NULL,
-  numeric_variable_names = FALSE, palette = "RdBu", direction = 1,
-  transpose = FALSE)
+visualize_time_series_heatmap(
+  data,
+  scale_data = FALSE,
+  title = NULL,
+  caption = NULL,
+  reverse_volume_axis = FALSE,
+  variable_axis_label = "variable",
+  numeric_variable_names = FALSE,
+  palette = "RdBu",
+  palette_direction = 1,
+  transpose = FALSE
+)
 }
 \arguments{
 \item{data}{data of volume/time points (row) by variable (e.g., multiple regions of interest or predictors of design matrix) for heatmap figure}

@@ -11,6 +11,9 @@ upsample(data, upsample_factor)
 
 \item{upsample_factor}{factor to upsample data}
 }
+\value{
+
+}
 \description{
 upsample
 }

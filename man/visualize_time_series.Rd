@@ -4,8 +4,13 @@
 \alias{visualize_time_series}
 \title{visualize_time_series}
 \usage{
-visualize_time_series(data, title = NULL, scales = NULL, nrow = NULL,
-  ncol = NULL)
+visualize_time_series(
+  data,
+  title = NULL,
+  scales = NULL,
+  nrow = NULL,
+  ncol = NULL
+)
 }
 \arguments{
 \item{data}{data to create time series figure}

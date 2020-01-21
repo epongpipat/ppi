@@ -4,8 +4,11 @@
 \alias{calculate_parameter_temporal_derivative_polynomial}
 \title{calculate_parameter_temporal_derivative_polynomial}
 \usage{
-calculate_parameter_temporal_derivative_polynomial(data,
-  temporal_derivative = 1, polynomial = 2)
+calculate_parameter_temporal_derivative_polynomial(
+  data,
+  temporal_derivative = 1,
+  polynomial = 2
+)
 }
 \arguments{
 \item{data}{data to have temporal derivatives and polynomial calculated}

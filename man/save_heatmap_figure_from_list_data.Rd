@@ -4,9 +4,16 @@
 \alias{save_heatmap_figure_from_list_data}
 \title{save_heatmap_figure_from_list_data}
 \usage{
-save_heatmap_figure_from_list_data(data, out_dir, out_prefix = NULL,
-  out_suffix = NULL, transpose = FALSE, width = NA, height = NA,
-  units = "in")
+save_heatmap_figure_from_list_data(
+  data,
+  out_dir,
+  out_prefix = NULL,
+  out_suffix = NULL,
+  transpose = FALSE,
+  width = NA,
+  height = NA,
+  units = "in"
+)
 }
 \arguments{
 \item{data}{list data to create and save time series figure}
@@ -16,6 +23,9 @@ save_heatmap_figure_from_list_data(data, out_dir, out_prefix = NULL,
 \item{out_prefix}{prefix of figures to save (default: NULL)}
 
 \item{out_suffix}{suffix of figures to save (default: NULL)}
+}
+\value{
+
 }
 \description{
 save_heatmap_figure_from_list_data

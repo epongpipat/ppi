@@ -9,6 +9,9 @@ get_vif_tolerance(predictors)
 \arguments{
 \item{predictors}{}
 }
+\value{
+
+}
 \description{
 get_vif_tolerance
 }

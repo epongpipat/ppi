@@ -11,6 +11,9 @@ model_glm_roi2roi(target_roi, design_matrix)
 
 \item{design_matrix}{predictors. can be also be list or a 3d array if there are more than one set of predictors}
 }
+\value{
+
+}
 \description{
 model_glm_roi2roi
 }

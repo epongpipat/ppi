@@ -4,8 +4,13 @@
 \alias{create_hrf_afni}
 \title{create_hrf_afni}
 \usage{
-create_hrf_afni(hrf, tr, upsample_factor = NULL, afni_path = NULL,
-  afni_quiet = TRUE)
+create_hrf_afni(
+  hrf,
+  tr,
+  upsample_factor = NULL,
+  afni_path = NULL,
+  afni_quiet = TRUE
+)
 }
 \arguments{
 \item{hrf}{name of the hemodynamic response function. can be gam, block or spmg1}
@@ -13,6 +18,9 @@ create_hrf_afni(hrf, tr, upsample_factor = NULL, afni_path = NULL,
 \item{tr}{retrieval time (tr) in seconds}
 
 \item{upsample_factor}{number of volumes or time points}
+}
+\value{
+
 }
 \description{
 create_hrf_afni

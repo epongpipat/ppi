@@ -11,10 +11,13 @@ execute_afni_cmd(afni_cmd, afni_path = NULL)
 
 \item{afni_path}{afni path (default: NULL). the default option will use \code{afnir::get_afni()} to obtain the path}
 }
+\value{
+
+}
 \description{
 execute_afni_cmd
 }
 \examples{
-to be added
+# to be added
 }
 \concept{helper}

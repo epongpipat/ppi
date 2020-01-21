@@ -4,9 +4,18 @@
 \alias{save_list_data_fig}
 \title{save_ts_fig_from_list_data}
 \usage{
-save_list_data_fig(data, out_dir, out_prefix = NULL, out_suffix = NULL,
-  scales = NULL, nrow = NULL, ncol = NULL, width = NA,
-  height = NA, units = "in")
+save_list_data_fig(
+  data,
+  out_dir,
+  out_prefix = NULL,
+  out_suffix = NULL,
+  scales = NULL,
+  nrow = NULL,
+  ncol = NULL,
+  width = NA,
+  height = NA,
+  units = "in"
+)
 }
 \arguments{
 \item{data}{list data to create and save time series figure}
@@ -16,6 +25,9 @@ save_list_data_fig(data, out_dir, out_prefix = NULL, out_suffix = NULL,
 \item{out_prefix}{prefix of figures to save (default: NULL)}
 
 \item{out_suffix}{suffix of figures to save (default: NULL)}
+}
+\value{
+
 }
 \description{
 save_ts_fig_from_list_data

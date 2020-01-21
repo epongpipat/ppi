@@ -7,7 +7,7 @@
 #' @export
 #' @import afnir
 #' @examples
-#' to be added
+#' # to be added
 execute_afni_cmd <- function(afni_cmd, afni_path = NULL) {
   if (is.null(afni_path)) {
     afni_path <- get_afni()
