@@ -36,25 +36,37 @@ psy_contrast_table <- cbind(stimulus_vs_response = c(1, 1, -3, 1)/4,
 
 upsample_factor <- 16
 hrf <- create_hrf_afni("spmg1", tr, upsample_factor)
+detrend_factor <- 2
 
-phys_left_parietal <- "~/Desktop/sub-control01_task-music_run-1_bold_space-subj_vox-32-24-38.csv"
+phys_left_parietal <- "sub-control01_task-music_run-1_bold_space-subj_vox-32-24-38.csv"
 
-phys_target_file <- "~/Desktop/sub-control01_task-music_run-1_bold_space-subj_vox-48-24-36.csv"
+phys_target_file <- "sub-control01_task-music_run-1_bold_space-subj_vox-48-24-36.csv"
 
 phys_seed <- read_csv(phys_left_parietal, col_names = "seed")
 psy_unlabeled_trial_type <- "response"
 
 phys_target <- read_csv(phys_target_file, col_names = "target")
 
-data_wrangled_left <- data_wrangling(psy_events, psy_unlabeled_trial_type, psy_contrast_table, phys_seed, 2, "spmg1", tr, n_volumes, upsample_factor)
-
-data_wrangled_right <- data_wrangling(psy_events, psy_unlabeled_trial_type, psy_contrast_table, phys_target, 2, "spmg1", tr, n_volumes, upsample_factor)
+data_wrangled_left <- data_wrangling(psy_events, psy_unlabeled_trial_type, psy_contrast_table, phys_seed, detrend_factor, hrf, tr, n_volumes, upsample_factor)
+data_wrangled_right <- data_wrangling(psy_events, psy_unlabeled_trial_type, psy_contrast_table, phys_target, detrend_factor, hrf, tr, n_volumes, upsample_factor)
 ```
 
 ## Analysis
 
 ### ROI-to-ROI
 ```{r}
+
+y <- cbind(data_wrangled_right$phys_var$input, data_wrangled_left$phys_var$input)
+X <- list(data_wrangled_right$design_matrix, data_wrangled_left$design_matrix)
+model_l1 <- model_glm_roi2roi(y, X)
+
+model_l1 %>%
+  unnest(vif_tol)
+
+tidy_l1 <- model_l1 %>%
+  unnest(tidy)
+
+
 design_matrix <- array(0, dim = c(105, 7, 2))
 design_matrix[,,1] <- as.matrix(data_wrangled_left$design_matrix)
 design_matrix[,,2] <- as.matrix(data_wrangled_right$design_matrix)
