@@ -17,7 +17,7 @@ output:
 
 ## R Libraries
 ```{r}
-packages <- c("ppi", "tidyverse", "broom", "car", "performance", "bootPermBroom")
+packages <- c("ppi", "tidyverse", "broom", "car", "performance", "bootPermBroom", "furrr")
 xfun::pkg_attach(packages, message = F, install = T)
 ```
 
@@ -56,34 +56,18 @@ data_wrangled_right <- data_wrangling(psy_events, psy_unlabeled_trial_type, psy_
 ### ROI-to-ROI
 ```{r}
 
-y <- cbind(data_wrangled_right$phys_var$input, data_wrangled_left$phys_var$input)
-X <- list(data_wrangled_right$design_matrix, data_wrangled_left$design_matrix)
-model_l1 <- model_glm_roi2roi(y, X)
+y_1d <- data_wrangled_right$phys_var$input
+y_2d <- as.matrix(cbind(data_wrangled_right$phys_var$input, data_wrangled_left$phys_var$input))
+y_list <- list(data_wrangled_right$phys_var$input, data_wrangled_left$phys_var$input)
+
+X_2d <- data_wrangled_right$design_matrix
+X_list <- list(data_wrangled_right$design_matrix, data_wrangled_left$design_matrix)
+
+model_l1 <- model_glm_roi2roi(y_list, X_2d)
+model_l1_2 <- model_glm_roi2roi(y_list, X_2d, "psy_positive_music_vs_negative_music")
 
 model_l1 %>%
   unnest(vif_tol)
-
-tidy_l1 <- model_l1 %>%
-  unnest(tidy)
-
-
-design_matrix <- array(0, dim = c(105, 7, 2))
-design_matrix[,,1] <- as.matrix(data_wrangled_left$design_matrix)
-design_matrix[,,2] <- as.matrix(data_wrangled_right$design_matrix)
-
-target_data <- cbind(phys_seed, phys_target)
-
-model <- model_glm_roi2roi(target_data, design_matrix)
-
-func_analyze <- function(y, X) {
-  data <- as.data.frame(cbind(y, X))
-  colnames(data)[1] <- "target"
-  model <- lm(target ~ ., data)
-  return(model)
-}
-
-model <- apply(design_matrix, 3, function(x) apply(target_data, 2, function(y) func_analyze(y, x)))
-
 
 # extract estimate for each predictor
 tidy_4d <- array(NA, c(2, 2, 8, 6))
