@@ -5,9 +5,13 @@
 #'
 #' @return
 #' @export
-#' @import dplyr furrr
+#' @import dplyr furrr lme4
 #' @examples
-model_glm_roi2roi <- function(target_roi, design_matrix, formula = NULL, ...) {
+model_lmer_roi2roi <- function(target_roi, design_matrix, formula = NULL, ...) {
+
+  if (is.null(formula)) {
+    stop("formula must be specified")
+  }
 
   # convert target_roi to list ----
   y <- list()
@@ -55,19 +59,16 @@ model_glm_roi2roi <- function(target_roi, design_matrix, formula = NULL, ...) {
            data = future_map2(y, X, function(y, X) cbind(y, X) %>% as.data.frame()))
 
   #perform data analysis ----
-  if (is.null(formula)) {
-    data_analysis <- data %>%
-      mutate(model = future_map2(y, X, function(y, X) lm(y ~ X)))
-  } else {
-    data_analysis <- data %>%
-      mutate(model = future_map(data, function(x) lm(as.formula(paste0("target_roi ~ ", formula)), x, ...)))
-  }
+  data_analysis <- data %>%
+      mutate(model = future_map(data, function(x) lmer(as.formula(paste0("target_roi ~ ", formula)), x, ...)))
+
+  return(data_analysis)
 
   # extract useful information ----
   data_extracts <- data_analysis %>%
-    mutate(vif_tol = future_map(model, get_vif_tolerance),
-           residual = future_map(model, "residuals"),
-           residual = future_map(residual, function(x) as.data.frame(x, col.names = "residual")),
+    mutate(#vif_tol = future_map(model, get_vif_tolerance),
+           #residual = future_map(model, "residuals"),
+           #residual = future_map(residual, function(x) as.data.frame(x, col.names = "residual")),
            tidy = future_map(model, tidy),
            tidy = future_map2(tidy, X, function(x, y) bootPermBroom::tidy_lm_add_r_squared(x, nrow(y)) %>% as.data.frame()),
            glance = future_map(model, function(x) glance(x) %>% as.data.frame()))

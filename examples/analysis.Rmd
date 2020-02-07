@@ -61,11 +61,17 @@ y_2d <- as.matrix(cbind(data_wrangled_right$phys_var$input, data_wrangled_left$p
 y_list <- list(data_wrangled_right$phys_var$input, data_wrangled_left$phys_var$input)
 
 X_2d <- data_wrangled_right$design_matrix
-X_list <- list(data_wrangled_right$design_matrix, data_wrangled_left$design_matrix)
+X_list <- list(data_wrangled_right$design_matrix %>% mutate(run = c(rep(1, 50), rep(2, 55))), data_wrangled_left$design_matrix %>% mutate(run = c(rep(1, 50), rep(2, 55))))
 
 model_l1 <- model_glm_roi2roi(y_list, X_2d)
 model_l1_2 <- model_glm_roi2roi(y_list, X_2d, "psy_positive_music_vs_negative_music")
 
+x_names <- colnames(X_list[[1]])
+model_lmer_1 <- model_lmer_roi2roi(y_list, X_list, glue("{x_names} + ( {x_names} | run )"))
+```
+
+
+```{r}
 model_l1 %>%
   unnest(vif_tol)
 

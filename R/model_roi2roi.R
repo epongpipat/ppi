@@ -5,7 +5,7 @@
 #'
 #' @return
 #' @export
-#' @import dplyr furrr
+#' @import dplyr furrr lme4
 #' @examples
 model_glm_roi2roi <- function(target_roi, design_matrix, formula = NULL, ...) {
 
@@ -60,7 +60,7 @@ model_glm_roi2roi <- function(target_roi, design_matrix, formula = NULL, ...) {
       mutate(model = future_map2(y, X, function(y, X) lm(y ~ X)))
   } else {
     data_analysis <- data %>%
-      mutate(model = future_map(data, function(x) lm(as.formula(paste0("target_roi ~ ", formula)), x, ...)))
+      mutate(model = future_map(data, function(x) lm(as.formula(paste0("target_roi ~ ", formula, ...)), x)))
   }
 
   # extract useful information ----
