@@ -4,7 +4,7 @@
 \alias{get_vif_tolerance}
 \title{get_vif_tolerance}
 \usage{
-get_vif_tolerance(predictors)
+get_vif_tolerance(model)
 }
 \arguments{
 \item{predictors}{}

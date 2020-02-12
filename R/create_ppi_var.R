@@ -15,6 +15,23 @@
 #' @examples
 create_ppi_var <- function(psy_var, phys_var, hrf, tr, n_volumes, upsample_factor = NULL, deconvolve = TRUE, afni_path = NULL, afni_quiet = FALSE) {
   ppi_list <- list()
+
+  # ensure that rows of the psy and phys var match
+  if (ncol(psy_var) != ncol(phys_var)) {
+    stop(paste0("The number of rows in the psy_var (", ncol(psy_var), ") and phys_var (", ncol(phys_var), ") do not match."))
+  }
+
+  # ensure rows match the expected time points
+  if (is.null(upsample_factor)) {
+    expected_time_points <- n_volumes
+  } else {
+    expected_time_points <- n_volumes * upsample_factor
+  }
+
+  if (ncol(psy_var) != expected_time_points) {
+    stop(paste0("The rows of both variables (", ncol(psy_var), ") do not match the expected number of time points (", expected_time_points,")."))
+  }
+
   ppi_list$interaction <- apply(as.matrix(psy_var), 2, function(x) x * as.matrix(phys_var)) %>% as.data.frame()
   colnames(ppi_list$interaction) <- str_replace(colnames(ppi_list$interaction), "psy_", "ppi_")
   if (deconvolve == TRUE) {
