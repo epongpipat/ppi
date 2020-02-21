@@ -1,0 +1,119 @@
+---
+title: "PPI: Data Wrangling Output"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    code_folding: show
+    highlight: tango
+    theme: yeti
+    toc: yes
+    toc_float:
+      collapsed: yes
+      smooth_scroll: yes
+---
+
+## Data Wrangling
+```{r}
+Hmisc::list.tree(params$data_wrangling, depth = 3)
+```
+
+## Parameters
+
+### MRI
+```{r}
+params$data_wrangling$params$mri
+```
+
+### PPI
+```{r}
+params$data_wrangling$params$ppi
+```
+
+### HRF
+```{r}
+visualize_time_series(params$data_wrangling$params$hrf)
+```
+
+## *PSY* Variables
+
+### Events
+```{r}
+params$data_wrangling$psy_var$events %>% 
+  nice_table_html_short()
+```
+
+### Trial Type by Volume
+```{r}
+params$data_wrangling$psy_var$trial_type_by_volume %>%
+  nice_table_html_short()
+```
+
+### Contrast Table
+```{r}
+params$data_wrangling$psy_var$contrast_table %>%
+  nice_table()
+```
+
+### Contrast
+```{r}
+visualize_time_series(params$data_wrangling$psy_var$contrast, ncol = 1)
+```
+
+### Upsample
+```{r}
+params$data_wrangling$psy_var$upsample %>% visualize_time_series(., ncol = 1, scales = "free_y")
+```
+
+### Convolve
+```{r}
+params$data_wrangling$psy_var$convolve %>% visualize_time_series(., ncol = 1, scales = "free_y")
+```
+
+### Downsample
+```{r}
+params$data_wrangling$psy_var$downsample %>% visualize_time_series(., ncol = 1, scales = "free_y")
+```
+
+## *PHYS* Variable
+
+### Input
+```{r}
+params$data_wrangling$phys_var$input %>% visualize_time_series()
+```
+
+### Detrend
+```{r}
+params$data_wrangling$phys_var$detrend %>% visualize_time_series()
+```
+
+### Upsample
+```{r}
+params$data_wrangling$phys_var$upsample %>% visualize_time_series()
+```
+
+### Convolve
+```{r}
+params$data_wrangling$phys_var$deconvolve %>% visualize_time_series()
+```
+
+## *PPI* Variable
+
+### Interaction
+```{r}
+params$data_wrangling$ppi_var$interaction %>% visualize_time_series(., ncol = 1, scales = "free_y")
+```
+
+### Convolve
+```{r}
+params$data_wrangling$ppi_var$convolve %>% visualize_time_series(., ncol = 1, scales = "free_y")
+```
+
+### Downsample
+```{r}
+params$data_wrangling$ppi_var$downsample %>% visualize_time_series(., ncol = 1, scales = "free_y")
+```
+
+## Design Matrix
+```{r}
+params$data_wrangling$design_matrix %>% visualize_time_series_heatmap(., transpose = T, scale_data = "min-max", palette = "Greys", variable_axis_label = NULL, caption = "Note: Variables are scaled to min-max for visualization purposes")
+```
