@@ -146,3 +146,8 @@ params$data_wrangling$ppi_var$downsample %>% visualize_time_series(., ncol = 1, 
 ```{r}
 params$data_wrangling$design_matrix %>% visualize_time_series_heatmap(., transpose = T, scale_data = "min-max", palette = "Greys", variable_axis_label = NULL, caption = "Note: Variables are scaled to min-max for visualization purposes")
 ```
+
+## Session Information
+```{r}
+sessionInfo()
+```
