@@ -69,6 +69,8 @@
 <div id="ppi-psychophysiological-interaction-ppi" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#ppi-psychophysiological-interaction-ppi" class="anchor"></a><code>ppi</code> : Psychophysiological Interaction (PPI)</h1></div>
+<!-- badges: start -->
+
 <p>A neuroimaging package to “easily” perform PPI analyses for task functional magnetic resonsnace imaging (fMRI).</p>
 <p>Note: This package is still being developed and will likely change a lot. Please use cautiously.</p>
 <div id="installation" class="section level2">
@@ -117,48 +119,84 @@
 <a class="sourceLine" id="cb2-35" data-line-number="35">                                 <span class="dt">deconvolve =</span> <span class="ot">TRUE</span>,</a>
 <a class="sourceLine" id="cb2-36" data-line-number="36">                                 <span class="dt">afni_quiet =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb2-37" data-line-number="37">tictoc<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">toc</a></span>()</a></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co">## 2.852 sec elapsed</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co">## 1.785 sec elapsed</span></a></code></pre></div>
 <p>Everything is saved as a list, which includes the input parameters and every single step of the data wrangling pipeline.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">Hmisc<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/Hmisc/man/list.tree.html">list.tree</a></span>(data_wrangling, <span class="dt">depth =</span> <span class="dv">3</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co">##  data_wrangling = list 5 (224984 bytes)</span></a>
+<div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co">##  data_wrangling = list 5 (230616 bytes)</span></a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">## .  params = list 3</span></a>
 <a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">## . .  mri = list 2</span></a>
 <a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">## . .  ppi = list 3</span></a>
 <a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">## . .  hrf = list 1( data.frame )</span></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co">## .  psy_var = list 6</span></a>
-<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">## . .  trial_type_by_volume = list 2( data.frame )</span></a>
-<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">## . .  contrast_table = list 3( data.frame )</span></a>
-<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">## . .  contrast = list 3( data.frame )</span></a>
-<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">## . .  upsample = list 3( data.frame )</span></a>
-<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co">## . .  convolve = list 3( data.frame )</span></a>
-<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co">## . .  downsample = list 3( data.frame )</span></a>
-<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co">## .  phys_var = list 3</span></a>
-<a class="sourceLine" id="cb5-14" data-line-number="14"><span class="co">## . .  detrend = list 1( data.frame )</span></a>
-<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="co">## . .  upsample = list 1( data.frame )</span></a>
-<a class="sourceLine" id="cb5-16" data-line-number="16"><span class="co">## . .  deconvolve = list 1( data.frame )</span></a>
-<a class="sourceLine" id="cb5-17" data-line-number="17"><span class="co">## .  ppi_var = list 3</span></a>
-<a class="sourceLine" id="cb5-18" data-line-number="18"><span class="co">## . .  interaction = list 3( data.frame )</span></a>
-<a class="sourceLine" id="cb5-19" data-line-number="19"><span class="co">## . .  convolve = list 3( data.frame )</span></a>
-<a class="sourceLine" id="cb5-20" data-line-number="20"><span class="co">## . .  downsample = list 3( data.frame )</span></a>
-<a class="sourceLine" id="cb5-21" data-line-number="21"><span class="co">## .  design_matrix = list 7( data.frame )</span></a>
-<a class="sourceLine" id="cb5-22" data-line-number="22"><span class="co">## . .  psy_stimulus_vs_response = double 105= 0 0.10078 1.5873 ...</span></a>
-<a class="sourceLine" id="cb5-23" data-line-number="23"><span class="co">## . .  psy_music_vs_tones = double 105= 0 -0.26874 -4.2329 ...</span></a>
-<a class="sourceLine" id="cb5-24" data-line-number="24"><span class="co">## . .  psy_positive_music_vs_negative_music = double 105= 0 0 0 0 0 0 0 0 ...</span></a>
-<a class="sourceLine" id="cb5-25" data-line-number="25"><span class="co">## . .  phys = double 105= 3.0961 6.6414 9.1888 ...</span></a>
-<a class="sourceLine" id="cb5-26" data-line-number="26"><span class="co">## . .  ppi_stimulus_vs_response = double 105= 0 0.13324 1.1015 ...</span></a>
-<a class="sourceLine" id="cb5-27" data-line-number="27"><span class="co">## . .  ppi_music_vs_tones = double 105= 0 -0.35531 -2.9373 ...</span></a>
-<a class="sourceLine" id="cb5-28" data-line-number="28"><span class="co">## . .  ppi_positive_music_vs_negative_music = double 105= 0 0 0 0 0 0 0 0 ...</span></a>
-<a class="sourceLine" id="cb5-29" data-line-number="29"><span class="co">## . A  row.names = integer 105= 1 2 3 4 5 6 7 8 ...</span></a></code></pre></div>
+<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co">## .  psy_var = list 7</span></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">## . .  events = list 3( data.frame )</span></a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">## . .  trial_type_by_volume = list 2( data.frame )</span></a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">## . .  contrast_table = list 3( data.frame )</span></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">## . .  contrast = list 3( data.frame )</span></a>
+<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co">## . .  upsample = list 3( data.frame )</span></a>
+<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co">## . .  convolve = list 3( data.frame )</span></a>
+<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co">## . .  downsample = list 3( data.frame )</span></a>
+<a class="sourceLine" id="cb5-14" data-line-number="14"><span class="co">## .  phys_var = list 4</span></a>
+<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="co">## . .  input = list 1( data.frame )</span></a>
+<a class="sourceLine" id="cb5-16" data-line-number="16"><span class="co">## . .  detrend = list 1( data.frame )</span></a>
+<a class="sourceLine" id="cb5-17" data-line-number="17"><span class="co">## . .  upsample = list 1( data.frame )</span></a>
+<a class="sourceLine" id="cb5-18" data-line-number="18"><span class="co">## . .  deconvolve = list 1( data.frame )</span></a>
+<a class="sourceLine" id="cb5-19" data-line-number="19"><span class="co">## .  ppi_var = list 3</span></a>
+<a class="sourceLine" id="cb5-20" data-line-number="20"><span class="co">## . .  interaction = list 3( data.frame )</span></a>
+<a class="sourceLine" id="cb5-21" data-line-number="21"><span class="co">## . .  convolve = list 3( data.frame )</span></a>
+<a class="sourceLine" id="cb5-22" data-line-number="22"><span class="co">## . .  downsample = list 3( data.frame )</span></a>
+<a class="sourceLine" id="cb5-23" data-line-number="23"><span class="co">## .  design_matrix = list 7( data.frame )</span></a>
+<a class="sourceLine" id="cb5-24" data-line-number="24"><span class="co">## . .  psy_stimulus_vs_response = double 105= 0 0.10078 1.5873 ...</span></a>
+<a class="sourceLine" id="cb5-25" data-line-number="25"><span class="co">## . .  psy_music_vs_tones = double 105= 0 -0.26874 -4.2329 ...</span></a>
+<a class="sourceLine" id="cb5-26" data-line-number="26"><span class="co">## . .  psy_positive_music_vs_negative_music = double 105= 0 0 0 0 0 0 0 0 ...</span></a>
+<a class="sourceLine" id="cb5-27" data-line-number="27"><span class="co">## . .  phys = double 105= 3.0961 6.6414 9.1888 ...</span></a>
+<a class="sourceLine" id="cb5-28" data-line-number="28"><span class="co">## . .  ppi_stimulus_vs_response = double 105= 0 0.13324 1.1015 ...</span></a>
+<a class="sourceLine" id="cb5-29" data-line-number="29"><span class="co">## . .  ppi_music_vs_tones = double 105= 0 -0.35531 -2.9373 ...</span></a>
+<a class="sourceLine" id="cb5-30" data-line-number="30"><span class="co">## . .  ppi_positive_music_vs_negative_music = double 105= 0 0 0 0 0 0 0 0 ...</span></a>
+<a class="sourceLine" id="cb5-31" data-line-number="31"><span class="co">## . A  row.names = integer 105= 1 2 3 4 5 6 7 8 ...</span></a></code></pre></div>
 <div id="need-more-flexibility" class="section level4">
 <h4 class="hasAnchor">
 <a href="#need-more-flexibility" class="anchor"></a>Need more flexibility?</h4>
 <p>You can create each individual set of variables using <code><a href="reference/create_psy_var.html">create_psy_var()</a></code>, <code><a href="reference/create_phys_var.html">create_phys_var()</a></code>, and <code><a href="reference/create_ppi_var.html">create_ppi_var()</a></code> or create every step of each variable using <a href="https://ekarinpongpipat.com/ppi/reference/index.html#section-data-wrangling">these</a> data wrangling functions.</p>
 </div>
+<div id="visualization" class="section level3">
+<h3 class="hasAnchor">
+<a href="#visualization" class="anchor"></a>Visualization</h3>
+<p>Visualize the data as a time series or a heatmap.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="reference/visualize_time_series.html">visualize_time_series</a></span>(<span class="dt">data =</span> data_wrangling<span class="op">$</span>design_matrix, </a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">                      <span class="dt">scales =</span> <span class="st">"free_y"</span>)</a></code></pre></div>
+<p><img src="README_files/figure-gfm/unnamed-chunk-4-1.png"><!-- --></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="reference/visualize_time_series_heatmap.html">visualize_time_series_heatmap</a></span>(<span class="dt">data =</span> data_wrangling<span class="op">$</span>design_matrix, </a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">                              <span class="dt">scale_data =</span> <span class="st">"min-max"</span>,</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">                              <span class="dt">title =</span> <span class="st">"design matrix"</span>,</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">                              <span class="dt">caption =</span> <span class="st">"Note: Each predictor has been scaled to min-max for visualization."</span>,</a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">                              <span class="dt">reverse_volume_axis =</span> T,</a>
+<a class="sourceLine" id="cb7-6" data-line-number="6">                              <span class="dt">palette =</span> <span class="st">"Greys"</span>, </a>
+<a class="sourceLine" id="cb7-7" data-line-number="7">                              <span class="dt">palette_direction =</span> <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb7-8" data-line-number="8">                              <span class="dt">transpose =</span> T)</a></code></pre></div>
+<p><img src="README_files/figure-gfm/unnamed-chunk-4-2.png"><!-- --></p>
+</div>
+<div id="save-and-report" class="section level3">
+<h3 class="hasAnchor">
+<a href="#save-and-report" class="anchor"></a>Save and Report</h3>
+<p>Save the output as both an .rds and .json file for continued use in R or other languages, respectively.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="reference/save_data_wrangling.html">save_data_wrangling</a></span>(data_wrangling)</a></code></pre></div>
+<p>Craete a report of the entire pipeline.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="reference/create_data_wrangling_report.html">create_data_wrangling_report</a></span>(data_wrangling)</a></code></pre></div>
+</div>
 </div>
 <div id="under-development" class="section level2">
 <h2 class="hasAnchor">
 <a href="#under-development" class="anchor"></a>Under Development</h2>
-<p>Analysis and visualization steps are currently being developed.</p>
+<div id="analysis" class="section level4">
+<h4 class="hasAnchor">
+<a href="#analysis" class="anchor"></a>Analysis</h4>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">tictoc<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">tic</a></span>()</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">model &lt;-<span class="st"> </span><span class="kw"><a href="reference/model_glm_roi2roi.html">model_glm_roi2roi</a></span>(data_wrangling<span class="op">$</span>phys<span class="op">$</span>detrend, data_wrangling<span class="op">$</span>design_matrix)</a>
+<a class="sourceLine" id="cb10-3" data-line-number="3">tictoc<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">toc</a></span>()</a>
+<a class="sourceLine" id="cb10-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb10-5" data-line-number="5">model</a>
+<a class="sourceLine" id="cb10-6" data-line-number="6">Hmisc<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/Hmisc/man/list.tree.html">list.tree</a></span>(model, <span class="dt">depth =</span> <span class="dv">3</span>)</a></code></pre></div>
+</div>
 </div>
 <div id="acknowledgements" class="section level2">
 <h2 class="hasAnchor">
@@ -203,7 +241,13 @@
 </ul>
 </div>
 
-  </div>
+  <div class="dev-status">
+<h2>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://www.tidyverse.org/lifecycle/#experimental"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
+</ul>
+</div>
+</div>
 </div>
 
 

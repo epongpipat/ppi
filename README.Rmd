@@ -95,7 +95,7 @@ Save the output as both an .rds and .json file for continued use in R or other l
 save_data_wrangling(data_wrangling)
 ```
 
-Craete a report of the entire pipeline.
+Create a report of the entire pipeline.
 ```{r, eval = F}
 create_data_wrangling_report(data_wrangling)
 ```
