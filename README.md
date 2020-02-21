@@ -1,6 +1,12 @@
 
 # `ppi` : Psychophysiological Interaction (PPI)
 
+<!-- badges: start -->
+
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+<!-- badges: end -->
+
 A neuroimaging package to “easily” perform PPI analyses for task
 functional magnetic resonsnace imaging (fMRI).
 
@@ -59,7 +65,7 @@ data_wrangling <- data_wrangling(psy_events_data = psy_events,
 tictoc::toc()
 ```
 
-    ## 2.852 sec elapsed
+    ## 1.785 sec elapsed
 
 Everything is saved as a list, which includes the input parameters and
 every single step of the data wrangling pipeline.
@@ -68,19 +74,21 @@ every single step of the data wrangling pipeline.
 Hmisc::list.tree(data_wrangling, depth = 3)
 ```
 
-    ##  data_wrangling = list 5 (224984 bytes)
+    ##  data_wrangling = list 5 (230616 bytes)
     ## .  params = list 3
     ## . .  mri = list 2
     ## . .  ppi = list 3
     ## . .  hrf = list 1( data.frame )
-    ## .  psy_var = list 6
+    ## .  psy_var = list 7
+    ## . .  events = list 3( data.frame )
     ## . .  trial_type_by_volume = list 2( data.frame )
     ## . .  contrast_table = list 3( data.frame )
     ## . .  contrast = list 3( data.frame )
     ## . .  upsample = list 3( data.frame )
     ## . .  convolve = list 3( data.frame )
     ## . .  downsample = list 3( data.frame )
-    ## .  phys_var = list 3
+    ## .  phys_var = list 4
+    ## . .  input = list 1( data.frame )
     ## . .  detrend = list 1( data.frame )
     ## . .  upsample = list 1( data.frame )
     ## . .  deconvolve = list 1( data.frame )
@@ -106,9 +114,57 @@ create every step of each variable using
 [these](https://ekarinpongpipat.com/ppi/reference/index.html#section-data-wrangling)
 data wrangling functions.
 
+### Visualization
+
+Visualize the data as a time series or a heatmap.
+
+``` r
+visualize_time_series(data = data_wrangling$design_matrix, 
+                      scales = "free_y")
+```
+
+![](README_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+
+``` r
+visualize_time_series_heatmap(data = data_wrangling$design_matrix, 
+                              scale_data = "min-max",
+                              title = "design matrix",
+                              caption = "Note: Each predictor has been scaled to min-max for visualization.",
+                              reverse_volume_axis = T,
+                              palette = "Greys", 
+                              palette_direction = 1,
+                              transpose = T)
+```
+
+![](README_files/figure-gfm/unnamed-chunk-4-2.png)<!-- -->
+
+### Save and Report
+
+Save the output as both an .rds and .json file for continued use in R or
+other languages, respectively.
+
+``` r
+save_data_wrangling(data_wrangling)
+```
+
+Craete a report of the entire pipeline.
+
+``` r
+create_data_wrangling_report(data_wrangling)
+```
+
 ## Under Development
 
-Analysis and visualization steps are currently being developed.
+#### Analysis
+
+``` r
+tictoc::tic()
+model <- model_glm_roi2roi(data_wrangling$phys$detrend, data_wrangling$design_matrix)
+tictoc::toc()
+
+model
+Hmisc::list.tree(model, depth = 3)
+```
 
 ## Acknowledgements
 

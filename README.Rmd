@@ -71,6 +71,35 @@ Hmisc::list.tree(data_wrangling, depth = 3)
 
 You can create each individual set of variables using `create_psy_var()`, `create_phys_var()`, and `create_ppi_var()` or create every step of each variable using [these](https://ekarinpongpipat.com/ppi/reference/index.html#section-data-wrangling) data wrangling functions.
 
+### Visualization
+
+Visualize the data as a time series or a heatmap.
+
+```{r}
+visualize_time_series(data = data_wrangling$design_matrix, 
+                      scales = "free_y")
+visualize_time_series_heatmap(data = data_wrangling$design_matrix, 
+                              scale_data = "min-max",
+                              title = "design matrix",
+                              caption = "Note: Each predictor has been scaled to min-max for visualization.",
+                              reverse_volume_axis = T,
+                              palette = "Greys", 
+                              palette_direction = 1,
+                              transpose = T)
+```
+
+### Save and Report
+
+Save the output as both an .rds and .json file for continued use in R or other languages, respectively.
+```{r, eval = F}
+save_data_wrangling(data_wrangling)
+```
+
+Craete a report of the entire pipeline.
+```{r, eval = F}
+create_data_wrangling_report(data_wrangling)
+```
+
 ## Under Development
 
 #### Analysis 
@@ -81,21 +110,6 @@ tictoc::toc()
 
 model
 Hmisc::list.tree(model, depth = 3)
-```
-
-#### Visualization
-
-```{r}
-visualize_time_series(data = data_wrangling$design_matrix, 
-                      scales = "free_y")
-visualize_time_series_heatmap(data = data_wrangling$design_matrix, 
-                              scale_data = "min-max",
-                              title = "design matrix",
-                              caption = "Note: Each predictor has been scaled to min-max.",
-                              reverse_volume_axis = T,
-                              palette = "Greys", 
-                              palette_direction = 1,
-                              transpose = T)
 ```
 
 ## Acknowledgements

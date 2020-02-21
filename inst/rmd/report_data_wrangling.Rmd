@@ -1,0 +1,147 @@
+---
+title: "PPI: Data Wrangling Report"
+date: "`r Sys.Date()`"
+output: 
+  rmdformats::readthedown:
+    highlight: tango
+    code_folding: hide
+    code_download: true
+    toc_depth: 3
+---
+
+```{r, include = F}
+library(tidyverse)
+library(kableExtra)
+```
+
+## Data Wrangling
+```{r}
+Hmisc::list.tree(params$data_wrangling, depth = 3)
+```
+
+## Parameters
+
+### MRI
+```{r}
+params_mri <- params$data_wrangling$params$mri %>%
+  as.data.frame() %>%
+  t() %>%
+  as.data.frame() %>%
+  rownames_to_column("parameter")
+colnames(params_mri)[2] <- "value"
+  kable(params_mri) %>%
+  kable_styling(., bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F, position = "left")
+```
+
+### PPI
+```{r}
+params_ppi <- params$data_wrangling$params$ppi %>%
+  as.data.frame() %>%
+  t() %>%
+  as.data.frame() %>%
+  rownames_to_column("parameter")
+colnames(params_ppi)[2] <- "value"
+  kable(params_ppi) %>%
+  kable_styling(., bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F, position = "left")
+```
+
+### HRF
+```{r}
+visualize_time_series(params$data_wrangling$params$hrf)
+```
+
+## *PSY* Variables
+
+### Events
+```{r}
+params$data_wrangling$psy_var$events %>% 
+  kable() %>%
+  kable_styling(., bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F, position = "left")
+```
+
+### Trial Type by Volume
+```{r, fig.height = 1.5, fig.width = 8}
+params$data_wrangling$psy_var$trial_type_by_volume %>%
+  mutate(value = 0) %>%
+  ggplot(., aes(volume, value, color = trial_type)) +
+  geom_point() +
+  theme_minimal() +
+  labs(y = NULL) +
+  theme(axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        legend.position="bottom") +
+  scale_x_continuous(breaks = seq(0, max(params$data_wrangling$psy_var$trial_type_by_volume$volume), 10))
+```
+
+### Contrast Table
+```{r}
+params$data_wrangling$psy_var$contrast_table %>%
+  kable() %>%
+  kable_styling(., bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F, position = "left")
+```
+
+### Contrast
+```{r}
+visualize_time_series(params$data_wrangling$psy_var$contrast, ncol = 1)
+```
+
+### Upsample
+```{r}
+params$data_wrangling$psy_var$upsample %>% visualize_time_series(., ncol = 1, scales = "free_y")
+```
+
+### Convolve
+```{r}
+params$data_wrangling$psy_var$convolve %>% visualize_time_series(., ncol = 1, scales = "free_y")
+```
+
+### Downsample
+```{r}
+params$data_wrangling$psy_var$downsample %>% visualize_time_series(., ncol = 1, scales = "free_y")
+```
+
+## *PHYS* Variable
+
+### Input
+```{r}
+params$data_wrangling$phys_var$input %>% visualize_time_series()
+```
+
+### Detrend
+```{r}
+params$data_wrangling$phys_var$detrend %>% visualize_time_series()
+```
+
+### Upsample
+```{r}
+params$data_wrangling$phys_var$upsample %>% visualize_time_series()
+```
+
+### Convolve
+```{r}
+params$data_wrangling$phys_var$deconvolve %>% visualize_time_series()
+```
+
+## *PPI* Variable
+
+### Interaction
+```{r}
+params$data_wrangling$ppi_var$interaction %>% visualize_time_series(., ncol = 1, scales = "free_y")
+```
+
+### Convolve
+```{r}
+params$data_wrangling$ppi_var$convolve %>% visualize_time_series(., ncol = 1, scales = "free_y")
+```
+
+### Downsample
+```{r}
+params$data_wrangling$ppi_var$downsample %>% visualize_time_series(., ncol = 1, scales = "free_y")
+```
+
+## Design Matrix
+```{r}
+params$data_wrangling$design_matrix %>% visualize_time_series_heatmap(., transpose = T, scale_data = "min-max", palette = "Greys", variable_axis_label = NULL, caption = "Note: Variables are scaled to min-max for visualization purposes")
+```

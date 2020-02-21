@@ -48,12 +48,15 @@ psy_unlabeled_trial_type <- "response"
 phys_target <- read_csv(phys_target_file, col_names = "target")
 
 data_wrangled_left <- data_wrangling(psy_events, psy_unlabeled_trial_type, psy_contrast_table, phys_seed, detrend_factor, hrf, tr, n_volumes, upsample_factor)
-
-save_data_wrangling(data_wrangled_left, "~/Desktop/", "r1_", "_outlier")
-create_data_wrangling_report(data_wrangled_left, "~/Desktop/", "r1_", "_outlier")
-
-
 data_wrangled_right <- data_wrangling(psy_events, psy_unlabeled_trial_type, psy_contrast_table, phys_target, detrend_factor, hrf, tr, n_volumes, upsample_factor)
+```
+
+```{r}
+save_data_wrangling(data_wrangled_left, "~/Desktop/", "r1_", "_outlier")
+```
+
+```{r}
+create_data_wrangling_report(data_wrangled_left, "~/Desktop/", "r1_", "_outlier")
 ```
 
 ## Analysis
