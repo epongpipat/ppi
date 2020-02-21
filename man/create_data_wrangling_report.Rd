@@ -6,22 +6,22 @@
 \usage{
 create_data_wrangling_report(
   data_wrangling,
-  out_dir,
-  out_prefix,
-  out_suffix,
-  quiet = T
+  out_dir = NULL,
+  out_prefix = NULL,
+  out_suffix = NULL,
+  quiet = TRUE
 )
 }
 \arguments{
 \item{data_wrangling}{data wrangling output}
 
-\item{out_dir}{output directory}
+\item{out_dir}{output directory (default: NULL) if null, saves to current working directory}
 
-\item{out_prefix}{output file prefix}
+\item{out_prefix}{output file prefix (default: NULL)}
 
-\item{out_suffix}{output file suffix}
+\item{out_suffix}{output file suffix (default: NULL)}
 
-\item{quiet}{suppress message from rmarkdown::render()}
+\item{quiet}{suppress message from rmarkdown::render() (default: TRUE)}
 }
 \value{
 

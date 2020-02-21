@@ -4,16 +4,21 @@
 \alias{save_data_wrangling}
 \title{save_data_wrangling}
 \usage{
-save_data_wrangling(data_wrangling, out_dir, out_prefix, out_suffix)
+save_data_wrangling(
+  data_wrangling,
+  out_dir = NULL,
+  out_prefix = NULL,
+  out_suffix = NULL
+)
 }
 \arguments{
 \item{data_wrangling}{data wrangling output}
 
-\item{out_dir}{output directory}
+\item{out_dir}{output directory (default: NULL) if null, saves to current working directory}
 
-\item{out_prefix}{output file prefix}
+\item{out_prefix}{output file prefix (default: NULL)}
 
-\item{out_suffix}{output file suffix}
+\item{out_suffix}{output file suffix (default: NULL)}
 }
 \value{
 
