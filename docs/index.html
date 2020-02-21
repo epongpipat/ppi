@@ -119,7 +119,7 @@
 <a class="sourceLine" id="cb2-35" data-line-number="35">                                 <span class="dt">deconvolve =</span> <span class="ot">TRUE</span>,</a>
 <a class="sourceLine" id="cb2-36" data-line-number="36">                                 <span class="dt">afni_quiet =</span> <span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb2-37" data-line-number="37">tictoc<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/tictoc/man/tic.html">toc</a></span>()</a></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co">## 1.785 sec elapsed</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co">## 1.75 sec elapsed</span></a></code></pre></div>
 <p>Everything is saved as a list, which includes the input parameters and every single step of the data wrangling pipeline.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">Hmisc<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/Hmisc/man/list.tree.html">list.tree</a></span>(data_wrangling, <span class="dt">depth =</span> <span class="dv">3</span>)</a></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co">##  data_wrangling = list 5 (230616 bytes)</span></a>
@@ -156,7 +156,7 @@
 <div id="need-more-flexibility" class="section level4">
 <h4 class="hasAnchor">
 <a href="#need-more-flexibility" class="anchor"></a>Need more flexibility?</h4>
-<p>You can create each individual set of variables using <code><a href="reference/create_psy_var.html">create_psy_var()</a></code>, <code><a href="reference/create_phys_var.html">create_phys_var()</a></code>, and <code><a href="reference/create_ppi_var.html">create_ppi_var()</a></code> or create every step of each variable using <a href="https://ekarinpongpipat.com/ppi/reference/index.html#section-data-wrangling">these</a> data wrangling functions.</p>
+<p>You can create each individual set of variables using <code><a href="reference/create_psy_var.html">create_psy_var()</a></code>, <code><a href="reference/create_phys_var.html">create_phys_var()</a></code>, and <code><a href="reference/create_ppi_var.html">create_ppi_var()</a></code> or create every step of each variable using <a href="https://ekarinpongpipat.com/ppi/reference/index.html#section-data-wrangling" target="_blank">these</a> data wrangling functions.</p>
 </div>
 <div id="visualization" class="section level3">
 <h3 class="hasAnchor">
@@ -178,9 +178,9 @@
 <div id="save-and-report" class="section level3">
 <h3 class="hasAnchor">
 <a href="#save-and-report" class="anchor"></a>Save and Report</h3>
-<p>Save the output as both an .rds and .json file for continued use in R or other languages, respectively.</p>
+<p>Save the output as both an .rds (<a href="https://github.com/epongpipat/ppi/blob/master/examples/data_wrangling.rds" target="_blank">example</a>) and .json (<a href="https://github.com/epongpipat/ppi/blob/master/examples/data_wrangling.json" target="_blank">example</a>) file for continued use in R or other languages, respectively.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="reference/save_data_wrangling.html">save_data_wrangling</a></span>(data_wrangling)</a></code></pre></div>
-<p>Craete a report of the entire pipeline.</p>
+<p>Create a report of the entire pipeline (<a href="https://ekarinpongpipat.com/ppi/data_wrangling_report.html" target="_blank">example</a>).</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="reference/create_data_wrangling_report.html">create_data_wrangling_report</a></span>(data_wrangling)</a></code></pre></div>
 </div>
 </div>

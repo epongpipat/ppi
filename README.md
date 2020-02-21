@@ -65,7 +65,7 @@ data_wrangling <- data_wrangling(psy_events_data = psy_events,
 tictoc::toc()
 ```
 
-    ## 1.785 sec elapsed
+    ## 1.75 sec elapsed
 
 Everything is saved as a list, which includes the input parameters and
 every single step of the data wrangling pipeline.
@@ -111,7 +111,7 @@ Hmisc::list.tree(data_wrangling, depth = 3)
 You can create each individual set of variables using
 `create_psy_var()`, `create_phys_var()`, and `create_ppi_var()` or
 create every step of each variable using
-[these](https://ekarinpongpipat.com/ppi/reference/index.html#section-data-wrangling)
+<a href="https://ekarinpongpipat.com/ppi/reference/index.html#section-data-wrangling" target="_blank">these</a>
 data wrangling functions.
 
 ### Visualization
@@ -140,14 +140,18 @@ visualize_time_series_heatmap(data = data_wrangling$design_matrix,
 
 ### Save and Report
 
-Save the output as both an .rds and .json file for continued use in R or
-other languages, respectively.
+Save the output as both an .rds
+(<a href="https://github.com/epongpipat/ppi/blob/master/examples/data_wrangling.rds" target="_blank">example</a>)
+and .json
+(<a href="https://github.com/epongpipat/ppi/blob/master/examples/data_wrangling.json" target="_blank">example</a>)
+file for continued use in R or other languages, respectively.
 
 ``` r
 save_data_wrangling(data_wrangling)
 ```
 
-Craete a report of the entire pipeline.
+Create a report of the entire pipeline
+(<a href="https://ekarinpongpipat.com/ppi/data_wrangling_report.html" target="_blank">example</a>).
 
 ``` r
 create_data_wrangling_report(data_wrangling)
