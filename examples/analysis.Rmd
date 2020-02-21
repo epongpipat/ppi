@@ -52,11 +52,11 @@ data_wrangled_right <- data_wrangling(psy_events, psy_unlabeled_trial_type, psy_
 ```
 
 ```{r}
-save_data_wrangling(data_wrangled_left, "~/Desktop/", "r1_", "_outlier")
+save_data_wrangling(data_wrangled_left)
 ```
 
 ```{r}
-create_data_wrangling_report(data_wrangled_left, "~/Desktop/", "r1_", "_outlier")
+create_data_wrangling_report(data_wrangled_left)
 ```
 
 ## Analysis
