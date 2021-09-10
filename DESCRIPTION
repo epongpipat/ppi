@@ -2,7 +2,7 @@ Package: ppi
 Type: Package
 Title: Psychophysiological Interaction (PPI)
 Version: 0.1.0
-Authors@R: c(person("Ekarin", "Pongpipat", "Eric", "epongpipat@gmail.com", c("aut", "cre")))
+Author: Ekarin Eric Pongpipat <epongpipat@gmail.com>
 Maintainer: Ekarin Eric Pongpipat <epongpipat@gmail.com>
 Description: A package to "easily" perform PPI analyses for task fMRI
 License: MIT + CC BY-NC-SA 4.0
@@ -10,7 +10,7 @@ URL: https://ekarinpongpipat.com/ppi, https://github.com/epongpipat/ppi
 BugReports: https://github.com/epongpipat/ppi/issues
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.1
 Imports: 
   afnir,
   dplyr,
