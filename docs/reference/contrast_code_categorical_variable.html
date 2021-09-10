@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -37,7 +41,6 @@
 
 <meta property="og:title" content="contrast_code_categorical_variable — contrast_code_categorical_variable" />
 <meta property="og:description" content="contrast_code_categorical_variable" />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -55,7 +58,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -77,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -87,8 +90,8 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/epongpipat/ppi">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/epongpipat/ppi/">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -114,7 +117,7 @@
     <p>contrast_code_categorical_variable</p>
     </div>
 
-    <pre class="usage"><span class='fu'>contrast_code_categorical_variable</span>(<span class='no'>data</span>, <span class='no'>contrast</span>)</pre>
+    <pre class="usage"><span class='fu'>contrast_code_categorical_variable</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>contrast</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -136,7 +139,8 @@
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: ‘dplyr’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:stats’:</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    filter, lag</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
@@ -154,29 +158,32 @@
 <span class='co'># volumes collected for this was run 105.</span>
 
 <span class='co'># read events from openneuro.org</span>
-<span class='no'>psy_events</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>readr</span><span class='kw ns'>::</span><span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_tsv</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/connections.html'>url</a></span>(<span class='st'>"https://openneuro.org/crn/datasets/ds000171/snapshots/00001/files/sub-control01:func:sub-control01_task-music_run-1_events.tsv"</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>trial_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span>(<span class='no'>trial_type</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='create_trial_type_by_volume_list.html'>create_trial_type_by_volume_list</a></span>(<span class='no'>.</span>, <span class='kw'>tr</span> <span class='kw'>=</span> <span class='fl'>1.5</span>, <span class='kw'>n_volumes</span> <span class='kw'>=</span> <span class='fl'>105</span>, <span class='kw'>unlabeled_trial_type</span> <span class='kw'>=</span> <span class='st'>"response"</span>)</div><div class='output co'>#&gt; <span class='message'>Parsed with column specification:</span>
-#&gt; <span class='message'>cols(</span>
-#&gt; <span class='message'>  onset = <span style='color: #00BB00;'>col_double()</span><span>,</span>
-#&gt; <span class='message'>  duration = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
-#&gt; <span class='message'>  trial_type = </span><span style='color: #BB0000;'>col_character()</span><span></span>
-#&gt; <span class='message'>)</span></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>psy_events</span>$<span class='no'>trial_type</span>)</div><div class='output co'>#&gt; negative_music positive_music       response          tones 
+<span class='va'>psy_events</span> <span class='op'>&lt;-</span> <span class='fu'>readr</span><span class='fu'>::</span><span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_tsv</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/connections.html'>url</a></span><span class='op'>(</span><span class='st'>"https://openneuro.org/crn/datasets/ds000171/snapshots/00001/files/sub-control01:func:sub-control01_task-music_run-1_events.tsv"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>trial_type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='va'>trial_type</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='create_trial_type_by_volume_list.html'>create_trial_type_by_volume_list</a></span><span class='op'>(</span><span class='va'>.</span>, tr <span class='op'>=</span> <span class='fl'>1.5</span>, n_volumes <span class='op'>=</span> <span class='fl'>105</span>, unlabeled_trial_type <span class='op'>=</span> <span class='st'>"response"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'><span style='font-weight: bold;'>Rows: </span><span style='color: #0000BB;'>18</span> <span style='font-weight: bold;'>Columns: </span><span style='color: #0000BB;'>3</span></span></div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>──</span> <span style='font-weight: bold;'>Column specification</span> <span style='color: #00BBBB;'>────────────────────────────────────────────────────────</span></span>
+#&gt; <span class='message'><span style='font-weight: bold;'>Delimiter:</span> "\t"</span>
+#&gt; <span class='message'><span style='color: #BB0000;'>chr</span> (1): trial_type</span>
+#&gt; <span class='message'><span style='color: #00BB00;'>dbl</span> (2): onset, duration</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> Use <span style='color: #262626; background-color: #DADADA;'>`spec()`</span> to retrieve the full column specification for this data.</span>
+#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span> Specify the column types or set <span style='color: #262626; background-color: #DADADA;'>`show_col_types = FALSE`</span> to quiet this message.</span></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>psy_events</span><span class='op'>$</span><span class='va'>trial_type</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; negative_music positive_music       response          tones 
 #&gt;             21             21              8             55 </div><div class='input'>
 <span class='co'># orthogonal contrast code that test:</span>
 <span class='co'># 1. stimulus vs response</span>
 <span class='co'># 2. music vs tones</span>
 <span class='co'># 3. positive music vs negative music</span>
-<span class='no'>psy_contrast_table</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(<span class='kw'>stimulus_vs_response</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, -<span class='fl'>3</span>, <span class='fl'>1</span>)/<span class='fl'>4</span>,
-                                          <span class='kw'>music_vs_tones</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0</span>, -<span class='fl'>2</span>)/<span class='fl'>3</span>,
-                                          <span class='kw'>positive_music_vs_negative_music</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0</span>, <span class='fl'>0</span>)/<span class='fl'>2</span>))
+<span class='va'>psy_contrast_table</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span>stimulus_vs_response <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='op'>-</span><span class='fl'>3</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>/</span><span class='fl'>4</span>,
+                                          music_vs_tones <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0</span>, <span class='op'>-</span><span class='fl'>2</span><span class='op'>)</span><span class='op'>/</span><span class='fl'>3</span>,
+                                          positive_music_vs_negative_music <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>/</span><span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'># run function</span>
-<span class='no'>psy_contrast</span> <span class='kw'>&lt;-</span> <span class='fu'>contrast_code_categorical_variable</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>psy_events</span>,
-                                                   <span class='kw'>contrast</span> <span class='kw'>=</span> <span class='no'>psy_contrast_table</span>)
+<span class='va'>psy_contrast</span> <span class='op'>&lt;-</span> <span class='fu'>contrast_code_categorical_variable</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>psy_events</span>,
+                                                   contrast <span class='op'>=</span> <span class='va'>psy_contrast_table</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>psy_contrast</span>)</div><div class='output co'>#&gt;   volume trial_type psy_stimulus_vs_response psy_music_vs_tones
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>psy_contrast</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   volume trial_type psy_stimulus_vs_response psy_music_vs_tones
 #&gt; 1      1      tones                     0.25         -0.6666667
 #&gt; 2      2      tones                     0.25         -0.6666667
 #&gt; 3      3      tones                     0.25         -0.6666667
@@ -190,23 +197,19 @@
 #&gt; 4                                    0
 #&gt; 5                                    0
 #&gt; 6                                    0</div><div class='input'>
-# references:
-# Lepping RJ, Atchley RA, Chrysikou E, Martin LE, Clair AA, Ingram RE, et al. Neural processing of emotional musical and nonmusical stimuli in depression.  PlosONE.  In Press.
-# Lepping RJ, Atchley RA, Savage CR. Development of a Validated Emotionally Provocative Musical Stimulus Set for Research. Psychology of Music. 2015; online before print. doi:10.1177/0305735615604509.
-# Lepping RJ, Atchley RA, Martin LE, Patrician TM, Stroupe N, Brooks WM, et al. Limbic responses to positive and negative emotionally evocative music: An fMRI study.  Society for Neuroscience annual meeting 2012 Oct 13-18; New Orleans, LA 2012.
-# Lepping RJ, Atchley RA, Martin LE, Brooks WM, Clair AA, Ingram RE, et al. Musical and nonmusical sounds evoke different patterns of neural activity: An fMRI study.  Psychonomic Society annual meeting; 2012 Nov 14-18; Minneapolis, MN 2012.
-# Lepping RJ, Atchley RA, Martin LE, Patrician TM, Ingram RE, Clair AA, et al. The effect of musical experiences and musical training on neural responses to emotionally evocative music and non-musical sounds.  Social and Affective Neuroscience Society annual conference 2013 Apr 12-13; San Francisco, CA 2013
-# Lepping RJ, Atchley RA, Patrician TM, Stroupe NN, Martin LE, Ingram RE, et al. Music to my ears: Neural responsiveness to emotional music and sounds in depression.  Society of Biological Psychiatry annual scientific convention 2013 May 16-18; San Francisco, CA 2013.
-</div></span></pre>
+<span class='co'># references:</span>
+<span class='co'># Lepping RJ, Atchley RA, Chrysikou E, Martin LE, Clair AA, Ingram RE, et al. Neural processing of emotional musical and nonmusical stimuli in depression.  PlosONE.  In Press.</span>
+<span class='co'># Lepping RJ, Atchley RA, Savage CR. Development of a Validated Emotionally Provocative Musical Stimulus Set for Research. Psychology of Music. 2015; online before print. doi:10.1177/0305735615604509.</span>
+<span class='co'># Lepping RJ, Atchley RA, Martin LE, Patrician TM, Stroupe N, Brooks WM, et al. Limbic responses to positive and negative emotionally evocative music: An fMRI study.  Society for Neuroscience annual meeting 2012 Oct 13-18; New Orleans, LA 2012.</span>
+<span class='co'># Lepping RJ, Atchley RA, Martin LE, Brooks WM, Clair AA, Ingram RE, et al. Musical and nonmusical sounds evoke different patterns of neural activity: An fMRI study.  Psychonomic Society annual meeting; 2012 Nov 14-18; Minneapolis, MN 2012.</span>
+<span class='co'># Lepping RJ, Atchley RA, Martin LE, Patrician TM, Ingram RE, Clair AA, et al. The effect of musical experiences and musical training on neural responses to emotionally evocative music and non-musical sounds.  Social and Affective Neuroscience Society annual conference 2013 Apr 12-13; San Francisco, CA 2013</span>
+<span class='co'># Lepping RJ, Atchley RA, Patrician TM, Stroupe NN, Martin LE, Ingram RE, et al. Music to my ears: Neural responsiveness to emotional music and sounds in depression.  Society of Biological Psychiatry annual scientific convention 2013 May 16-18; San Francisco, CA 2013.</span>
+</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -217,7 +220,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
