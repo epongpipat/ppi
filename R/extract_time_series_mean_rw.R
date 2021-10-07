@@ -38,8 +38,12 @@ extract_time_series_mean_rw <- function(in_path_data, in_path_mask, in_path_labe
 
   df_data <- readNifti(in_path_data)
   df_mask <- readNifti(in_path_mask)
-  df_labels <- read_csv(in_path_labels, col_names = F) %>% unlist() %>% as.character()
-  df_ts <- extract_time_series_mean(df_data, df_mask, labels = df_labels)
+  if (!is.null(in_path_labels)) {
+    df_labels <- read_csv(in_path_labels, col_names = F) %>% unlist() %>% as.character()
+    df_ts <- extract_time_series_mean(df_data, df_mask, labels = df_labels)
+  } else {
+    df_ts <- extract_time_series_mean(df_data, df_mask)
+  }
   write_csv(df_ts, out_path, col_names = F)
 
 }
