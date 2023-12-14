@@ -16,7 +16,7 @@ lot. Please use cautiously.
 ## Installation
 
 ``` r
-devtools::install_github("epongpipat/ppi")
+remotes::install_github("epongpipat/ppi")
 ```
 
 ## Data Wrangling
